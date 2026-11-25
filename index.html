@@ -4,23 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KHTN 6–9 – Tự học Khoa học tự nhiên</title>
-<meta name="description" content="Website tự học Khoa học tự nhiên lớp 6, 7, 8, 9 theo Chương trình GDPT 2018: lý thuyết, công thức, bài luyện, kiểm tra nền.">
-<link rel="stylesheet" href="css/style.css">
+<meta name="description" content="Website tự học Khoa học tự nhiên lớp 6, 7, 8, 9 theo Chương trình GDPT 2018: lý thuyết, công thức, bài luyện, bảng nháp, phiếu PDF A4 và kiểm tra nền.">
+<link rel="stylesheet" href="css/style.css?v=20261125c">
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#/">🔬 KHTN 6–9</a>
-  <nav>
-    <a href="#/lop/6">Lớp 6</a><a href="#/lop/7">Lớp 7</a><a href="#/lop/8">Lớp 8</a><a href="#/lop/9">Lớp 9</a>
-    <a href="#/so-tay">Sổ tay</a><a href="#/tien-do">Tiến độ</a>
+  <a class="brand" href="#/">KHTN 6–9</a>
+  <nav id="main-nav" aria-label="Điều hướng chính">
+    <a href="#/lop/6" data-nav="lop-6">Lớp 6</a>
+    <a href="#/lop/7" data-nav="lop-7">Lớp 7</a>
+    <a href="#/lop/8" data-nav="lop-8">Lớp 8</a>
+    <a href="#/lop/9" data-nav="lop-9">Lớp 9</a>
+    <a href="#/de-kiem-tra/7" data-nav="de-kiem-tra">Đề kiểm tra</a>
+    <a href="#/luyen-tap" data-nav="luyen-tap">Chọn bài luyện</a>
+    <a href="#/so-tay" data-nav="so-tay">Sổ tay</a>
+    <a href="#/tien-do" data-nav="tien-do">Tiến độ</a>
   </nav>
+  <button type="button" class="theme-btn" id="theme-toggle" aria-label="Đổi giao diện sáng tối">Giao diện tối</button>
 </header>
 <main id="app" tabindex="-1"></main>
-<footer>Nội dung bám sát Chương trình GDPT môn Khoa học tự nhiên (Thông tư 32/2018/TT-BGDĐT). Dữ liệu học tập lưu ngay trên thiết bị của bạn.</footer>
-<script src="js/data/lop6.js"></script>
-<script src="js/data/lop7.js"></script>
-<script src="js/data/lop8.js"></script>
-<script src="js/data/lop9.js"></script>
-<script src="js/app.js"></script>
+<footer>Nội dung bám sát Chương trình GDPT môn Khoa học tự nhiên (Thông tư 32/2018/TT-BGDĐT). Dữ liệu học tập và nháp được tự động lưu trên thiết bị của bạn.</footer>
+<div id="print-modal" class="modal" hidden aria-modal="true" role="dialog" aria-labelledby="print-modal-title"></div>
+<div id="print-root" class="print-only"></div>
+<script src="js/data/lop6.js?v=20261125c"></script>
+<script src="js/data/lop7.js?v=20261125c"></script>
+<script src="js/data/lop8.js?v=20261125c"></script>
+<script src="js/data/lop9.js?v=20261125c"></script>
+<script src="js/data/exams.js?v=20261125c"></script>
+<script src="js/qbank.js?v=20261125c"></script>
+<script src="js/pad.js?v=20261125c"></script>
+<script src="js/print.js?v=20261125c"></script>
+<script src="js/app.js?v=20261125c"></script>
 </body>
 </html>
