@@ -39,7 +39,7 @@ var KEY_META = 'khtn-meta-v1';
 var KEY_THEME = 'khtn-theme';
 var KEY_FONTSIZE = 'khtn-fontsize';
 
-var PUBLIC_URL = 'https://kimtham18301-arch.github.io/khtn-6-9/';
+var PUBLIC_URL = 'https://kimtham18301-arch.github.io/scibook/';
 var currentCleanup = null;
 var quickExamSpecs = {};
 var toastTimer = null;
@@ -218,11 +218,11 @@ function openShareModal(customLabel){
     if (bHome) bHome.onclick = function(){ copyText(homeUrl, '✓ Đã chép link Trang chủ! Bạn dán vào Zalo / Messenger nhé.'); };
     var bNatCur = modal.querySelector('#sh-native-cur');
     if (bNatCur) bNatCur.onclick = function(){
-      navigator.share({ title: customLabel || 'Học Tốt KHTN 6–9', url: curUrl }).catch(function(){});
+      navigator.share({ title: customLabel || 'SciBook', url: curUrl }).catch(function(){});
     };
     var bNatHome = modal.querySelector('#sh-native-home');
     if (bNatHome) bNatHome.onclick = function(){
-      navigator.share({ title: 'Học Tốt KHTN 6–9 (Miễn phí)', url: homeUrl }).catch(function(){});
+      navigator.share({ title: 'SciBook – Pastel Science Book', url: homeUrl }).catch(function(){});
     };
   });
 }
@@ -991,7 +991,7 @@ function home(){
           '<button type="button" class="btn sm alt" id="home-share-btn">📤 Gửi link qua Zalo</button>' +
         '</div>' +
       '</div>' +
-      '<h1 style="margin:0 0 4px">Học Tốt Khoa Học Tự Nhiên Lớp 6 – 9</h1>' +
+      '<h1 style="margin:0 0 4px">SciBook</h1>' + +
       '<p class="muted" style="margin:0 0 12px">Dành cho học sinh tự học ở nhà, phụ huynh kèm con và thầy cô lấy đề in giấy — chỉ cần <b>2 bước đơn giản</b>:</p>' +
 
       '<div class="step-label"><span class="step-num">1</span><span>Chọn lớp đang học:</span></div>' +

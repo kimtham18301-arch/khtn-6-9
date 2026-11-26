@@ -335,7 +335,7 @@ function buildStandaloneDownloadFile(spec, mode, includeTypes){
     mathCss + '\n' +
     '@media print{@page{size:A4;margin:14mm}body{background:#fff;padding:0}.top-bar{display:none!important}.sheet-preview{border:0;padding:0;max-width:none}.sheet-page-break{border-top:0;margin:0;padding:0;page-break-before:always;break-before:page}}\n' +
     '</style>\n</head>\n<body>\n' +
-    '<div class="top-bar"><div><b>Học Tốt KHTN 6–9</b> · Mã đề: <b>' + esc(spec.code) + '</b><div style="font-size:13px;color:#555;margin-top:2px">Bấm nút màu tím bên cạnh để in ra máy in hoặc chọn Save as PDF (Lưu dưới dạng PDF).</div></div>' +
+    '<div class="top-bar"><div><b>SciBook</b> · Mã đề: <b>' + esc(spec.code) + '</b><div style="font-size:13px;color:#555;margin-top:2px">Bấm nút màu tím bên cạnh để in ra máy in hoặc chọn Save as PDF (Lưu dưới dạng PDF).</div></div>' +
     '<button class="pbtn" onclick="window.print()">🖨️ In ra giấy / Lưu thành PDF</button></div>\n' +
     bodySheet + '\n</body>\n</html>';
 }

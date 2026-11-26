@@ -1,7 +1,7 @@
-# Học Tốt KHTN 6–9 (SciBook) – Tự học & Đề kiểm tra Khoa học tự nhiên miễn phí
+# SciBook – Pastel Science Study Book
 
 🌐 **Đường link công khai (ai cũng bấm vào dùng được ngay, không cần đăng nhập):**
-👉 **https://kimtham18301-arch.github.io/khtn-6-9/**
+👉 **https://kimtham18301-arch.github.io/scibook/**
 
 ---
 
