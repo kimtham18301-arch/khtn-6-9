@@ -500,18 +500,36 @@ a.card:hover{
 }
 .gb-table th,.gb-table td{
   border:1px solid var(--line);
-  padding:8px 9px;
+  padding:8px 8px;
   text-align:center;
+  vertical-align:middle;
 }
-.gb-table th{background:var(--surface);font-weight:700}
+.gb-table th{background:var(--surface);font-weight:700;font-size:.86rem}
+.gb-table th.gb-stage-h1{background:#ede9fe;color:#4c3bcf}
+.gb-table th.gb-stage-h2{background:#e0f2fe;color:#0369a1}
+.gb-table .gb-milestone{background:#fff5f8}
+.gb-table th.gb-milestone{background:#ffe4ef;color:#9d174d}
+:root[data-theme="dark"] .gb-table th.gb-stage-h1{background:rgba(139,92,246,.22);color:#ddd6fe}
+:root[data-theme="dark"] .gb-table th.gb-stage-h2{background:rgba(56,189,248,.18);color:#bae6fd}
+:root[data-theme="dark"] .gb-table .gb-milestone{background:rgba(244,114,182,.09)}
+:root[data-theme="dark"] .gb-table th.gb-milestone{background:rgba(244,114,182,.2);color:#fbcfe8}
+.gb-sub{
+  display:block;
+  font-size:.73rem;
+  color:var(--mut);
+  margin-top:3px;
+  line-height:1.25;
+}
 .gb-cell-link{
   display:inline-block;
   text-decoration:none;
   font-weight:700;
+  font-size:.88rem;
   padding:2px 8px;
   border-radius:7px;
+  background:var(--pri-soft);
 }
-.gb-cell-link:hover{background:var(--pri-soft)}
+.gb-cell-link:hover{background:var(--pri);color:#fff}
 .gb-inp{
   width:56px !important;
   padding:4px 6px !important;

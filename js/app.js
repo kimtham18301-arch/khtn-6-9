@@ -19,10 +19,10 @@ var DIFF_SHORT = {
   4:'Mức 4 · Khó'
 };
 var STAGE_META = {
-  1: { term:'HK1', title:'Giai đoạn 1 – Nửa đầu Học kì I (Tuần 1 – Tuần 9 · Trước Giữa kì I)', note:'Học bài nào làm chắc 15 phút bài đó → Chốt cột ĐĐGtx 1, ĐĐGtx 2 và Kiểm tra Giữa kì I (Hệ số 2).' },
-  2: { term:'HK1', title:'Giai đoạn 2 – Nửa sau Học kì I (Tuần 10 – Tuần 18 · Sau Giữa kì I đến Cuối kì I)', note:'Bổ sung kiến thức nửa sau HK1 → Chốt cột ĐĐGtx 3, ĐĐGtx 4 và Kiểm tra Cuối kì I (Hệ số 3). Không chèn kiến thức HK2.' },
-  3: { term:'HK2', title:'Giai đoạn 3 – Nửa đầu Học kì II (Tuần 19 – Tuần 26 · Trước Giữa kì II)', note:'Kiến thức mới đầu HK2 → Chốt cột ĐĐGtx 1, ĐĐGtx 2 (HK2) và Kiểm tra Giữa kì II (Hệ số 2).' },
-  4: { term:'HK2', title:'Giai đoạn 4 – Nửa sau Học kì II (Tuần 27 – Tuần 35 · Sau Giữa kì II đến Cuối kì II)', note:'Hoàn thiện chương trình cả năm → Chốt cột ĐĐGtx 3, ĐĐGtx 4 (HK2) và Kiểm tra Cuối kì II (Hệ số 3).' },
+  1: { term:'HK1', title:'Giai đoạn 1 – Đầu Học kì I đến Giữa kì I (Tuần 1 – Tuần 9)', note:'Lộ trình đúng thứ tự: Học từng bài → Kiểm tra 15p (Lần 1) → Kiểm tra 15p (Lần 2) → Chốt Kiểm tra Giữa kì I.' },
+  2: { term:'HK1', title:'Giai đoạn 2 – Sau Giữa kì I đến Cuối kì I (Tuần 10 – Tuần 18)', note:'Lộ trình đúng thứ tự: Học bài mới sau Giữa kì → Kiểm tra 15p (Lần 3, Lần 4) → Chốt Kiểm tra Cuối kì I. Không chèn kiến thức HK2.' },
+  3: { term:'HK2', title:'Giai đoạn 3 – Đầu Học kì II đến Giữa kì II (Tuần 19 – Tuần 26)', note:'Lộ trình đúng thứ tự: Học kiến thức đầu HK2 → Kiểm tra 15p (Lần 1) → Kiểm tra 15p (Lần 2) → Chốt Kiểm tra Giữa kì II.' },
+  4: { term:'HK2', title:'Giai đoạn 4 – Sau Giữa kì II đến Cuối kì II (Tuần 27 – Tuần 35)', note:'Lộ trình đúng thứ tự: Học nửa sau HK2 → Kiểm tra 15p (Lần 3, Lần 4) → Chốt Kiểm tra Cuối kì II.' },
   5: { term:'Cả năm', title:'Giai đoạn 5 – Ôn tổng hợp chuyển lớp & Bồi dưỡng Nâng cao', note:'Chỉ dùng khi đã hoàn tất cả 2 học kì hoặc ôn thi học sinh giỏi.' }
 };
 
@@ -227,9 +227,8 @@ function updateNavActive(routeKey){
 }
 
 // ============================================================================
-// SỔ ĐIỂM ĐIỆN TỬ & CÔNG THỨC TÍNH ĐTB MÔN THEO THÔNG TƯ 22/2021/TT-BGDĐT
-// Môn KHTN (140 tiết/năm > 70 tiết): 04 cột ĐĐGtx (hs 1) + 01 GK (hs 2) + 01 CK (hs 3) => chia 9
-// Cả năm: ĐTBmcn = (ĐTBmhk1 + 2 * ĐTBmhk2) / 3
+// BẢNG LỘ TRÌNH KIỂM TRA THEO THỨ TỰ THỜI GIAN HỌC KÌ & SỔ ĐIỂM THÔNG TƯ 22
+// Thứ tự thời gian: KT 15p (Lần 1) -> KT 15p (Lần 2) -> Giữa kì -> KT 15p (Lần 3, 4) -> Cuối kì
 // ============================================================================
 function computeCircular22Gradebook(g){
   var examStats = loadExams();
@@ -247,11 +246,10 @@ function computeCircular22Gradebook(g){
     var cols = [prefix + '-tx1', prefix + '-tx2', prefix + '-tx3', prefix + '-tx4'];
     var gk = byCol[prefix + '-gk'] ? byCol[prefix + '-gk'].val : null;
     var ck = byCol[prefix + '-ck'] ? byCol[prefix + '-ck'].val : null;
-    var txs = cols.map(function(c){ return byCol[c] ? byCol[c].val : null; });
-    var allPresent = txs.every(function(v){ return v != null; }) && gk != null && ck != null;
-    if (!allPresent) return null;
-    var sum = txs[0] + txs[1] + txs[2] + txs[3] + 2 * gk + 3 * ck;
-    return round1(sum / 9);
+    var presentTxs = cols.map(function(c){ return byCol[c] ? byCol[c].val : null; }).filter(function(v){ return v != null; });
+    if (presentTxs.length < 3 || gk == null || ck == null) return null;
+    var sumTx = presentTxs.reduce(function(a, b){ return a + b; }, 0);
+    return round1((sumTx + 2 * gk + 3 * ck) / (presentTxs.length + 5));
   }
 
   var hk1 = calcTermAvg('hk1');
@@ -262,7 +260,7 @@ function computeCircular22Gradebook(g){
 }
 
 function rankLabel(score){
-  if (score == null || isNaN(score)) return 'Chưa đủ cột điểm';
+  if (score == null || isNaN(score)) return 'Chưa đủ bài kiểm tra';
   if (score >= 8.0) return 'Tốt (Giỏi)';
   if (score >= 6.5) return 'Khá';
   if (score >= 5.0) return 'Đạt';
@@ -277,17 +275,19 @@ function mountGradebookWidget(containerEl, g){
   var gb = computeCircular22Gradebook(g);
   var simMode = false;
 
-  function cellHtml(colKey){
+  function cellHtml(colKey, isMilestone){
     var info = gb.byCol[colKey];
-    if (!info) return '<td>—</td>';
+    var cls = isMilestone ? ' class="gb-milestone"' : '';
+    if (!info) return '<td' + cls + '>—</td>';
     var v = info.val;
+    var sub = info.exam.shortLabel ? '<span class="gb-sub">' + esc(info.exam.shortLabel) + '</span>' : '';
     if (simMode) {
-      return '<td><input type="text" class="gb-inp" data-col="' + colKey + '" value="' + (v != null ? fmtNum(v) : '8,0') + '"></td>';
+      return '<td' + cls + '><input type="text" class="gb-inp" data-col="' + colKey + '" value="' + (v != null ? fmtNum(v) : '8,0') + '">' + sub + '</td>';
     }
     if (v != null) {
-      return '<td><a class="gb-cell-link ' + (v >= 6.5 ? 'done' : '') + '" href="#/lam-de/' + info.exam.id + '" title="Bấm để làm lại / cải thiện điểm">' + fmtNum(v.toFixed(1)) + '</a></td>';
+      return '<td' + cls + '><a class="gb-cell-link ' + (v >= 6.5 ? 'done' : '') + '" href="#/lam-de/' + info.exam.id + '" title="Bấm để làm lại: ' + esc(info.exam.title) + '">' + fmtNum(v.toFixed(1)) + '</a>' + sub + '</td>';
     }
-    return '<td><a class="gb-cell-link muted" href="#/lam-de/' + info.exam.id + '" title="' + esc(info.exam.title) + '">Làm bài</a></td>';
+    return '<td' + cls + '><a class="gb-cell-link" href="#/lam-de/' + info.exam.id + '" title="' + esc(info.exam.title) + '">Mở đề ›</a>' + sub + '</td>';
   }
 
   function render(){
@@ -295,45 +295,48 @@ function mountGradebookWidget(containerEl, g){
       '<section class="card" style="margin:14px 0">' +
         '<div class="row between">' +
           '<div>' +
-            '<b>Bảng điểm KHTN Lớp ' + g + ' chuẩn Thông tư 22/2021/TT-BGDĐT (140 tiết/năm)</b>' +
-            '<div class="muted" style="font-size:.86rem;line-height:1.9">Mỗi học kì có <b>4 cột ĐĐGtx (hs 1)</b> + <b>1 cột Giữa kì (hs 2)</b> + <b>1 cột Cuối kì (hs 3)</b>: ' +
-              fmtMath('ĐTB_mhk = \\frac{TX_1 + TX_2 + TX_3 + TX_4 + 2·GK + 3·CK}{9}') + ' · ' +
-              fmtMath('ĐTB_cn = \\frac{ĐTB_HK1 + 2·ĐTB_HK2}{3}') +
-            '.</div>' +
+            '<b>Lộ trình Đề Kiểm Tra theo Giai đoạn Học kì – KHTN Lớp ' + g + '</b>' +
+            '<div class="muted" style="font-size:.86rem;line-height:1.75">Sắp xếp đúng thứ tự học tới đâu lấy đề tới đó: <b>Kiểm tra 15p (Lần 1) → Kiểm tra 15p (Lần 2) → Giữa kì → Kiểm tra 15p (Lần 3, Lần 4) → Cuối kì</b>. <i>(Trường lấy 3 hoặc 4 cột 15p đều tính đúng)</i>.</div>' +
           '</div>' +
-          '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? 'Đóng tính thử' : 'Tính thử mục tiêu điểm') + '</button>' +
+          '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? 'Đóng tính thử' : 'Tính thử điểm TB') + '</button>' +
         '</div>' +
         '<div class="gb-wrap">' +
           '<table class="gb-table">' +
-            '<thead><tr>' +
-              '<th>Học kì</th>' +
-              '<th>ĐĐGtx 1<br><small>(hs 1)</small></th>' +
-              '<th>ĐĐGtx 2<br><small>(hs 1)</small></th>' +
-              '<th>ĐĐGtx 3<br><small>(hs 1)</small></th>' +
-              '<th>ĐĐGtx 4<br><small>(hs 1)</small></th>' +
-              '<th>Giữa kì<br><small>(hs 2)</small></th>' +
-              '<th>Cuối kì<br><small>(hs 3)</small></th>' +
-              '<th>ĐTB học kì</th>' +
-            '</tr></thead>' +
+            '<thead>' +
+              '<tr>' +
+                '<th rowspan="2">Học kì</th>' +
+                '<th colspan="3" class="gb-stage-h1">Giai đoạn 1: Đầu kì → Giữa kì</th>' +
+                '<th colspan="3" class="gb-stage-h2">Giai đoạn 2: Sau Giữa kì → Cuối kì</th>' +
+                '<th rowspan="2">ĐTB kì</th>' +
+              '</tr>' +
+              '<tr>' +
+                '<th>Kiểm tra 15p<br><small>Lần 1</small></th>' +
+                '<th>Kiểm tra 15p<br><small>Lần 2</small></th>' +
+                '<th class="gb-milestone">Kiểm tra<br>Giữa kì</th>' +
+                '<th>Kiểm tra 15p<br><small>Lần 3</small></th>' +
+                '<th>Kiểm tra 15p<br><small>Lần 4 / TH</small></th>' +
+                '<th class="gb-milestone">Kiểm tra<br>Cuối kì</th>' +
+              '</tr>' +
+            '</thead>' +
             '<tbody>' +
               '<tr>' +
-                '<td><b>Học kì I</b><br><small class="muted">72 tiết</small></td>' +
-                cellHtml('hk1-tx1') + cellHtml('hk1-tx2') + cellHtml('hk1-tx3') + cellHtml('hk1-tx4') +
-                cellHtml('hk1-gk') + cellHtml('hk1-ck') +
+                '<td><b>Học kì I</b><br><small class="muted">Tuần 1–18</small></td>' +
+                cellHtml('hk1-tx1', false) + cellHtml('hk1-tx2', false) + cellHtml('hk1-gk', true) +
+                cellHtml('hk1-tx3', false) + cellHtml('hk1-tx4', false) + cellHtml('hk1-ck', true) +
                 '<td id="gb-avg-hk1"><b>' + (gb.hk1 != null ? fmtNum(gb.hk1.toFixed(1)) : '—') + '</b></td>' +
               '</tr>' +
               '<tr>' +
-                '<td><b>Học kì II</b><br><small class="muted">68 tiết</small></td>' +
-                cellHtml('hk2-tx1') + cellHtml('hk2-tx2') + cellHtml('hk2-tx3') + cellHtml('hk2-tx4') +
-                cellHtml('hk2-gk') + cellHtml('hk2-ck') +
+                '<td><b>Học kì II</b><br><small class="muted">Tuần 19–35</small></td>' +
+                cellHtml('hk2-tx1', false) + cellHtml('hk2-tx2', false) + cellHtml('hk2-gk', true) +
+                cellHtml('hk2-tx3', false) + cellHtml('hk2-tx4', false) + cellHtml('hk2-ck', true) +
                 '<td id="gb-avg-hk2"><b>' + (gb.hk2 != null ? fmtNum(gb.hk2.toFixed(1)) : '—') + '</b></td>' +
               '</tr>' +
             '</tbody>' +
           '</table>' +
         '</div>' +
-        '<div class="row between" style="font-size:.92rem">' +
-          '<span id="gb-year-summary"><b>ĐTB cả năm:</b> ' + (gb.cn != null ? ('<b class="done">' + fmtNum(gb.cn.toFixed(1)) + '</b> (' + rankLabel(gb.cn) + ')') : 'Hoàn thành đủ cột điểm (hoặc bấm <b>Tính thử mục tiêu điểm</b>) để xem ĐTB cả năm.') + '</span>' +
-          '<span class="muted">Bấm vào từng ô trong bảng để mở đúng bài kiểm tra của cột đó</span>' +
+        '<div class="row between" style="font-size:.9rem">' +
+          '<span id="gb-year-summary"><b>ĐTB cả năm:</b> ' + (gb.cn != null ? ('<b class="done">' + fmtNum(gb.cn.toFixed(1)) + '</b> (' + rankLabel(gb.cn) + ')') : 'Bấm <b>Mở đề ›</b> đúng cột giai đoạn đang học trên lớp để rèn đề & lưu điểm.') + '</span>' +
+          '<span class="muted">' + fmtMath('ĐTB_kì = \\frac{Tổng điểm 15p + 2·GK + 3·CK}{Số bài 15p + 5}') + '</span>' +
         '</div>' +
       '</section>';
 
@@ -351,16 +354,18 @@ function mountGradebookWidget(containerEl, g){
         vals[inp.dataset.col] = (!isNaN(v) && v >= 0 && v <= 10) ? v : null;
       });
       function termSim(p){
-        var arr = [vals[p+'-tx1'], vals[p+'-tx2'], vals[p+'-tx3'], vals[p+'-tx4'], vals[p+'-gk'], vals[p+'-ck']];
-        if (arr.some(function(x){ return x == null; })) return null;
-        return round1((arr[0] + arr[1] + arr[2] + arr[3] + 2*arr[4] + 3*arr[5]) / 9);
+        var txs = [vals[p+'-tx1'], vals[p+'-tx2'], vals[p+'-tx3'], vals[p+'-tx4']].filter(function(x){ return x != null; });
+        var gk = vals[p+'-gk'], ck = vals[p+'-ck'];
+        if (txs.length < 3 || gk == null || ck == null) return null;
+        var sumTx = txs.reduce(function(a, b){ return a + b; }, 0);
+        return round1((sumTx + 2*gk + 3*ck) / (txs.length + 5));
       }
       var s1 = termSim('hk1'), s2 = termSim('hk2');
       var scn = (s1 != null && s2 != null) ? round1((s1 + 2*s2) / 3) : null;
       containerEl.querySelector('#gb-avg-hk1').innerHTML = '<b>' + (s1 != null ? fmtNum(s1.toFixed(1)) : '—') + '</b>';
       containerEl.querySelector('#gb-avg-hk2').innerHTML = '<b>' + (s2 != null ? fmtNum(s2.toFixed(1)) : '—') + '</b>';
       containerEl.querySelector('#gb-year-summary').innerHTML =
-        '<b>ĐTB cả năm (dự kiến):</b> ' + (scn != null ? ('<b class="done">' + fmtNum(scn.toFixed(1)) + ' / 10</b> — Mức đánh giá: <b>' + rankLabel(scn) + '</b>') : 'Nhập số từ 0 đến 10 vào các ô để tính.');
+        '<b>ĐTB cả năm (dự kiến):</b> ' + (scn != null ? ('<b class="done">' + fmtNum(scn.toFixed(1)) + ' / 10</b> — Mức đánh giá: <b>' + rankLabel(scn) + '</b>') : 'Nhập điểm từ 0 đến 10 (có thể để trống Lần 4 nếu trường chỉ lấy 3 bài 15p).');
     }
 
     if (simMode) {
@@ -691,14 +696,14 @@ function home(){
     var gb = computeCircular22Gradebook(item.g);
     h +=
       '<div class="card highlight">' +
-        '<div class="row between"><h2 style="margin:0">KHTN Lớp ' + item.g + '</h2><span class="badge pri">4 Giai đoạn · 12 cột điểm TT22</span></div>' +
+        '<div class="row between"><h2 style="margin:0">KHTN Lớp ' + item.g + '</h2><span class="badge pri">15p → Giữa kì → 15p → Cuối kì</span></div>' +
         '<p class="muted" style="font-size:.9rem;margin:.45em 0">' + esc(item.desc) + '</p>' +
         '<div class="muted" style="font-size:.9rem"><b>' + item.list.length + ' bài</b> · <b>' + item.qTotal + '+ câu khóa đúng bài</b> · <b>' + item.exs.length + ' đề theo giai đoạn</b></div>' +
         '<div class="bar"><i style="width:' + p + '%"></i></div>' +
         '<div class="muted" style="font-size:.86rem;margin-bottom:8px">ĐTB HK1: <b>' + (gb.hk1 != null ? fmtNum(gb.hk1.toFixed(1)) : '—') + '</b> · ĐTB HK2: <b>' + (gb.hk2 != null ? fmtNum(gb.hk2.toFixed(1)) : '—') + '</b> · Cả năm: <b>' + (gb.cn != null ? fmtNum(gb.cn.toFixed(1)) : '—') + '</b></div>' +
         '<div class="row">' +
           '<a class="btn sm" href="#/lop/' + item.g + '">Vào lộ trình từng giai đoạn</a>' +
-          '<a class="btn sm alt" href="#/de-kiem-tra/' + item.g + '">Làm cột ĐĐGtx · GK · CK</a>' +
+          '<a class="btn sm alt" href="#/de-kiem-tra/' + item.g + '">Chọn đề 15p · Giữa kì · Cuối kì</a>' +
         '</div>' +
       '</div>';
   });
@@ -749,11 +754,11 @@ function home(){
 // --- Stage-Based Exam Explorer Renderer ---
 var EXAM_STAGE_FILTERS = [
   { key:'all', label:'Cả năm theo 4 giai đoạn' },
-  { key:'s1',  label:'GĐ1: Trước Giữa kì I' },
-  { key:'s2',  label:'GĐ2: Nửa sau HK1 → Cuối kì I' },
-  { key:'s3',  label:'GĐ3: Trước Giữa kì II' },
-  { key:'s4',  label:'GĐ4: Nửa sau HK2 → Cuối kì II' },
-  { key:'15p', label:'Chỉ đề 15 phút (ĐĐGtx)' },
+  { key:'s1',  label:'GĐ1: Đầu HK1 → Giữa kì I' },
+  { key:'s2',  label:'GĐ2: Sau GK1 → Cuối kì I' },
+  { key:'s3',  label:'GĐ3: Đầu HK2 → Giữa kì II' },
+  { key:'s4',  label:'GĐ4: Sau GK2 → Cuối kì II' },
+  { key:'15p', label:'Chỉ đề Kiểm tra 15p' },
   { key:'gkck',label:'Chỉ đề Giữa kì & Cuối kì' }
 ];
 
@@ -770,10 +775,16 @@ function matchStageFilter(ex, fKey){
 
 function renderExamCardHtml(ex, saved){
   var st = saved[ex.id];
-  var colBadge = ex.col
-    ? '<span class="badge ' + (ex.coef === 3 ? 'd4' : (ex.coef === 2 ? 'warn' : 'pri')) + '">' +
-      (ex.coef === 3 ? 'Cột Cuối kì · Hệ số 3' : (ex.coef === 2 ? 'Cột Giữa kì · Hệ số 2' : 'Cột sổ điểm ĐĐGtx · Hệ số 1')) + '</span>'
-    : '<span class="badge ok">15p tự luyện thêm theo bài</span>';
+  var stageTag = (ex.stage === 1 || ex.stage === 3) ? 'Trước Giữa kì' : 'Sau Giữa kì';
+  var colBadge = ex.kind === 'gk'
+    ? '<span class="badge warn">Đề Giữa học kì · Chốt nửa đầu kì</span>'
+    : (ex.kind === 'ck'
+      ? '<span class="badge d4">Đề Cuối học kì · Chốt cả học kì</span>'
+      : (ex.col
+        ? '<span class="badge pri">Kiểm tra 15p · ' + stageTag + '</span>'
+        : (ex.kind === '15p'
+          ? '<span class="badge ok">Kiểm tra 15p theo bài · ' + stageTag + '</span>'
+          : '<span class="badge">Đề ôn tổng hợp</span>')));
 
   return (
     '<div class="card">' +
@@ -945,7 +956,7 @@ function grade(g, activeTab){
             '<p class="muted" style="margin:.2em 0 .8em;font-size:.9rem">' + esc(sm.note) + '</p>' +
             '<h3>Bước 1: Học & củng cố từng bài trong giai đoạn (' + stLessons.length + ' bài)</h3>' +
             '<div class="grid">' + stLessons.map(renderLessonCard).join('') + '</div>' +
-            '<h3 style="margin-top:14px">Bước 2: Bài kiểm tra 15 phút (ĐĐGtx) & Định kì của giai đoạn này (' + stExams.length + ' đề)</h3>' +
+            '<h3 style="margin-top:14px">Bước 2: Đề Kiểm tra 15p & Giữa kì / Cuối kì đúng giai đoạn này (' + stExams.length + ' đề)</h3>' +
             '<div class="grid two">' + stExams.map(function(ex){ return renderExamCardHtml(ex, savedEx); }).join('') + '</div>' +
           '</section>';
       });
@@ -1358,9 +1369,11 @@ function examRunner(examId){
     if (currentCleanup) { currentCleanup(); currentCleanup = null; }
     var st = loadExams()[ex.id];
     var setupPrintSpec = null;
-    var coefNote = ex.col
-      ? ('Tính vào cột sổ điểm Thông tư 22 · Hệ số ' + (ex.coef || 1))
-      : 'Đề 15 phút tự luyện chuyên sâu theo bài';
+    var coefNote = ex.kind === 'gk'
+      ? 'Đề Giữa kì (chỉ gồm kiến thức nửa đầu học kì)'
+      : (ex.kind === 'ck'
+        ? 'Đề Cuối kì (tổng hợp đúng học kì này)'
+        : (ex.col ? 'Đề Kiểm tra 15p chính thức theo giai đoạn' : 'Đề Kiểm tra 15p tự luyện riêng theo bài'));
 
     var h =
       '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
@@ -1570,7 +1583,7 @@ function examRunner(examId){
         '<div class="row between">' +
           '<div><div class="score-big">Điểm bài kiểm tra: ' + score10(ratio) + ' / 10</div>' +
           '<div>Mã đề: <b>' + esc(attemptSpec.code) + '</b> · Đúng <b>' + right + '/' + picks.length + '</b> câu · ' +
-          (ex.col ? 'Đã cập nhật vào cột điểm hệ số ' + (ex.coef || 1) + ' trên sổ điểm!' : 'Thời gian: ' + spentTxt) + '</div></div>' +
+          (ex.col ? 'Đã lưu điểm vào bảng lộ trình kiểm tra!' : 'Thời gian: ' + spentTxt) + '</div></div>' +
           '<span class="badge ' + (ratio >= 0.8 ? 'ok' : (ratio >= 0.65 ? 'pri' : 'warn')) + '">' +
             (ratio >= 0.8 ? 'Tốt (Giỏi)' : (ratio >= 0.65 ? 'Khá' : (ratio >= 0.5 ? 'Đạt' : 'Chưa đạt'))) +
           '</span>' +
