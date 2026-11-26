@@ -3,37 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KHTN 6–9 – Tự học Khoa học tự nhiên</title>
-<meta name="description" content="Website tự học Khoa học tự nhiên lớp 6, 7, 8, 9 theo Chương trình GDPT 2018: lý thuyết, công thức, bài luyện, bảng nháp, phiếu PDF A4 và kiểm tra nền.">
-<link rel="stylesheet" href="css/style.css?v=20261126a">
+<title>Cẩm Nang Tự Nhiên – Sách mở tự học KHTN 6–9</title>
+<meta name="description" content="Cẩm Nang Tự Nhiên: quyển sách mở tự học và rèn đề Khoa học tự nhiên lớp 6, 7, 8, 9 theo Chương trình GDPT 2018 và Thông tư 22 Bộ GD&ĐT.">
+<link rel="stylesheet" href="css/style.css?v=20261126c">
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#/">KHTN 6–9</a>
-  <nav id="main-nav" aria-label="Điều hướng chính">
-    <a href="#/lop/6" data-nav="lop-6">Lớp 6</a>
-    <a href="#/lop/7" data-nav="lop-7">Lớp 7</a>
-    <a href="#/lop/8" data-nav="lop-8">Lớp 8</a>
-    <a href="#/lop/9" data-nav="lop-9">Lớp 9</a>
-    <a href="#/de-kiem-tra/7" data-nav="de-kiem-tra">Đề kiểm tra</a>
-    <a href="#/luyen-tap" data-nav="luyen-tap">Chọn bài luyện</a>
+  <a class="brand" href="#/">
+    <svg class="brand-book" viewBox="0 0 28 24" width="26" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 4c4-1 8 0 12 2.5C18 4 22 3 26 4v15c-4-1-8 0-12 2.5C10 19 6 18 2 19V4z"/>
+      <path d="M14 6.5v15"/>
+    </svg>
+    <span>
+      <strong>Cẩm Nang Tự Nhiên</strong>
+      <small>Sách mở KHTN 6–9</small>
+    </span>
+  </a>
+  <nav id="main-nav" aria-label="Mục lục sách">
+    <a href="#/lop/6" data-nav="lop-6">Tập 6</a>
+    <a href="#/lop/7" data-nav="lop-7">Tập 7</a>
+    <a href="#/lop/8" data-nav="lop-8">Tập 8</a>
+    <a href="#/lop/9" data-nav="lop-9">Tập 9</a>
+    <a href="#/de-kiem-tra/8" data-nav="de-kiem-tra">Đề kiểm tra</a>
+    <a href="#/luyen-tap" data-nav="luyen-tap">Luyện theo bài</a>
     <a href="#/so-tay" data-nav="so-tay">Sổ tay</a>
-    <a href="#/tien-do" data-nav="tien-do">Tiến độ</a>
+    <a href="#/tien-do" data-nav="tien-do">Sổ điểm</a>
   </nav>
-  <button type="button" class="theme-btn" id="theme-toggle" aria-label="Đổi giao diện sáng tối">Giao diện tối</button>
+  <button type="button" class="theme-btn" id="theme-toggle" aria-label="Đổi chế độ đọc sách">Đọc ban đêm</button>
 </header>
-<main id="app" tabindex="-1"></main>
-<footer>Nội dung bám sát Chương trình GDPT môn Khoa học tự nhiên (Thông tư 32/2018/TT-BGDĐT). Dữ liệu học tập và nháp được tự động lưu trên thiết bị của bạn.</footer>
+
+<div class="desk-stage">
+  <div class="book-shell">
+    <div class="book-ribbon" aria-hidden="true"></div>
+    <main id="app" class="book-pages" tabindex="-1"></main>
+    <footer class="book-colophon">
+      <span>✦ <b>Cẩm Nang Tự Nhiên</b> · Bám sát Chương trình GDPT 2018 &amp; Thông tư 22/2021/TT-BGDĐT ✦</span>
+      <small>Bài học, nét nháp và sổ điểm được lưu trực tiếp trong quyển sổ trên thiết bị của bạn.</small>
+    </footer>
+  </div>
+</div>
+
 <div id="print-modal" class="modal" hidden aria-modal="true" role="dialog" aria-labelledby="print-modal-title"></div>
 <div id="print-root" class="print-only"></div>
-<script src="js/data/lop6.js?v=20261126a"></script>
-<script src="js/data/lop7.js?v=20261126a"></script>
-<script src="js/data/lop8.js?v=20261126a"></script>
-<script src="js/data/lop9.js?v=20261126a"></script>
-<script src="js/data/exams.js?v=20261126a"></script>
-<script src="js/qbank.js?v=20261126a"></script>
-<script src="js/pad.js?v=20261126a"></script>
-<script src="js/print.js?v=20261126a"></script>
-<script src="js/app.js?v=20261126a"></script>
+
+<script src="js/data/lop6.js?v=20261126c"></script>
+<script src="js/data/lop7.js?v=20261126c"></script>
+<script src="js/data/lop8.js?v=20261126c"></script>
+<script src="js/data/lop9.js?v=20261126c"></script>
+<script src="js/data/exams.js?v=20261126c"></script>
+<script src="js/qbank.js?v=20261126c"></script>
+<script src="js/pad.js?v=20261126c"></script>
+<script src="js/print.js?v=20261126c"></script>
+<script src="js/app.js?v=20261126c"></script>
 </body>
 </html>

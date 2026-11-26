@@ -74,7 +74,7 @@ function saveMeta(m){ return writeJSON(KEY_META, m); }
   function apply(t){
     theme = t;
     document.documentElement.dataset.theme = t;
-    if (btn) btn.textContent = t === 'dark' ? 'Giao diện sáng' : 'Giao diện tối';
+    if (btn) btn.textContent = t === 'dark' ? 'Đọc ban ngày' : 'Đọc ban đêm';
   }
   apply(theme);
   if (btn) {
@@ -657,12 +657,13 @@ function home(){
 
   var h =
     '<section class="hero">' +
-      '<h1>Lộ trình Học & Tính điểm KHTN chuẩn Trường THCS (Lớp 7 – 8)</h1>' +
-      '<p>Chia rõ <b>4 giai đoạn năm học (140 tiết / 35 tuần)</b> và tính điểm theo <b>Thông tư 22/2021/TT-BGDĐT</b> (4 cột ĐĐGtx 15p + Giữa kì hệ số 2 + Cuối kì hệ số 3). Học đến bài nào chỉ random đúng dạng bài đó, <b>tuyệt đối không chèn kiến thức học kì sau</b>.</p>' +
+      '<div class="hero-kicker">✦ Sách Mở Tự Học &amp; Luyện Đề Khoa Học Tự Nhiên THCS ✦</div>' +
+      '<h1>Cẩm Nang Tự Nhiên</h1>' +
+      '<p>Quyển sách gối đầu giường môn Khoa học tự nhiên (Trọng tâm Tập 7 &amp; Tập 8): chia rõ <b>4 giai đoạn năm học (140 tiết)</b>, sổ điểm <b>Thông tư 22/2021/TT-BGDĐT</b>, học đến trang nào chỉ random đúng dạng bài trang đó và tách riêng 2 phần Đề – Đáp án khi in ra giấy.</p>' +
       '<div class="row">' +
-        '<a class="btn" href="#/lop/7">Lộ trình & Sổ điểm Lớp 7</a>' +
-        '<a class="btn" href="#/lop/8">Lộ trình & Sổ điểm Lớp 8</a>' +
-        '<a class="btn ghost" href="#/de-kiem-tra/8">Kho Đề theo Giai đoạn & Học kì</a>' +
+        '<a class="btn" href="#/lop/7">Mở Tập 7 (Lớp 7)</a>' +
+        '<a class="btn" href="#/lop/8">Mở Tập 8 (Lớp 8)</a>' +
+        '<a class="btn ghost" href="#/de-kiem-tra/8">Phụ lục Đề 15p · Giữa kì · Cuối kì</a>' +
       '</div>' +
     '</section>';
 
@@ -717,18 +718,19 @@ function home(){
     '</div>';
   h += '</div>';
 
-  h += '<h2>Toàn bộ các khối lớp THCS (6 – 9)</h2><div class="grid">';
+  h += '<h2>Tủ sách 4 Tập (Lớp 6 – Lớp 9)</h2><div class="grid">';
   [6,7,8,9].forEach(function(g){
     var l = D.filter(function(t){ return t.grade === g; });
     var exCount = EXAMS.filter(function(ex){ return ex.grade === g; }).length;
     var p = pct(l);
     var totalQ = BANK ? BANK.estimateTotalQuestions(l) : l.reduce(function(s,t){ return s + t.questions.length; }, 0);
     h +=
-      '<a class="card" href="#/lop/' + g + '">' +
-        '<div class="row between"><h2 style="margin:0">Lớp ' + g + '</h2><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? 'Chuẩn TT22' : p + '%') + '</span></div>' +
-        '<div class="muted" style="margin-top:4px">' + l.length + ' bài · ' + totalQ + '+ câu · ' + exCount + ' đề KT</div>' +
+      '<a class="vol-card v' + g + '" href="#/lop/' + g + '">' +
+        '<div class="row between"><span class="vol-label">Quyển Tập ' + g + '</span><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? 'Trọng tâm' : p + '%') + '</span></div>' +
+        '<h2 style="margin:.2em 0 .15em">KHTN Lớp ' + g + '</h2>' +
+        '<div class="muted" style="margin-top:2px;font-size:.9rem">' + l.length + ' chương bài · ' + totalQ + '+ câu · ' + exCount + ' đề KT</div>' +
         '<div class="bar"><i style="width:' + p + '%"></i></div>' +
-        '<small class="muted">Hoàn thành ' + p + '% (' + l.filter(function(t){ return isMastered(t.id); }).length + '/' + l.length + ' bài)</small>' +
+        '<small class="muted">Đã đọc & đạt ' + l.filter(function(t){ return isMastered(t.id); }).length + '/' + l.length + ' bài (' + p + '%)</small>' +
       '</a>';
   });
   h += '</div>';
@@ -1104,8 +1106,8 @@ function lesson(id){
 
   h +=
     '<div class="lesson-nav">' +
-      (prevLesson ? '<a class="btn subtle" href="#/bai/' + prevLesson.id + '">← ' + esc(prevLesson.title) + '</a>' : '<span></span>') +
-      (nextLesson ? '<a class="btn" href="#/bai/' + nextLesson.id + '">' + esc(nextLesson.title) + ' →</a>' : '<a class="btn" href="#/lop/' + t.grade + '/exams">Vào đề kiểm tra lớp ' + t.grade + ' →</a>') +
+      (prevLesson ? '<a class="btn subtle" href="#/bai/' + prevLesson.id + '">← Trang trước: ' + esc(prevLesson.title) + '</a>' : '<span></span>') +
+      (nextLesson ? '<a class="btn" href="#/bai/' + nextLesson.id + '">Lật trang tiếp: ' + esc(nextLesson.title) + ' →</a>' : '<a class="btn" href="#/lop/' + t.grade + '/exams">Mở Phụ lục Đề kiểm tra lớp ' + t.grade + ' →</a>') +
     '</div>';
 
   app.innerHTML = h;

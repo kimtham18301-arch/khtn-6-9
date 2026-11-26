@@ -18,8 +18,8 @@ window.KHTNPad = {
     box.className = 'pad-box';
     box.innerHTML =
       '<div class="pad-top">' +
-        '<h2>Bảng nháp</h2>' +
-        '<span class="muted" style="font-size:.82rem" id="pad-hint">Dùng bút, ngón tay hoặc chuột</span>' +
+        '<h2>Trang Vở Nháp</h2>' +
+        '<span class="muted" style="font-size:.82rem" id="pad-hint">Viết bút, ngón tay hoặc chuột</span>' +
       '</div>' +
       '<div class="pad-wrap"><canvas class="pad" aria-label="Bảng nháp vẽ tay"></canvas></div>' +
       '<div class="pad-tools">' +
