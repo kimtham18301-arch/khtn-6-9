@@ -11,9 +11,9 @@ KHTN.push(
     'Lưu ý hay nhầm: "Dự đoán (giả thuyết)" được đưa ra TRƯỚC khi làm thí nghiệm kiểm chứng; nếu thí nghiệm bác bỏ giả thuyết thì cần điều chỉnh lại giả thuyết.'
   ],
   formulas:[
-    '5 bước tìm hiểu tự nhiên: Vấn đề → Giả thuyết → Kế hoạch → Thực hiện → Kết luận',
-    '7 kĩ năng học KHTN: Quan sát · Phân loại · Liên kết · Đo · Dự báo · Thuyết trình · Viết báo cáo',
-    '1 s = 1000 ms (mili-giây) ⇒ 1 ms = 0,001 s'
+    '5 bước phương pháp tìm hiểu tự nhiên: Vấn đề → Giả thuyết → Kế hoạch → Thực hiện → Kết luận || Ý nghĩa: Giả thuyết là câu dự đoán tạm thời đưa ra TRƯỚC khi làm thí nghiệm kiểm chứng.',
+    '7 kĩ năng học tập KHTN: Quan sát · Phân loại · Liên kết · Đo · Dự báo · Thuyết trình · Viết báo cáo || Ý nghĩa: Các kĩ năng tiến trình giúp thu thập, xử lí số liệu và rút ra quy luật khoa học.',
+    'Đổi đơn vị thời gian trên đồng hồ hiện số: 1 s = 1000 ms  ⇒  t_(giây) = \\frac{t_(ms)}{1000} || Trong đó: s là giây; ms là mili-giây đo từ cổng quang điện (VD: 250 ms = 0,25 s).'
   ],
   examples:[
     {
@@ -55,10 +55,10 @@ KHTN.push(
     'Lưu ý hay nhầm: Tổng số hạt cơ bản trong nguyên tử = p + n + e = 2p + n; còn khối lượng nguyên tử theo amu ≈ p + n (tuyệt đối không cộng số e vào khối lượng amu).'
   ],
   formulas:[
-    'Trung hòa điện: số p = số e = Z',
-    'Tổng số hạt S = p + n + e = 2p + n',
-    'Hiệu hạt mang điện và không mang điện = (p + e) − n = 2p − n',
-    'Khối lượng nguyên tử (amu) ≈ p + n  (1 amu ≈ 1,6605 × 10⁻²⁴ g)'
+    'Điều kiện nguyên tử trung hòa điện: p = e = Z || Trong đó: p là số hạt proton (+1) trong hạt nhân; e là số hạt electron (−1) ở vỏ; Z là số đơn vị điện tích hạt nhân.',
+    'Tổng số hạt cơ bản trong nguyên tử: S = p + n + e = 2p + n || Trong đó: S là tổng số hạt; p là số proton; n là số neutron (không mang điện); vì p = e nên tổng hạt mang điện (p + e) = 2p.',
+    'Hiệu số hạt mang điện và không mang điện: (p + e) − n = 2p − n || Ý nghĩa: Kết hợp với phương trình 2p + n = S để giải nhanh bài toán tìm số hạt p, n, e của nguyên tử.',
+    'Khối lượng nguyên tử xấp xỉ: m_nt ≈ p + n (amu) || Trong đó: 1 proton ≈ 1 amu, 1 neutron ≈ 1 amu; khối lượng electron rất nhỏ (≈ 0,00055 amu) nên bỏ qua (1 amu ≈ 1,6605 × 10⁻²⁴ g).'
   ],
   examples:[
     {
@@ -102,9 +102,9 @@ KHTN.push(
     'Phân loại: Kim loại (>80%, thường có 1, 2, 3e lớp ngoài cùng, trừ H, He, B); Phi kim (thường có 5, 6, 7e lớp ngoài cùng); Khí hiếm (nhóm VIIIA, vỏ bền vững 8e hoặc 2e với He, hầu như không phản ứng).'
   ],
   formulas:[
-    'Số thứ tự ô = Số hiệu nguyên tử Z = Số p = Số e',
-    'Số thứ tự chu kì = Số lớp electron',
-    'Số thứ tự nhóm A (La Mã) = Số electron lớp ngoài cùng (trừ He ở VIIIA)'
+    'Ý nghĩa số thứ tự ô nguyên tố: Số thứ tự ô = Z = p = e || Ý nghĩa: Biết số thứ tự ô suy ra ngay điện tích hạt nhân Z, số proton trong hạt nhân và số electron ở lớp vỏ.',
+    'Ý nghĩa số thứ tự chu kì (hàng ngang): Số thứ tự chu kì = Số lớp electron || Ý nghĩa: Nguyên tử có mấy lớp electron thì nằm ở chu kì bấy nhiêu (VD: có 3 lớp e → thuộc Chu kì 3).',
+    'Ý nghĩa số thứ tự nhóm A (cột dọc La Mã): Số thứ tự nhóm A = Số electron lớp ngoài cùng || Ý nghĩa: Cho biết tính chất hóa học (1, 2, 3e thường là kim loại; 5, 6, 7e thường là phi kim; 8e nhóm VIIIA là khí hiếm bền vững, riêng He có 2e vẫn thuộc VIIIA).'
   ],
   examples:[
     {
@@ -148,10 +148,10 @@ KHTN.push(
     'Liên kết cộng hóa trị: hình thành do sự dùng chung một hay nhiều cặp electron (thường giữa các phi kim: H₂, O₂, N₂, H₂O, CO₂, NH₃, CH₄). Chất cộng hóa trị có thể ở thể rắn, lỏng, khí; nhiệt độ nóng chảy/sôi thường thấp và không dẫn điện.'
   ],
   formulas:[
-    'Khối lượng phân tử (amu) = Tổng khối lượng các nguyên tử trong phân tử',
-    'NTK thường gặp: H=1, C=12, N=14, O=16, Na=23, Mg=24, Al=27, P=31, S=32, Cl=35,5, K=39, Ca=40, Fe=56, Cu=64, Zn=65, Ag=108, Ba=137',
-    'Kim loại điển hình + Phi kim điển hình → Liên kết ion (NaCl, KCl, MgO, CaO)',
-    'Phi kim + Phi kim → Liên kết cộng hóa trị (H₂O, CO₂, NH₃, HCl)'
+    'Tính khối lượng phân tử (KLPT): M_pt = Tổng khối lượng các nguyên tử trong phân tử (amu) || Cách tính: Cộng tích (nguyên tử khối × chỉ số chân) của mọi nguyên tố trong phân tử (VD: M_(H₂SO₄) = 2×1 + 32 + 4×16 = 98 amu).',
+    'Nguyên tử khối (amu) thường gặp: H=1, C=12, N=14, O=16, Na=23, Mg=24, Al=27, P=31, S=32, Cl=35,5, K=39, Ca=40, Fe=56, Cu=64, Zn=65, Ag=108, Ba=137 || Ý nghĩa: Trị số nguyên tử khối (amu) dùng tính KLPT ở lớp 7 và cũng chính là khối lượng mol M (g/mol) ở lớp 8.',
+    'Dấu hiệu nhận biết liên kết ion: Kim loại điển hình + Phi kim điển hình → Liên kết ion (NaCl, KCl, MgO, CaO) || Bản chất: Kim loại nhường e thành ion dương (+), phi kim nhận e thành ion âm (−) rồi hút nhau bằng lực tĩnh điện.',
+    'Dấu hiệu nhận biết liên kết cộng hóa trị: Phi kim + Phi kim → Liên kết cộng hóa trị (H₂, O₂, H₂O, CO₂, NH₃, HCl) || Bản chất: Các nguyên tử phi kim góp chung một hay nhiều cặp electron để cùng đạt vỏ khí hiếm bền vững.'
   ],
   examples:[
     {
@@ -195,9 +195,9 @@ KHTN.push(
     'Tìm công thức hóa học khi biết % khối lượng và khối lượng phân tử M: tìm khối lượng mỗi nguyên tố trong 1 phân tử m_X = (%X · M) / 100% ⇒ suy ra chỉ số x = m_X / M_X.'
   ],
   formulas:[
-    'Quy tắc hóa trị (AₓBᵧ): a · x = b · y  ⇒  \\frac{x}{y} = \\frac{b}{a} (tối giản)',
-    '%A = \\frac{x · M_A}{M_(AₓBᵧ)} × 100%',
-    'Tìm chỉ số từ % và M: x = \\frac{%A × M}{100 × M_A}'
+    'Quy tắc hóa trị cho hợp chất AₓBᵧ: a · x = b · y  ⇒  \\frac{x}{y} = \\frac{b}{a} || Trong đó: x, y là chỉ số nguyên tử của A và B; a, b là hóa trị của A và B (rút gọn tỉ số b/a về phân số tối giản để suy ra x và y).',
+    'Phần trăm khối lượng nguyên tố trong hợp chất AₓBᵧ: %A = \\frac{x · M_A}{M_(AₓBᵧ)} × 100% || Trong đó: %A là phần trăm khối lượng của nguyên tố A; x là chỉ số nguyên tử A; M_A là nguyên tử khối của A; M_(AₓBᵧ) là khối lượng phân tử hợp chất (tổng % các nguyên tố = 100%).',
+    'Tìm chỉ số nguyên tử khi biết % khối lượng và KLPT: x = \\frac{%A × M_(hợp chất)}{100% × M_A} || Ý nghĩa: Dùng xác định số nguyên tử x của mỗi nguyên tố để tìm ra công thức hóa học của hợp chất.'
   ],
   examples:[
     {
@@ -241,10 +241,10 @@ KHTN.push(
     'Lưu ý hay nhầm: Tốc độ trung bình trên nhiều đoạn đường luôn tính bằng Tổng quãng đường chia Tổng thời gian (kể cả thời gian dừng nghỉ): v_tb = (s₁ + s₂) / (t₁ + t₂).'
   ],
   formulas:[
-    'v = \\frac{s}{t}  ⇒  s = v · t  ;  t = \\frac{s}{v}',
-    '1 m/s = 3,6 km/h',
-    'v_tb = \\frac{s₁ + s₂ + …}{t₁ + t₂ + …}',
-    'Khoảng cách an toàn theo quy tắc 3 giây: d ≈ v (m/s) × 3'
+    'Công thức tính tốc độ chuyển động: v = \\frac{s}{t}  ⇒  s = v · t  ;  t = \\frac{s}{v} || Trong đó: v là tốc độ cho biết sự nhanh chậm (m/s hoặc km/h); s là quãng đường đi được (m hoặc km); t là thời gian đi hết quãng đường đó (s hoặc h).',
+    'Quy tắc đổi đơn vị tốc độ: 1 m/s = 3,6 km/h || Cách đổi: Từ m/s sang km/h nhân với 3,6; từ km/h sang m/s chia cho 3,6 (VD: 72 km/h = 72 : 3,6 = 20 m/s).',
+    'Tốc độ trung bình trên nhiều đoạn đường: v_tb = \\frac{s₁ + s₂ + …}{t₁ + t₂ + …} || Trong đó: Tử số là tổng quãng đường các đoạn; mẫu số là tổng thời gian đi hết các đoạn (tính cả thời gian nghỉ nếu có; tuyệt đối không lấy trung bình cộng của v₁ và v₂).',
+    'Khoảng cách an toàn giao thông theo quy tắc "3 giây": d_(an toàn) = v × 3 || Trong đó: d_(an toàn) là khoảng cách tối thiểu tới xe chạy trước (m); v là tốc độ xe bắt buộc đổi ra m/s; 3 (s) là thời gian phản xạ phanh.'
   ],
   examples:[
     {
@@ -287,9 +287,9 @@ KHTN.push(
     'Chống ô nhiễm tiếng ồn: tác động vào nguồn âm (giảm to, cấm còi), phân tán âm trên đường truyền (trồng cây xanh, xây tường chắn), ngăn âm truyền tới tai (kính hai lớp, nút tai).'
   ],
   formulas:[
-    'Tần số: f = \\frac{N}{t} (Hz; t tính bằng giây)',
-    'Bài toán tiếng vang / sonar đo khoảng cách: d = \\frac{v · t}{2}',
-    'Khoảng cách tối thiểu nghe tiếng vang trong không khí (v = 340 m/s): d_min = \\frac{340}{2 × 15} ≈ 11,3 m'
+    'Tần số dao động của nguồn âm: f = \\frac{N}{t} || Trong đó: f là tần số dao động (Hz – Héc; tần số càng lớn âm nghe càng cao/bổng); N là số dao động thực hiện được; t là thời gian dao động tính bằng giây (s).',
+    'Đo khoảng cách bằng tiếng vang hoặc sóng siêu âm (sonar): d = \\frac{v · t}{2} || Trong đó: d là khoảng cách từ nguồn âm đến vách phản xạ/đáy biển (m); v là tốc độ truyền âm trong môi trường đó (m/s); t là thời gian cả đi lẫn về của âm (s) nên phải chia 2.',
+    'Khoảng cách tối thiểu để nghe thấy tiếng vang trong không khí: d_min = \\frac{340}{2 × 15} ≈ 11,3 m || Ý nghĩa: Tai người tách được tiếng vang khi âm phản xạ đến chậm hơn âm trực tiếp ít nhất 1/15 giây (với v_(không khí) ≈ 340 m/s).'
   ],
   examples:[
     {
@@ -332,10 +332,10 @@ KHTN.push(
     'Lưu ý hay nhầm: Góc tới i luôn tính từ tia tới đến ĐƯỜNG PHÁP TUYẾN (vuông góc với gương). Nếu tia tới hợp với mặt gương góc α thì góc tới i = 90° − α.'
   ],
   formulas:[
-    'Định luật phản xạ ánh sáng: i′ = i',
-    'Góc hợp bởi tia tới và mặt gương là α  ⇒  i = i′ = 90° − α',
-    'Góc hợp bởi tia tới và tia phản xạ = i + i′ = 2i',
-    'Gương phẳng: d(ảnh → gương) = d(vật → gương)  ⇒  d(vật → ảnh) = 2 · d(vật → gương)'
+    'Định luật phản xạ ánh sáng: i′ = i || Trong đó: i là góc tới (hợp bởi tia tới và pháp tuyến vuông góc với gương); i′ là góc phản xạ (hợp bởi tia phản xạ và pháp tuyến), đơn vị độ (°).',
+    'Tính góc tới khi đề cho góc hợp với mặt gương: i = i′ = 90° − α || Trong đó: α là góc hợp bởi tia sáng tới với MẶT GƯƠNG (°); vì pháp tuyến vuông góc mặt gương nên lấy 90° − α.',
+    'Góc hợp bởi tia tới và tia phản xạ: β = i + i′ = 2i || Ý nghĩa: Biết góc giữa tia tới và tia phản xạ là β, chia đôi (β / 2) sẽ được góc tới i.',
+    'Tính chất khoảng cách ảnh qua gương phẳng: d_(ảnh → gương) = d_(vật → gương)  ⇒  d_(vật → ảnh) = 2 · d_(vật → gương) || Ý nghĩa: Ảnh ảo lớn bằng vật và đối xứng với vật qua mặt gương phẳng.'
   ],
   examples:[
     {
@@ -377,9 +377,9 @@ KHTN.push(
     'Nam châm điện gồm ống dây dẫn có dòng điện chạy qua và lõi sắt non bên trong. Lực từ tăng khi tăng cường độ dòng điện hoặc tăng số vòng dây; đổi chiều dòng điện thì hai cực từ đổi chỗ; ngắt điện thì sắt non mất từ tính ngay.'
   ],
   formulas:[
-    'Tương tác từ: Cùng cực đẩy nhau · Khác cực hút nhau',
-    'Chiều đường sức từ (ngoài nam châm): Ra Bắc (N) – Vào Nam (S)',
-    'Lực từ nam châm điện tăng khi: tăng dòng điện I hoặc tăng số vòng dây N'
+    'Quy luật tương tác từ giữa hai nam châm: Cùng cực đẩy nhau · Khác cực hút nhau || Trong đó: Mỗi nam châm luôn có 2 cực Bắc (N – North, sơn đỏ) và Nam (S – South, sơn xanh/trắng).',
+    'Chiều đường sức từ bên ngoài thanh nam châm: Đi ra từ cực Bắc (N) → đi vào cực Nam (S) || Ý nghĩa: Càng gần hai đầu cực nam châm, các đường sức từ càng dày đặc nên từ trường càng mạnh.',
+    'Cách làm tăng lực từ của nam châm điện: Tăng cường độ dòng điện I hoặc tăng số vòng dây N || Lưu ý: Khi ngắt dòng điện (I = 0) thì lõi sắt non mất từ tính ngay; đổi chiều dòng điện thì hai cực N – S của nam châm điện đổi chỗ cho nhau.'
   ],
   examples:[
     {

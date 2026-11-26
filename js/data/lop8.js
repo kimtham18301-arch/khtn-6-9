@@ -56,9 +56,9 @@ KHTN.push(
     'Lập phương trình hóa học (PTHH): viết sơ đồ → cân bằng hệ số sao cho số nguyên tử mỗi nguyên tố hai vế bằng nhau (không được tự ý sửa chỉ số trong CTHH!) → viết dấu mũi tên "→" và ghi điều kiện phản ứng (t°, xt).'
   ],
   formulas:[
-    'BTKL (với A + B → C + D): m_A + m_B = m_C + m_D',
-    'Nung đá vôi (thu nhiệt): CaCO₃ —(t°)→ CaO + CO₂↑  ⇒  m(CaCO₃ phản ứng) = m(CaO) + m(CO₂)',
-    'Đốt cháy kim loại trong không khí: m(oxide) = m(kim loại phản ứng) + m(O₂ phản ứng)'
+    'Định luật bảo toàn khối lượng (với A + B → C + D): m_A + m_B = m_C + m_D || Trong đó: m_A, m_B là khối lượng các chất tham gia thực sự đã phản ứng (g hoặc kg; không tính phần dư hay tạp chất); m_C, m_D là khối lượng các sản phẩm tạo thành.',
+    'Bảo toàn khối lượng khi nung đá vôi (thu nhiệt): CaCO₃ —(t°)→ CaO + CO₂↑  ⇒  m_(CaCO₃ phản ứng) = m_CaO + m_CO₂ || Ý nghĩa: Khối lượng chất rắn giảm đi sau khi nung chính bằng khối lượng khí CO₂ đã bay ra khỏi lò.',
+    'Bảo toàn khối lượng khi đốt kim loại trong oxygen: m_oxide = m_(kim loại phản ứng) + m_(O₂ phản ứng) || Ý nghĩa: Khối lượng chất rắn tăng thêm sau khi nung ngoài không khí chính bằng khối lượng khí O₂ đã hóa hợp.'
   ],
   examples:[
     {
@@ -102,10 +102,10 @@ KHTN.push(
     'Lưu ý hay nhầm: Công thức V = n × 24,79 (L) CHỈ áp dụng cho CHẤT KHÍ ở điều kiện chuẩn (25 °C, 1 bar), tuyệt đối không dùng cho chất rắn hay chất lỏng!'
   ],
   formulas:[
-    'n = \\frac{m}{M}  ⇒  m = n · M  ;  M = \\frac{m}{n}',
-    'V_khí (ở 25 °C, 1 bar) = n · 24,79 (L)  ⇒  n = \\frac{V}{24,79}',
-    'Số hạt = n · 6,022 × 10²³',
-    'd_(A/B) = \\frac{M_A}{M_B}  ;  d_(A/không khí) = \\frac{M_A}{29}'
+    'Tính số mol theo khối lượng chất: n = \\frac{m}{M}  ⇒  m = n · M  ;  M = \\frac{m}{n} || Trong đó: n là số mol chất (mol); m là khối lượng chất (g); M là khối lượng mol (g/mol, có trị số bằng khối lượng nguyên tử/phân tử amu).',
+    'Thể tích mol chất khí ở điều kiện chuẩn (25 °C, 1 bar): V_khí = n · 24,79  ⇒  n = \\frac{V_khí}{24,79} || Trong đó: V_khí là thể tích chất khí ở 25 °C, 1 bar (L; 1 L = 1000 mL); n là số mol khí (mol); 24,79 (L/mol) là thể tích của 1 mol mọi chất khí ở đkc (chỉ áp dụng cho chất khí!).',
+    'Số hạt vi mô (nguyên tử hoặc phân tử) trong n mol chất: N_hạt = n · 6,022 × 10²³ || Trong đó: N_hạt là tổng số nguyên tử hoặc phân tử; n là số mol chất (mol); 6,022 × 10²³ là hằng số Avogadro (N_A) – số hạt có trong đúng 1 mol chất.',
+    'Tỉ khối của khí A đối với khí B và không khí: d_(A/B) = \\frac{M_A}{M_B}  ;  d_(A/không khí) = \\frac{M_A}{29} || Trong đó: d_(A/B) cho biết khí A nặng hay nhẹ hơn khí B bao nhiêu lần (d > 1 là nặng hơn, d < 1 là nhẹ hơn); M_A, M_B là khối lượng mol (g/mol); 29 là khối lượng mol trung bình của không khí.'
   ],
   examples:[
     {
@@ -149,10 +149,10 @@ KHTN.push(
     'Khi pha loãng dung dịch bằng nước nguyên chất, lượng chất tan (m_ct và n_ct) trước và sau khi pha luôn KHÔNG ĐỔI: C₁·V₁ = C₂·V₂ hoặc m_dd1·C%₁ = m_dd2·C%₂.'
   ],
   formulas:[
-    'Độ tan: S = \\frac{m_ct}{m_nước} × 100  (trong dung dịch bão hòa)',
-    'C% = \\frac{m_ct}{m_dd} × 100%  ;  m_dd = m_ct + m_nước  ;  m_ct = \\frac{m_dd · C%}{100%}',
-    'C_M = \\frac{n}{V} (mol/L hay M, với V tính bằng Lít; 1 L = 1000 mL)',
-    'Liên hệ giữa C% (bão hòa) và độ tan S: C%_bh = \\frac{S}{100 + S} × 100%'
+    'Độ tan của một chất trong nước: S = \\frac{m_ct}{m_nước} × 100 || Trong đó: S là độ tan (số gam chất đó hòa tan tối đa trong 100 g nước để tạo dung dịch bão hòa ở nhiệt độ xác định); m_ct là khối lượng chất tan (g); m_nước là khối lượng nước (g).',
+    'Nồng độ phần trăm của dung dịch: C% = \\frac{m_ct}{m_dd} × 100%  ⇒  m_ct = \\frac{m_dd · C%}{100%} || Trong đó: C% là số gam chất tan có trong 100 g dung dịch (%); m_ct là khối lượng chất tan (g); m_dd = m_ct + m_nước là khối lượng dung dịch (g).',
+    'Nồng độ mol của dung dịch: C_M = \\frac{n}{V_dd}  ⇒  n = C_M · V_dd || Trong đó: C_M là số mol chất tan có trong 1 lít dung dịch (mol/L hay M); n là số mol chất tan (mol); V_dd là thể tích dung dịch bắt buộc đổi ra LÍT (1 L = 1000 mL).',
+    'Liên hệ giữa nồng độ C% dung dịch bão hòa và độ tan S: C%_bh = \\frac{S}{100 + S} × 100% || Ý nghĩa: Trong dung dịch bão hòa, cứ 100 g nước hòa tan tối đa S gam chất tan tạo thành (100 + S) gam dung dịch.'
   ],
   examples:[
     {
@@ -196,9 +196,9 @@ KHTN.push(
     'Chất xúc tác làm tăng tốc độ phản ứng nhưng giữ nguyên khối lượng và tính chất hóa học sau khi phản ứng kết thúc (VD: MnO₂ xúc tác phân hủy H₂O₂; enzyme sinh học). Chất ức chế làm giảm tốc độ phản ứng (bảo quản thực phẩm).'
   ],
   formulas:[
-    'Xét chất hết (aA + bB → …): so sánh \\frac{n_A}{a} với \\frac{n_B}{b} ⇒ bên nhỏ hơn phản ứng hết',
-    'H% = \\frac{m_(thực tế)}{m_(lí thuyết)} × 100%  ⇒  m_(sp thực tế) = m_(sp lí thuyết) × H%',
-    '5 yếu tố tăng tốc độ phản ứng: Nồng độ ↑ · Nhiệt độ ↑ · Áp suất khí ↑ · Diện tích tiếp xúc ↑ · Xúc tác'
+    'Quy tắc tìm chất phản ứng hết – chất còn dư (aA + bB → sản phẩm): So sánh \\frac{n_A}{a} với \\frac{n_B}{b} || Trong đó: n_A, n_B là số mol ban đầu của A và B; a, b là hệ số cân bằng trên PTHH. Tỉ số bên nào NHỎ HƠN thì chất đó phản ứng HẾT (mọi sản phẩm phải tính theo chất hết!).',
+    'Hiệu suất phản ứng hóa học: H% = \\frac{m_(thực tế)}{m_(lí thuyết)} × 100%  ⇒  m_(sp thực tế) = m_(sp lí thuyết) × \\frac{H%}{100%} || Trong đó: H% là hiệu suất phản ứng (≤ 100%); m_(lí thuyết) là lượng sản phẩm tính theo PTHH; m_(thực tế) là lượng thực tế thu được.',
+    '5 yếu tố làm tăng tốc độ phản ứng: Nồng độ ↑ · Nhiệt độ ↑ · Áp suất khí ↑ · Diện tích tiếp xúc ↑ · Chất xúc tác || Ý nghĩa: Tăng các yếu tố này giúp các hạt va chạm hiệu quả nhiều hơn nên phản ứng nhanh hơn; ngược lại hạ nhiệt độ giúp bảo quản thực phẩm lâu hỏng.'
   ],
   examples:[
     {
@@ -242,9 +242,9 @@ KHTN.push(
     'Ứng dụng thực tế: Dịch vị dạ dày có HCl (pH ≈ 1,5 – 3,5), thừa acid dùng thuốc kháng acid chứa Mg(OH)₂ hoặc NaHCO₃; đất chua (pH < 6) bón vôi bột CaO / Ca(OH)₂ để khử chua; mưa acid (pH < 5,6) do khí thải SO₂, NOₓ.'
   ],
   formulas:[
-    'Kim loại (trước H: K, Na, Mg, Al, Zn, Fe) + HCl / H₂SO₄ loãng → Muối + H₂↑',
-    'Phản ứng trung hòa: Acid + Base → Muối + H₂O  (VD: H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O)',
-    'Thang pH: pH < 7 (Acid, quỳ đỏ)  |  pH = 7 (Trung tính)  |  pH > 7 (Base, quỳ xanh, PP hồng)'
+    'Phản ứng của kim loại với dung dịch acid loãng: Kim loại (đứng trước H) + HCl / H₂SO₄ loãng → Muối + H₂↑ || Lưu ý: Chỉ các kim loại hoạt động đứng trước H (như Mg, Al, Zn, Fe) mới phản ứng giải phóng khí H₂; các kim loại Cu, Ag, Au KHÔNG phản ứng.',
+    'Phản ứng trung hòa giữa acid và base: Acid + Base → Muối + H₂O || Ví dụ: H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O (mọi base tan hay không tan đều phản ứng được với dung dịch acid).',
+    'Ý nghĩa thang đo pH (từ 1 đến 14): pH < 7 (Acid, quỳ hóa đỏ)  |  pH = 7 (Trung tính)  |  pH > 7 (Base/kiềm, quỳ hóa xanh, PP hóa hồng) || Ý nghĩa: pH càng nhỏ tính acid càng mạnh; pH càng lớn tính kiềm càng mạnh (PP là dung dịch phenolphthalein không màu).'
   ],
   examples:[
     {
@@ -287,10 +287,10 @@ KHTN.push(
     'Bón phân theo nguyên tắc "4 đúng" (đúng loại, đúng liều, đúng lúc, đúng cách) để tăng năng suất và tránh gây phú dưỡng nguồn nước, thoái hóa đất.'
   ],
   formulas:[
-    'Nhận biết khí CO₂: CO₂ + Ca(OH)₂ → CaCO₃↓ (trắng, làm đục nước vôi trong) + H₂O',
-    'Oxide base + Acid → Muối + H₂O  (VD: CuO + 2HCl → CuCl₂ + H₂O, dung dịch xanh lam)',
-    'Phản ứng tạo kết tủa đặc trưng: BaCl₂ + Na₂SO₄ → BaSO₄↓ (trắng) + 2NaCl  ;  AgNO₃ + NaCl → AgCl↓ + NaNO₃',
-    'Phân bón: Đạm (N) · Lân (P) · Kali (K) · Phân phức hợp / hỗn hợp (NPK)'
+    'Phản ứng nhận biết khí CO₂ (oxide acid + kiềm): CO₂ + Ca(OH)₂ → CaCO₃↓ + H₂O || Hiện tượng: Xuất hiện kết tủa CaCO₃ màu trắng không tan làm vẩn đục dung dịch nước vôi trong.',
+    'Phản ứng hòa tan gỉ kim loại (oxide base + acid): Oxide base + Acid → Muối + H₂O || Ví dụ: CuO (đen) + 2HCl → CuCl₂ (dung dịch xanh lam) + H₂O.',
+    'Phản ứng trao đổi tạo kết tủa đặc trưng của muối: BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl  ;  AgNO₃ + NaCl → AgCl↓ + NaNO₃ || Điều kiện xảy ra: Phản ứng trao đổi trong dung dịch chỉ xảy ra khi sản phẩm có chất kết tủa (↓), chất khí (↑) hoặc H₂O.',
+    'Ý nghĩa thành phần dinh dưỡng phân bón hóa học: Đạm cung cấp N · Lân cung cấp P · Kali cung cấp K · NPK cung cấp cả 3 nguyên tố || Ý nghĩa: Đạm (N) tốt cho thân lá; Lân (P) kích thích rễ, hoa; Kali (K) giúp cây cứng cáp, tạo củ ngọt (trên bao NPK 20-20-15 là % khối lượng N, P₂O₅, K₂O).'
   ],
   examples:[
     {
@@ -334,9 +334,9 @@ KHTN.push(
     'Trái Đất được bao bọc bởi khí quyển nên mọi vật đều chịu áp suất khí quyển theo mọi phương (càng lên cao không khí càng loãng nên áp suất khí quyển càng giảm; ứng dụng giác mút, ống hút, lỗ nhỏ trên nắp bình nước mắm).'
   ],
   formulas:[
-    'D = \\frac{m}{V}  ;  1 g/cm³ = 1000 kg/m³  ;  d = 10 · D (N/m³)',
-    'Áp suất trên bề mặt: p = \\frac{F}{S}  (1 Pa = 1 N/m² ; 1 kPa = 1000 Pa ; 1 cm² = 10⁻⁴ m²)',
-    'Áp suất chất lỏng ở độ sâu h: p = d · h = 10 · D · h (h tính từ mặt thoáng chất lỏng)'
+    'Khối lượng riêng & trọng lượng riêng: D = \\frac{m}{V}  ;  d = 10 · D || Trong đó: D là khối lượng riêng (kg/m³ hoặc g/cm³, quy đổi 1 g/cm³ = 1000 kg/m³); m là khối lượng vật (kg hoặc g); V là thể tích vật (m³ hoặc cm³); d là trọng lượng riêng (N/m³).',
+    'Áp suất của áp lực trên bề mặt bị ép: p = \\frac{F}{S}  ⇒  F = p · S || Trong đó: p là áp suất (Pa, với 1 Pa = 1 N/m²; 1 kPa = 1000 Pa); F là áp lực ép vuông góc với mặt bị ép (N; vật đặt trên sàn ngang có F = P = 10m); S là diện tích bị ép (m²; 1 cm² = 10⁻⁴ m²).',
+    'Áp suất chất lỏng gây ra tại độ sâu h: p = d · h = 10 · D · h || Trong đó: p là áp suất chất lỏng (Pa); d là trọng lượng riêng chất lỏng (N/m³); D là khối lượng riêng chất lỏng (kg/m³); h là độ sâu tính từ MẶT THOÁNG chất lỏng xuống điểm đang xét (m).'
   ],
   examples:[
     {
@@ -379,10 +379,10 @@ KHTN.push(
     'Lưu ý cực kì quan trọng: Khi vật ĐÃ NỔI CÂN BẰNG trên mặt chất lỏng và đứng yên thì lực đẩy Archimedes lúc cân bằng đúng bằng trọng lượng của vật: F_A(cân bằng) = P_vật!'
   ],
   formulas:[
-    'F_A = d_lỏng · V_chìm = 10 · D_lỏng · V_chìm  (d: N/m³, V_chìm: m³, F_A: N)',
-    'Thí nghiệm lực kế: F_A = P − F_nhúng',
-    'Vật đặc: D_vật > D_lỏng (chìm)  |  D_vật = D_lỏng (lơ lửng)  |  D_vật < D_lỏng (nổi)',
-    'Khi vật đang nổi đứng yên trên mặt chất lỏng: F_A = P = d_lỏng · V_chìm'
+    'Độ lớn lực đẩy Archimedes: F_A = d_lỏng · V_chìm = 10 · D_lỏng · V_chìm || Trong đó: F_A là lực đẩy hướng thẳng đứng từ dưới lên (N); d_lỏng là trọng lượng riêng của CHẤT LỎNG (N/m³); D_lỏng là khối lượng riêng chất lỏng (kg/m³); V_chìm là thể tích phần vật chìm trong chất lỏng (m³; 1 cm³ = 10⁻⁶ m³).',
+    'Đo lực đẩy Archimedes bằng lực kế: F_A = P − F_nhúng || Trong đó: P là số chỉ lực kế khi treo vật ngoài không khí (trọng lượng vật, N); F_nhúng là số chỉ lực kế khi nhúng vật trong chất lỏng (N).',
+    'Điều kiện chìm – nổi của vật đặc: D_vật > D_lỏng (chìm)  |  D_vật = D_lỏng (lơ lửng)  |  D_vật < D_lỏng (nổi) || Ý nghĩa: So sánh khối lượng riêng trung bình của vật (D_vật) với khối lượng riêng chất lỏng (D_lỏng) để biết vật chìm hay nổi.',
+    'Khi vật đang nổi cân bằng đứng yên trên mặt chất lỏng: F_A = P_vật = d_lỏng · V_chìm || Ý nghĩa: Khi tàu thuyền hoặc khối gỗ đã nổi đứng yên trên mặt nước, lực đẩy Archimedes lúc đó đúng bằng trọng lượng của vật.'
   ],
   examples:[
     {
@@ -424,9 +424,9 @@ KHTN.push(
     'Trong cơ thể người có nhiều hệ thống xương – khớp – cơ hoạt động như đòn bẩy: đầu ngửa trên đốt sống cổ (loại 1), kiễng gót bàn chân nâng cơ thể (loại 2), cơ nhị đầu cánh tay gập cẳng tay nâng tạ (loại 3).'
   ],
   formulas:[
-    'Moment lực: M = F · d  (F: N, d: m, M: N·m)',
-    'Điều kiện cân bằng của đòn bẩy: F₁ · d₁ = F₂ · d₂  ⇒  \\frac{F₁}{F₂} = \\frac{d₂}{d₁}',
-    'Đòn bẩy cho lợi về lực khi cánh tay đòn lực tác dụng > cánh tay đòn lực cản (d_người > d_vật)'
+    'Công thức tính Moment lực: M = F · d || Trong đó: M là moment lực đặc trưng cho tác dụng làm quay (N·m); F là độ lớn lực tác dụng (N); d là cánh tay đòn – khoảng cách vuông góc từ trục quay đến giá của lực (m).',
+    'Điều kiện cân bằng của đòn bẩy: F₁ · d₁ = F₂ · d₂  ⇒  \\frac{F₁}{F₂} = \\frac{d₂}{d₁} || Trong đó: F₁, F₂ là độ lớn hai lực tác dụng lên đòn bẩy (N); d₁, d₂ là cánh tay đòn từ điểm tựa O đến giá của F₁, F₂ (m). Cánh tay đòn gấp mấy lần thì lực nhỏ đi bấy nhiêu lần.',
+    'Điều kiện để đòn bẩy cho lợi về lực: d_người > d_vật  ⇒  F_người < F_vật || Ý nghĩa: Khoảng cách từ điểm tựa đến tay người càng lớn hơn khoảng cách từ điểm tựa đến vật cản thì nâng vật càng nhẹ.'
   ],
   examples:[
     {
@@ -469,10 +469,10 @@ KHTN.push(
     'Cường độ dòng điện I (đơn vị Ampe – A, 1 A = 1000 mA) đo bằng AMPE KẾ mắc NỐI TIẾP. Hiệu điện thế U (đơn vị Vôn – V, 1 kV = 1000 V) đo bằng VÔN KẾ mắc SONG SONG giữa hai đầu đoạn mạch cần đo (chốt + của dụng cụ đo luôn nối về phía cực + của nguồn). Cầu chì / aptomat tự ngắt mạch khi dòng điện tăng quá mức an toàn (đoản mạch).'
   ],
   formulas:[
-    'Đổi đơn vị: 1 A = 1000 mA  ;  1 V = 1000 mV  ;  1 kV = 1000 V',
-    'Ampe kế: mắc NỐI TIẾP  |  Vôn kế: mắc SONG SONG',
-    'Mạch nối tiếp hai đèn: I = I₁ = I₂  ;  U = U₁ + U₂',
-    'Mạch song song hai đèn: U = U₁ = U₂  ;  I = I₁ + I₂'
+    'Đổi đơn vị cường độ dòng điện & hiệu điện thế: 1 A = 1000 mA  ;  1 V = 1000 mV  ;  1 kV = 1000 V || Trong đó: I là cường độ dòng điện đo bằng Ampe (A) hoặc mili-ampe (mA); U là hiệu điện thế đo bằng Vôn (V), mili-vôn (mV) hoặc kilô-vôn (kV).',
+    'Quy tắc mắc dụng cụ đo điện: Ampe kế mắc NỐI TIẾP  |  Vôn kế mắc SONG SONG || Lưu ý: Chốt (+) của dụng cụ đo luôn nối về phía cực dương (+) của nguồn điện; không mắc trực tiếp hai chốt ampe kế vào hai cực nguồn.',
+    'Mạch điện mắc nối tiếp hai bóng đèn: I = I₁ = I₂  ;  U = U₁ + U₂ || Trong đó: I₁, I₂ là dòng điện qua từng đèn (luôn bằng nhau); U là hiệu điện thế cả mạch bằng tổng hiệu điện thế trên mỗi đèn.',
+    'Mạch điện mắc song song hai bóng đèn: U = U₁ = U₂  ;  I = I₁ + I₂ || Trong đó: U₁, U₂ là hiệu điện thế hai đầu mỗi nhánh (luôn bằng nhau); I là dòng điện mạch chính bằng tổng dòng điện qua các nhánh rẽ.'
   ],
   examples:[
     {
@@ -515,9 +515,9 @@ KHTN.push(
     'Khi sự co giãn vì nhiệt của vật rắn bị ngăn cản, nó gây ra lực rất lớn (khe hở đường ray tàu hỏa, gối đỡ cầu thép, băng kép tự đóng ngắt bàn là điện khi đủ nóng). Nhiệt lượng đun nóng vật: Q = m · c · Δt.'
   ],
   formulas:[
-    'Nhiệt lượng thu vào / tỏa ra: Q = m · c · Δt  (m: kg, c: J/(kg·K), Δt: độ tăng/giảm nhiệt độ °C)',
-    'Dẫn nhiệt tốt: Kim loại > Rắn phi kim > Lỏng > Khí (Chân không không dẫn nhiệt & không đối lưu)',
-    'Độ nở vì nhiệt: Chất khí > Chất lỏng > Chất rắn  ;  Băng kép khi nóng cong về phía kim loại nở ÍT hơn'
+    'Công thức tính nhiệt lượng vật thu vào hay tỏa ra: Q = m · c · Δt || Trong đó: Q là nhiệt lượng (J; 1 kJ = 1000 J); m là khối lượng vật bắt buộc đổi ra kg; c là nhiệt dung riêng của chất (J/(kg·K), nước c ≈ 4200 J/(kg·K)); Δt là độ tăng/giảm nhiệt độ (°C).',
+    'Khả năng dẫn nhiệt của các chất: Kim loại > Rắn phi kim > Lỏng > Khí || Ý nghĩa: Kim loại dẫn nhiệt tốt dùng làm nồi đun; gỗ, nhựa, không khí dẫn nhiệt kém dùng cách nhiệt (chân không không dẫn nhiệt và không đối lưu).',
+    'Mức độ nở vì nhiệt của các thể: Chất khí > Chất lỏng > Chất rắn || Lưu ý: Khi bị đun nóng, băng kép luôn cong về phía thanh kim loại nở vì nhiệt ÍT hơn.'
   ],
   examples:[
     {

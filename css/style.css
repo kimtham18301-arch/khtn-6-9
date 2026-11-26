@@ -644,11 +644,33 @@ li{margin:.42em 0}
   background:var(--surface);
   border:1px solid var(--line);
   border-left:4px solid #8b7cf6;
-  padding:10px 15px;
-  margin:8px 0;
-  border-radius:10px;
-  font-size:1.03rem;
+  padding:11px 16px;
+  margin:9px 0;
+  border-radius:11px;
+  font-size:1.02rem;
   line-height:1.85;
+}
+.formula .f-main{line-height:1.9}
+.formula .f-title{font-weight:700;color:#4c3bcf}
+:root[data-theme="dark"] .formula .f-title{color:#c4b5fd}
+.formula .f-expr{font-weight:600}
+.formula .f-desc{
+  margin-top:4px;
+  padding-top:4px;
+  border-top:1px dashed var(--line);
+  font-size:.9rem;
+  color:var(--mut);
+  line-height:1.58;
+}
+.sheet-preview .f-main{line-height:1.85}
+.sheet-preview .f-title{font-weight:700;color:#111}
+.sheet-preview .f-desc{
+  margin-top:2px;
+  padding-left:12px;
+  font-size:.91rem;
+  color:#333;
+  line-height:1.55;
+  font-weight:400;
 }
 
 /* Open Book Two-Page Spread (Trang Trái: Đề bài | Gáy giữa | Trang Phải: Vở nháp) */

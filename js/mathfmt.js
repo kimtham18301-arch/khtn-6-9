@@ -1,8 +1,8 @@
 (function(){
 'use strict';
 
-// Bộ định dạng Công thức Toán – Lý – Hóa (Stacked Vertical Fractions & Subscripts)
-// Không cần thư viện ngoài, hiển thị phân số tử trên – mẫu dưới có gạch ngang rõ ràng trên cả Web lẫn khi In / Tải PDF A4.
+// Bộ định dạng Công thức & Giải thích Đại lượng Toán – Lý – Hóa (Stacked Vertical Fractions, Subscripts & Symbol Legend)
+// Hiển thị rõ: (1) Tên/ý nghĩa công thức, (2) Phân số tử trên – mẫu dưới có gạch ngang, (3) Giải thích từng kí hiệu & đơn vị.
 
 function escHtml(s){
   return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
@@ -64,7 +64,7 @@ function formatSubscripts(html){
 }
 
 // Convert inline math divisions (in explanations/examples/hints without \frac) when clearly mathematical
-var UNIT_TOKENS = /^(g|kg|mg|mol|mmol|L|mL|m|cm|mm|km|s|ms|h|phút|giờ|ngày|N|kN|Pa|kPa|J|kJ|W|kW|V|A|mA|Ω|cm²|m²|cm³|m³)$/i;
+var UNIT_TOKENS = /^(g|kg|mg|mol|mmol|L|mL|m|cm|mm|km|s|ms|h|phút|giờ|ngày|N|kN|Pa|kPa|J|kJ|W|kW|V|A|mA|Ω|K|cm²|m²|cm³|m³)$/i;
 
 function formatAutoFractions(html){
   // Numeric fractions like 1/3, 1/15, 24/5 (when not part of dates like 15/11/2026)
@@ -91,24 +91,65 @@ function formatAutoFractions(html){
   return html;
 }
 
+function coreFormat(raw){
+  if (raw == null || raw === '') return '';
+  var s = escHtml(raw);
+  s = formatSubscripts(s);
+  s = replaceExplicitFrac(s);
+  s = formatAutoFractions(s);
+  return s;
+}
+
 window.KHTNMath = {
-  // Format a formula or explanation string safely into HTML with crisp vertical fractions & subscripts
+  // Inline formatting (for questions, choices, hints, steps): turns ' || ' into a clean dash separator
   format: function(raw){
     if (raw == null || raw === '') return '';
-    var s = escHtml(raw);
-    s = formatSubscripts(s);
-    s = replaceExplicitFrac(s);
-    s = formatAutoFractions(s);
-    return s;
+    var parts = String(raw).split(' || ');
+    if (parts.length > 1) {
+      return coreFormat(parts[0]) + ' <span style="opacity:.86">(' + coreFormat(parts.slice(1).join(' · ')) + ')</span>';
+    }
+    return coreFormat(raw);
   },
 
-  // CSS snippet embedded inside standalone downloaded HTML files so printed/saved files also render stacked fractions
+  // Structured Formula Block formatting (for Lesson Formulas, Notebook & PDF Formula Sheets):
+  // Supports 'Tên công thức: Biểu thức || Giải thích đại lượng & đơn vị'
+  formatFormula: function(raw){
+    if (raw == null || raw === '') return '';
+    var parts = String(raw).split(' || ');
+    var mainRaw = parts[0] || '';
+    var descRaw = parts.slice(1).join(' · ');
+
+    var mainHtml = '';
+    var colonIdx = mainRaw.indexOf(': ');
+    // Bold the formula title if ': ' appears before any '=', '→', '⇄', or '\frac'
+    if (colonIdx > 1 && colonIdx < 78) {
+      var head = mainRaw.slice(0, colonIdx);
+      var rest = mainRaw.slice(colonIdx + 2);
+      if (!/[=⇒→⇄]|\\frac/.test(head)) {
+        mainHtml = '<span class="f-title">' + coreFormat(head) + ':</span> <span class="f-expr">' + coreFormat(rest) + '</span>';
+      } else {
+        mainHtml = '<span class="f-expr">' + coreFormat(mainRaw) + '</span>';
+      }
+    } else {
+      mainHtml = '<span class="f-expr">' + coreFormat(mainRaw) + '</span>';
+    }
+
+    if (descRaw) {
+      return '<div class="f-main">' + mainHtml + '</div><div class="f-desc">↳ ' + coreFormat(descRaw) + '</div>';
+    }
+    return '<div class="f-main">' + mainHtml + '</div>';
+  },
+
+  // CSS snippet embedded inside standalone downloaded HTML files so printed/saved files also render stacked fractions & legends
   cssString: function(){
     return (
       '.mfrac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .22em;line-height:1.18;font-size:.96em}' +
       '.mfrac>.mnum{padding:0 .28em .12em;border-bottom:1.35px solid currentColor;display:block}' +
       '.mfrac>.mden{padding:.12em .28em 0;display:block}' +
-      'sub{font-size:.74em;line-height:0;vertical-align:sub}'
+      'sub{font-size:.74em;line-height:0;vertical-align:sub}' +
+      '.f-main{line-height:1.85}' +
+      '.f-title{font-weight:700;color:#111}' +
+      '.f-desc{margin-top:2px;padding-left:12px;font-size:.91em;color:#333;line-height:1.55}'
     );
   }
 };

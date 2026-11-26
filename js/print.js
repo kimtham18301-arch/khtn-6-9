@@ -27,6 +27,12 @@ function fmtMath(s){
     : esc(s);
 }
 
+function fmtFormula(s){
+  return (window.KHTNMath && typeof window.KHTNMath.formatFormula === 'function')
+    ? window.KHTNMath.formatFormula(s)
+    : fmtMath(s);
+}
+
 function makeCode(prefix){
   var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var out = '';
@@ -137,7 +143,7 @@ function buildSheetHtml(spec, mode){
     spec.formulaGroups.forEach(function(g, gi){
       fHtml += '<div class="sheet-q"><b>' + (gi + 1) + '. Lớp ' + g.grade + ' – ' + esc(g.title) + '</b><ul style="margin:6px 0 10px 18px;padding:0">';
       g.formulas.forEach(function(f){
-        fHtml += '<li style="margin:7px 0;line-height:1.8">' + fmtMath(f) + '</li>';
+        fHtml += '<li style="margin:8px 0;line-height:1.8">' + fmtFormula(f) + '</li>';
       });
       fHtml += '</ul></div>';
     });
@@ -160,7 +166,7 @@ function buildSheetHtml(spec, mode){
           (t.theory || []).map(function(line){ return '<li style="margin:5px 0">' + fmtMath(line) + '</li>'; }).join('') +
         '</ul></div>' +
         '<div style="margin-bottom:12px"><b>II. CÔNG THỨC & QUY TẮC CHUẨN</b><ul style="margin:5px 0 0 18px;padding:0">' +
-          (t.formulas || []).map(function(f){ return '<li style="margin:8px 0;line-height:1.85"><b>' + fmtMath(f) + '</b></li>'; }).join('') +
+          (t.formulas || []).map(function(f){ return '<li style="margin:8px 0;line-height:1.85">' + fmtFormula(f) + '</li>'; }).join('') +
         '</ul></div>';
 
     if (t.examples && t.examples.length) {

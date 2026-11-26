@@ -97,6 +97,11 @@ function fmtMath(s){
     ? window.KHTNMath.format(s)
     : esc(s);
 }
+function fmtFormula(s){
+  return (window.KHTNMath && typeof window.KHTNMath.formatFormula === 'function')
+    ? window.KHTNMath.formatFormula(s)
+    : fmtMath(s);
+}
 function normVi(s){
   return String(s || '')
     .toLowerCase()
@@ -1071,8 +1076,8 @@ function lesson(id){
     '<section class="card" style="margin-bottom:14px">' +
       '<h2 style="margin-top:0">1. Kiến thức trọng tâm (Bộ GD&ĐT)</h2>' +
       '<ul class="tight">' + t.theory.map(function(s){ return '<li>' + fmtMath(s) + '</li>'; }).join('') + '</ul>' +
-      '<h2>2. Công thức & quy tắc chuẩn</h2>' +
-      t.formulas.map(function(f){ return '<div class="formula">' + fmtMath(f) + '</div>'; }).join('');
+      '<h2>2. Công thức & ý nghĩa từng đại lượng</h2>' +
+      t.formulas.map(function(f){ return '<div class="formula">' + fmtFormula(f) + '</div>'; }).join('');
 
   if (t.examples && t.examples.length) {
     h += '<h2>3. Ví dụ minh họa từ Cơ bản đến Vận dụng</h2>';
@@ -2283,7 +2288,7 @@ function notebook(initialTab){
                 '<div>' + tag(t.subj) + ' <a href="#/bai/' + t.id + '" style="font-weight:700">Lớp ' + t.grade + (t.term ? ' (' + t.term + ')' : '') + ' – ' + esc(t.title) + '</a></div>' +
                 '<a href="#/bai/' + t.id + '" style="font-size:.88rem">Học bài →</a>' +
               '</div>' +
-              g.formulas.map(function(f){ return '<div class="formula">' + fmtMath(f) + '</div>'; }).join('') +
+              g.formulas.map(function(f){ return '<div class="formula">' + fmtFormula(f) + '</div>'; }).join('') +
             '</div>';
         });
         document.getElementById('nb-list').innerHTML = out || '<div class="empty">Không có công thức nào khớp với tìm kiếm.</div>';

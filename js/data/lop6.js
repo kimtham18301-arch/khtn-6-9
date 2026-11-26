@@ -7,7 +7,12 @@ KHTN.push(
     'Quy tắc an toàn trong phòng thực hành: đeo kính, găng tay khi cần; không nếm, không ngửi trực tiếp hóa chất; báo ngay giáo viên khi có sự cố.',
     'Đo chiều dài: thước; đo khối lượng: cân; đo thể tích chất lỏng: ống đong; đo thời gian: đồng hồ; đo nhiệt độ: nhiệt kế. Đặt mắt nhìn vuông góc với vạch chia, đọc kết quả theo độ chia nhỏ nhất.',
     'Kính lúp phóng to ảnh của vật nhỏ; kính hiển vi quang học dùng quan sát vật rất nhỏ như tế bào.'],
-  formulas:['1 m = 10 dm = 100 cm = 1000 mm','1 kg = 1000 g; 1 tấn = 1000 kg','1 h = 60 min = 3600 s','°F = °C × 1,8 + 32'],
+  formulas:[
+    'Đổi đơn vị chiều dài: 1 m = 10 dm = 100 cm = 1000 mm || Ý nghĩa: Mỗi bậc liền kề hơn kém nhau 10 lần (m → dm → cm → mm).',
+    'Đổi đơn vị khối lượng: 1 tấn = 1000 kg  ;  1 kg = 1000 g || Ý nghĩa: Dùng khi đổi khối lượng vật về đơn vị chuẩn kilôgam (kg) hoặc gam (g).',
+    'Đổi đơn vị thời gian: 1 h = 60 min = 3600 s || Trong đó: h là giờ; min là phút; s là giây (đơn vị thời gian chuẩn SI).',
+    'Đổi nhiệt độ Celsius sang Fahrenheit: t_(°F) = t_(°C) × 1,8 + 32 || Trong đó: °C là độ Celsius (nước đá tan ở 0 °C, sôi ở 100 °C); °F là độ Fahrenheit (0 °C ứng với 32 °F).'
+  ],
   questions:[
     {q:'Dụng cụ nào dùng để đo thể tích chất lỏng?',o:['Ống đong','Cân đồng hồ','Thước dây','Nhiệt kế'],w:'Ống đong có vạch chia thể tích (mL).'},
     {q:'Khi hóa chất dính vào da, việc đầu tiên cần làm là gì?',o:['Rửa ngay bằng nhiều nước sạch và báo giáo viên','Lau khô bằng khăn rồi tiếp tục làm','Bôi dầu ăn','Chờ hết tiết học mới xử lí'],w:'Rửa nhiều nước để loại hóa chất, sau đó báo giáo viên.'},
@@ -55,7 +60,7 @@ KHTN.push(
     'Cấu tạo chung: màng tế bào, tế bào chất, nhân (hoặc vùng nhân). Tế bào thực vật còn có thành tế bào, lục lạp và không bào lớn.',
     'Tế bào lớn lên rồi phân chia: 1 tế bào → 2 → 4 → 8… (sau k lần phân chia có 2ᵏ tế bào).',
     'Cơ thể đơn bào (vi khuẩn, trùng roi) chỉ gồm một tế bào; cơ thể đa bào gồm nhiều tế bào → mô → cơ quan → hệ cơ quan → cơ thể.'],
-  formulas:['Số tế bào sau k lần phân chia: 2ᵏ'],
+  formulas:['Số tế bào con sau k lần phân chia: N = 2ᵏ || Trong đó: N là tổng số tế bào con tạo ra từ 1 tế bào ban đầu; k là số lần phân chia liên tiếp (VD: k = 3 ⇒ 2³ = 8 tế bào).'],
   questions:[
     {q:'Đơn vị cấu trúc và chức năng cơ bản của sự sống là gì?',o:['Tế bào','Mô','Cơ quan','Hệ cơ quan'],w:'Tế bào là đơn vị cơ bản.'},
     {q:'Bào quan nào thực hiện quang hợp trong tế bào thực vật?',o:['Lục lạp','Nhân','Màng tế bào','Không bào'],w:'Lục lạp chứa diệp lục.'},
@@ -79,7 +84,7 @@ KHTN.push(
     'Trọng lượng là độ lớn lực hút của Trái Đất lên vật. Vật có khối lượng m (kg) có trọng lượng P ≈ 10m (N).',
     'Lực ma sát xuất hiện ở bề mặt tiếp xúc, cản trở chuyển động. Ma sát có lợi (phanh xe, đi lại) và có hại (mòn máy).',
     'Lực cản của nước, không khí cản trở chuyển động của vật trong chất lỏng, chất khí.'],
-  formulas:['P = 10 · m (P: N, m: kg)'],
+  formulas:['Liên hệ giữa trọng lượng và khối lượng: P ≈ 10 · m  ⇒  m ≈ \\frac{P}{10} || Trong đó: P là trọng lượng – độ lớn lực hút Trái Đất tác dụng lên vật (N – Niutơn); m là khối lượng của vật bắt buộc đổi ra kg.'],
   questions:[
     {q:'Đơn vị của lực là gì?',o:['Niutơn (N)','Kilôgam (kg)','Mét (m)','Giây (s)'],w:'Lực đo bằng niutơn.'},
     {q:'Một vật có khối lượng 5 kg. Trọng lượng của vật khoảng bao nhiêu N?',n:50,t:0,u:'N',w:'P = 10 × 5 = 50 N.'},
@@ -91,7 +96,7 @@ KHTN.push(
     'Định luật bảo toàn năng lượng: năng lượng không tự sinh ra cũng không tự mất đi, chỉ chuyển hóa từ dạng này sang dạng khác hoặc truyền từ vật này sang vật khác.',
     'Năng lượng tái tạo: gió, mặt trời, nước chảy. Năng lượng không tái tạo: than đá, dầu mỏ, khí tự nhiên.',
     'Nên sử dụng tiết kiệm năng lượng để bảo vệ môi trường.'],
-  formulas:['Đơn vị năng lượng: J (1 kJ = 1000 J)'],
+  formulas:['Đổi đơn vị năng lượng: 1 kJ = 1000 J || Trong đó: J (Jun) là đơn vị năng lượng chuẩn SI; kJ (kilô-jun) thường dùng ghi năng lượng dinh dưỡng trên bao bì thực phẩm.'],
   questions:[
     {q:'Đơn vị của năng lượng trong hệ SI là gì?',o:['Jun (J)','Niutơn (N)','Oát (W)','Pascal (Pa)'],w:'Năng lượng đo bằng jun.'},
     {q:'Phát biểu nào đúng với định luật bảo toàn năng lượng?',o:['Năng lượng chỉ chuyển hóa hoặc truyền đi, không tự mất','Năng lượng có thể tự sinh ra','Năng lượng có thể biến mất hoàn toàn','Năng lượng không thể chuyển hóa'],w:'Tổng năng lượng được bảo toàn.'},
