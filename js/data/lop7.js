@@ -2,7 +2,7 @@ window.KHTN = window.KHTN || [];
 // LỚP 7 – Đầy đủ Chương trình GDPT 2018 của Bộ GD&ĐT (Thông tư 32/2018/TT-BGDĐT).
 // Cấu trúc củng cố từ Dễ đến Khó: d=1 Nhận biết (Dễ), d=2 Thông hiểu (Trung bình), d=3 Vận dụng (Khá), d=4 Vận dụng cao (Khó).
 KHTN.push(
-{ id:'l7-phuong-phap', grade:7, term:'HK1', order:1, subj:'td', title:'Bài 1: Phương pháp & kĩ năng học tập KHTN', prereq:['l6-mo-dau'],
+{ id:'l7-phuong-phap', grade:7, term:'HK1', stage:1, weeks:'Tuần 1–2', periods:6, order:1, subj:'td', title:'Bài 1: Phương pháp & kĩ năng học tập KHTN', prereq:['l6-mo-dau'],
   theory:[
     'Phương pháp tìm hiểu tự nhiên gồm 5 bước: (1) Đề xuất vấn đề cần tìm hiểu → (2) Đưa ra dự đoán (giả thuyết) → (3) Lập kế hoạch kiểm tra dự đoán → (4) Thực hiện kế hoạch (thí nghiệm, thu thập dữ liệu) → (5) Viết báo cáo, thảo luận và kết luận.',
     'Các kĩ năng tiến trình khoa học cơ bản: quan sát (bằng giác quan hoặc thiết bị), phân loại (nhóm các đối tượng cùng đặc điểm), liên kết (kết nối dữ liệu), đo (xác định độ lớn đại lượng) và dự báo (nhận định điều sẽ xảy ra dựa trên quy luật).',
@@ -46,7 +46,7 @@ KHTN.push(
     {d:4,q:'Một tấm chắn sáng dài 5 cm gắn trên xe lăn đi qua một cổng quang điện mất 0,25 s. Tốc độ tức thời của xe khi qua cổng là bao nhiêu cm/s?',n:20,t:0.01,u:'cm/s',w:'v = d / t = 5 : 0,25 = 20 cm/s.'}
   ]},
 
-{ id:'l7-nguyen-tu', grade:7, term:'HK1', order:2, subj:'hoa', title:'Bài 2: Nguyên tử & cấu tạo vỏ electron', prereq:['l6-hon-hop'],
+{ id:'l7-nguyen-tu', grade:7, term:'HK1', stage:1, weeks:'Tuần 3–4', periods:8, order:2, subj:'hoa', title:'Bài 2: Nguyên tử & cấu tạo vỏ electron', prereq:['l6-hon-hop'],
   theory:[
     'Nguyên tử là hạt vô cùng nhỏ, trung hòa về điện, cấu tạo gồm hạt nhân ở tâm (chứa proton mang điện tích +1 và neutron không mang điện) và lớp vỏ gồm các electron mang điện tích −1.',
     'Nguyên tử luôn trung hòa về điện nên: số proton (p) = số electron (e). Số đơn vị điện tích hạt nhân Z = số p.',
@@ -93,7 +93,7 @@ KHTN.push(
     {d:4,q:'Nguyên tử R có tổng số hạt là 36, trong đó số hạt không mang điện bằng một nửa số hạt mang điện (n = p). Khối lượng nguyên tử R là bao nhiêu amu?',n:24,t:0,u:'amu',w:'2p + n = 36 và n = p ⇒ 3p = 36 ⇒ p = n = 12 ⇒ khối lượng ≈ 12 + 12 = 24 amu (Mg).'}
   ]},
 
-{ id:'l7-bang-tuan-hoan', grade:7, term:'HK1', order:3, subj:'hoa', title:'Bài 3: Nguyên tố hóa học & bảng tuần hoàn', prereq:['l7-nguyen-tu'],
+{ id:'l7-bang-tuan-hoan', grade:7, term:'HK1', stage:1, weeks:'Tuần 5–6', periods:10, order:3, subj:'hoa', title:'Bài 3: Nguyên tố hóa học & bảng tuần hoàn', prereq:['l7-nguyen-tu'],
   theory:[
     'Nguyên tố hóa học là tập hợp những nguyên tử cùng loại, có cùng số proton trong hạt nhân. Số proton là số đặc trưng duy nhất xác định nguyên tố hóa học.',
     'Kí hiệu hóa học gồm 1 hoặc 2 chữ cái (chữ cái đầu viết in hoa, chữ cái thứ hai nếu có viết thường): H, He, C, N, O, F, Ne, Na, Mg, Al, Si, P, S, Cl, K, Ca, Fe, Cu, Zn, Ag…',
@@ -139,7 +139,7 @@ KHTN.push(
     {d:4,q:'Hai nguyên tố A và B đứng kế tiếp nhau trong cùng một chu kì nhỏ và có tổng số proton là 25. Số hiệu nguyên tử của nguyên tố lớn hơn là bao nhiêu?',n:13,t:0,u:'proton',w:'Đứng kế tiếp nhau nên Z_B − Z_A = 1; kết hợp Z_A + Z_B = 25 ⇒ Z_A = 12 (Mg), Z_B = 13 (Al).'}
   ]},
 
-{ id:'l7-phan-tu', grade:7, term:'HK1', order:4, subj:'hoa', title:'Bài 4: Phân tử, đơn chất, hợp chất & liên kết hóa học', prereq:['l7-bang-tuan-hoan'],
+{ id:'l7-phan-tu', grade:7, term:'HK1', stage:2, weeks:'Tuần 10–11', periods:9, order:5, subj:'hoa', title:'Bài 5: Phân tử, đơn chất, hợp chất & liên kết hóa học', prereq:['l7-bang-tuan-hoan'],
   theory:[
     'Phân tử là hạt đại diện cho chất, gồm một số nguyên tử liên kết với nhau và thể hiện đầy đủ tính chất hóa học của chất (riêng khí hiếm có hạt đại diện là nguyên tử đơn lẻ).',
     'Đơn chất tạo nên từ 1 nguyên tố hóa học (O₂, H₂, N₂, Cl₂, Fe, Cu, C). Hợp chất tạo nên từ 2 nguyên tố hóa học trở lên (H₂O, CO₂, NaCl, H₂SO₄, CaCO₃).',
@@ -186,7 +186,7 @@ KHTN.push(
     {d:4,q:'Phân tử hợp chất khí XH₃ nặng hơn phân tử khí H₂ là 8,5 lần (H = 1). Nguyên tử khối của nguyên tố X là bao nhiêu amu?',n:14,t:0,u:'amu',w:'M(XH₃) = 8,5 × 2 = 17 amu ⇒ X + 3×1 = 17 ⇒ X = 14 (Nitrogen).'}
   ]},
 
-{ id:'l7-hoa-tri', grade:7, term:'HK1', order:5, subj:'hoa', title:'Bài 5: Hóa trị & công thức hóa học', prereq:['l7-phan-tu'],
+{ id:'l7-hoa-tri', grade:7, term:'HK1', stage:2, weeks:'Tuần 12–13', periods:9, order:6, subj:'hoa', title:'Bài 6: Hóa trị & công thức hóa học', prereq:['l7-phan-tu'],
   theory:[
     'Hóa trị là con số biểu thị khả năng liên kết của nguyên tử nguyên tố này với nguyên tử nguyên tố khác. Quy ước: H có hóa trị I, O có hóa trị II.',
     'Hóa trị các nguyên tố & nhóm nguyên tử cần thuộc: Hóa trị I (H, Na, K, Ag, Cl, nhóm OH, nhóm NO₃); Hóa trị II (O, Mg, Ca, Ba, Zn, Cu, nhóm SO₄, nhóm CO₃); Hóa trị III (Al, nhóm PO₄); Fe có hóa trị II và III; S có II, IV, VI; N có III, V; C có II, IV.',
@@ -232,7 +232,7 @@ KHTN.push(
     {d:4,q:'Một oxide có công thức XO₂ trong đó oxygen chiếm 50% về khối lượng (O = 16). Nguyên tử khối của X là bao nhiêu amu?',n:32,t:0,u:'amu',w:'2 nguyên tử O nặng 32 amu chiếm 50% ⇒ X cũng chiếm 50% nên X = 32 amu (Sulfur – S).'}
   ]},
 
-{ id:'l7-toc-do', grade:7, term:'HK1', order:6, subj:'ly', title:'Bài 6: Tốc độ chuyển động & đồ thị quãng đường – thời gian', prereq:['l6-luc'],
+{ id:'l7-toc-do', grade:7, term:'HK1', stage:1, weeks:'Tuần 7–8', periods:10, order:4, subj:'ly', title:'Bài 4: Tốc độ chuyển động & đồ thị quãng đường – thời gian', prereq:['l6-luc'],
   theory:[
     'Tốc độ chuyển động cho biết mức độ nhanh hay chậm của chuyển động, xác định bằng thương số giữa quãng đường đi được và thời gian đi quãng đường đó: v = s / t.',
     'Đơn vị tốc độ trong hệ SI là m/s; ngoài ra thường dùng km/h, cm/s. Quy tắc đổi: 1 m/s = 3,6 km/h (đổi m/s → km/h nhân 3,6; đổi km/h → m/s chia 3,6).',
@@ -278,7 +278,7 @@ KHTN.push(
     {d:4,q:'Một người đi nửa quãng đường đầu với tốc độ 6 km/h và nửa quãng đường còn lại với tốc độ 4 km/h. Tốc độ trung bình trên cả quãng đường là bao nhiêu km/h?',n:4.8,t:0.02,u:'km/h',w:'v_tb = 1 / (0,5/6 + 0,5/4) = 24 / 5 = 4,8 km/h.'}
   ]},
 
-{ id:'l7-am-thanh', grade:7, term:'HK1', order:7, subj:'ly', title:'Bài 7: Sóng âm, độ cao, độ to & phản xạ âm', prereq:['l7-toc-do'],
+{ id:'l7-am-thanh', grade:7, term:'HK1', stage:2, weeks:'Tuần 14–15', periods:9, order:7, subj:'ly', title:'Bài 7: Sóng âm, độ cao, độ to & phản xạ âm', prereq:['l7-toc-do'],
   theory:[
     'Nguồn âm là các vật dao động phát ra âm. Sóng âm truyền được trong chất rắn, chất lỏng, chất khí; KHÔNG truyền được trong chân không. Tốc độ truyền âm: v(rắn) > v(lỏng) > v(khí) (không khí ≈ 340 m/s, nước ≈ 1500 m/s, thép ≈ 6100 m/s).',
     'Tần số dao động f = N / t (Hz) là số dao động trong 1 giây. Tần số càng lớn → âm nghe càng cao (bổng); tần số càng nhỏ → âm nghe càng thấp (trầm). Tai người nghe được âm từ 20 Hz đến 20 000 Hz (dưới 20 Hz là hạ âm, trên 20 000 Hz là siêu âm).',
@@ -323,7 +323,7 @@ KHTN.push(
     {d:4,q:'Gõ búa vào một đầu ống thép dài. Ở đầu kia, tai nghe được 2 tiếng gõ cách nhau 1,6 giây. Biết tốc độ âm trong không khí là 340 m/s và trong thép nhanh gấp 17 lần trong không khí (5780 m/s). Chiều dài ống thép là bao nhiêu mét?',n:578,t:1,u:'m',w:'L/340 − L/5780 = 1,6 ⇒ 16L / 5780 = 1,6 ⇒ L = 578 m.'}
   ]},
 
-{ id:'l7-anh-sang', grade:7, term:'HK2', order:8, subj:'ly', title:'Bài 8: Ánh sáng, phản xạ ánh sáng & gương phẳng', prereq:['l7-toc-do'],
+{ id:'l7-anh-sang', grade:7, term:'HK1', stage:2, weeks:'Tuần 16–17', periods:9, order:8, subj:'ly', title:'Bài 8: Ánh sáng, phản xạ ánh sáng & gương phẳng', prereq:['l7-toc-do'],
   theory:[
     'Trong môi trường trong suốt và đồng tính, ánh sáng truyền đi theo đường thẳng. Biểu diễn đường truyền ánh sáng bằng tia sáng (đường thẳng có mũi tên chỉ chiều). Ba loại chùm sáng: song song, hội tụ, phân kì.',
     'Vùng tối (bóng tối) không nhận được ánh sáng từ nguồn sáng; vùng nửa tối chỉ nhận được ánh sáng từ một phần của nguồn sáng rộng. Hiện tượng nhật thực, nguyệt thực là hệ quả của sự truyền thẳng ánh sáng.',
@@ -368,7 +368,7 @@ KHTN.push(
     {d:4,q:'Giữ nguyên tia tới, nếu quay gương phẳng một góc 15° quanh điểm tới thì tia phản xạ sẽ quay đi một góc bao nhiêu độ?',n:30,t:0,u:'°',w:'Khi gương quay góc α thì pháp tuyến quay α ⇒ tia phản xạ quay góc 2α = 2 × 15° = 30°.'}
   ]},
 
-{ id:'l7-tu', grade:7, term:'HK2', order:9, subj:'ly', title:'Bài 9: Nam châm, từ trường Trái Đất & nam châm điện', prereq:['l6-luc'],
+{ id:'l7-tu', grade:7, term:'HK2', stage:3, weeks:'Tuần 19–21', periods:12, order:9, subj:'ly', title:'Bài 9: Nam châm, từ trường Trái Đất & nam châm điện', prereq:['l6-luc'],
   theory:[
     'Nam châm có tính chất hút các vật bằng sắt, thép, niken, coban (vật liệu từ). Mỗi nam châm luôn có 2 cực: cực Bắc (N – North, thường sơn đỏ) và cực Nam (S – South, sơn xanh/trắng). Dù cắt đôi thanh nam châm vẫn thu được nam châm mới có đủ 2 cực N và S.',
     'Tương tác giữa hai nam châm: hai cực cùng tên (N–N hoặc S–S) đẩy nhau; hai cực khác tên (N–S) hút nhau.',
@@ -412,7 +412,7 @@ KHTN.push(
     {d:4,q:'Có hai thanh kim loại giống hệt nhau về hình dáng: một thanh sắt thường và một thanh nam châm thẳng (không đánh dấu). KHÔNG dùng thêm vật nào khác, làm sao phân biệt được?',o:['Đưa đầu thanh A chạm vào chính giữa thanh B: nếu hút mạnh thì A là nam châm, nếu hầu như không hút thì B là nam châm','Cân hai thanh bằng tay','Đưa hai đầu chạm nhau xem có hút không','Để cả hai thanh nằm im trên bàn gỗ'],w:'Ở chính giữa thanh nam châm (vùng trung hòa) từ tính rất yếu; đầu thanh nam châm lại có từ tính mạnh nhất.'}
   ]},
 
-{ id:'l7-trao-doi-chat', grade:7, term:'HK2', order:10, subj:'sinh', title:'Bài 10: Trao đổi chất, quang hợp & hô hấp tế bào', prereq:['l6-te-bao'],
+{ id:'l7-trao-doi-chat', grade:7, term:'HK2', stage:3, weeks:'Tuần 22–24', periods:12, order:10, subj:'sinh', title:'Bài 10: Trao đổi chất, quang hợp & hô hấp tế bào', prereq:['l6-te-bao'],
   theory:[
     'Trao đổi chất và chuyển hóa năng lượng là đặc trưng cơ bản của sự sống: sinh vật lấy các chất từ môi trường, biến đổi chúng tạo chất xây dựng cơ thể & năng lượng, đồng thời thải chất bã ra ngoài. Ngừng trao đổi chất thì sinh vật chết.',
     'Quang hợp diễn ra tại lục lạp (chứa sắc tố diệp lục, chủ yếu ở tế bào thịt lá): sử dụng H₂O và CO₂ nhờ năng lượng ánh sáng tạo thành chất hữu cơ (glucose → tinh bột) và giải phóng khí O₂ (chuyển quang năng thành hóa năng).',
@@ -456,7 +456,7 @@ KHTN.push(
     {d:4,q:'Khi trồng cây trong nhà kính nông nghiệp công nghệ cao, người ta thường tăng nhẹ nồng độ CO₂ (tới khoảng 0,06% – 0,1%) vào ban ngày để làm gì?',o:['Tăng cường độ quang hợp giúp cây tổng hợp nhiều chất hữu cơ, tăng năng suất','Giúp cây ngừng thoát hơi nước','Giúp cây ngừng hô hấp tế bào','Làm giảm nhiệt độ lá cây'],w:'CO₂ là nguyên liệu trực tiếp của quang hợp; tăng hợp lí trong giới hạn bão hòa giúp tăng năng suất.'}
   ]},
 
-{ id:'l7-dinh-duong-van-chuyen', grade:7, term:'HK2', order:11, subj:'sinh', title:'Bài 11: Trao đổi khí, nước & dinh dưỡng ở sinh vật', prereq:['l7-trao-doi-chat'],
+{ id:'l7-dinh-duong-van-chuyen', grade:7, term:'HK2', stage:3, weeks:'Tuần 25–26', periods:12, order:11, subj:'sinh', title:'Bài 11: Trao đổi khí, nước & dinh dưỡng ở sinh vật', prereq:['l7-trao-doi-chat'],
   theory:[
     'Trao đổi khí ở sinh vật thực hiện theo cơ chế khuếch tán (khí đi từ nơi có nồng độ cao đến nơi có nồng độ thấp): ở thực vật chủ yếu qua khí khổng trên lá; ở động vật qua bề mặt cơ thể (giun đất), hệ thống ống khí (côn trùng), mang (cá, tôm) hoặc phổi (bò sát, chim, thú, người).',
     'Khí khổng gồm hai tế bào hình hạt đậu xếp úp vào nhau: khi tế bào hạt đậu trương nước thì khí khổng MỞ (thoát hơi nước và trao đổi khí mạnh); khi mất nước thì khí khổng ĐÓNG để hạn chế mất nước.',
@@ -500,7 +500,50 @@ KHTN.push(
     {d:4,q:'Vì sao khi bắt giun đất để lên mặt sân khô ráo dưới nắng thì giun đất nhanh chóng bị chết?',o:['Da giun bị khô làm O₂ và CO₂ không khuếch tán qua da được, giun chết ngạt','Giun đất bị mù vì ánh sáng','Giun không tìm được lá cây để quang hợp','Phổi giun bị vỡ'],w:'Giun đất trao đổi khí qua da; da phải ẩm ướt thì khí mới hòa tan và khuếch tán được.'}
   ]},
 
-{ id:'l7-cam-ung-sinh-san', grade:7, term:'HK2', order:12, subj:'sinh', title:'Bài 12: Cảm ứng, sinh trưởng, phát triển & sinh sản', prereq:['l7-dinh-duong-van-chuyen'],
+{ id:'l7-cam-ung', grade:7, term:'HK2', stage:4, weeks:'Tuần 27–30', periods:14, order:12, subj:'sinh', title:'Bài 12: Cảm ứng ở thực vật & tập tính ở động vật', prereq:['l7-dinh-duong-van-chuyen'],
+  theory:[
+    'Cảm ứng là khả năng cơ thể sinh vật tiếp nhận và phản ứng thích nghi với các kích thích từ môi trường (ánh sáng, nhiệt độ, nước, hóa chất, tiếp xúc), giúp sinh vật tồn tại và phát triển.',
+    'Cảm ứng ở thực vật thường diễn ra chậm, biểu hiện qua sự vận động sinh trưởng hướng về hoặc tránh xa nguồn kích thích (hướng sáng dương của ngọn, hướng nước dương và hướng trọng lực dương của rễ, hướng tiếp xúc của tua cuốn) hoặc vận động không sinh trưởng (lá trinh nữ cụp lại khi chạm).',
+    'Cảm ứng ở động vật diễn ra nhanh và đa dạng hơn nhờ hệ thần kinh. Tập tính là chuỗi những phản ứng của động vật trả lời kích thích từ môi trường bên trong hoặc bên ngoài.',
+    'Hai loại tập tính: Tập tính bẩm sinh (sinh ra đã có, di truyền từ bố mẹ, đặc trưng cho loài: nhện giăng tơ, chim di cư, tò vò đào hang) và Tập tính học được (hình thành trong đời sống cá thể qua học tập, rèn luyện: gà chạy lại khi nghe tiếng gọi cho ăn, người dừng đèn đỏ).',
+    'Ứng dụng cảm ứng và tập tính trong thực tiễn: làm giàn cho bầu bí leo (hướng tiếp xúc), tưới nước rãnh để rễ lan rộng (hướng nước), dùng đèn bẫy côn trùng ban đêm, dùng bù nhìn đuổi chim, huấn luyện chó nghiệp vụ.'
+  ],
+  formulas:[
+    'Cảm ứng thực vật: Hướng sáng (ngọn +) · Hướng nước (rễ +) · Hướng trọng lực (rễ +) · Hướng tiếp xúc (tua cuốn)',
+    'Tập tính động vật = Tập tính bẩm sinh (di truyền, bền vững) + Tập tính học được (rèn luyện, thay đổi được)'
+  ],
+  examples:[
+    {
+      q:'(Cơ bản) Phân biệt hiện tượng cảm ứng nào là hướng động sinh trưởng và hiện tượng nào không do sinh trưởng: (A) Ngọn cây đậu mọc cong về phía cửa sổ có nắng; (B) Lá cây xấu hổ cụp xuống ngay khi tay chạm vào.',
+      steps:[
+        '(A) Ngọn cây mọc cong về phía sáng do tế bào phía tối lớn nhanh hơn phía sáng → cảm ứng do sinh trưởng (hướng sáng).',
+        '(B) Lá xấu hổ cụp nhanh do thay đổi sức trương nước ở thể gối cuống lá, không phải do phân chia tế bào → vận động cảm ứng không sinh trưởng.'
+      ],
+      ans:'(A) Hướng sáng (sinh trưởng); (B) Ứng động tiếp xúc (không sinh trưởng).'
+    },
+    {
+      q:'(Vận dụng) Vì sao khi trồng bí đao, mướp, dưa leo nông dân thường cắm cọc làm giàn ngay khi cây bắt đầu vươn ngọn?',
+      steps:[
+        'Các cây thân leo có tua cuốn mang tính hướng tiếp xúc rất nhạy.',
+        'Làm giàn giúp tua cuốn quấn bám chắc để vươn cao đón ánh sáng quang hợp tốt, thoáng khí và quả không chạm đất ẩm thối.'
+      ],
+      ans:'Ứng dụng tính hướng tiếp xúc của tua cuốn để cây leo giàn đón nắng, tăng năng suất.'
+    }
+  ],
+  questions:[
+    {d:1,q:'Khả năng sinh vật tiếp nhận và phản ứng thích nghi với các kích thích từ môi trường được gọi là gì?',o:['Cảm ứng','Quang hợp','Bài tiết','Đột biến'],w:'Đó là định nghĩa khái niệm cảm ứng ở sinh vật.'},
+    {d:1,q:'Ngọn cây trồng cạnh cửa sổ mọc cong hướng ra phía có ánh sáng là hiện tượng gì?',o:['Hướng sáng dương','Hướng trọng lực dương','Hướng nước','Hướng hóa'],w:'Ngọn cây vươn về phía nguồn sáng là hướng sáng dương.'},
+    {d:1,q:'Hiện tượng nào sau đây là tập tính BẨM SINH ở động vật?',o:['Nhện tự biết giăng tơ bắt mồi ngay từ nhỏ','Chó làm xiếc nhảy qua vòng lửa','Vẹt bắt chước nói tiếng người','Cá cảnh bơi lên mặt bể khi nghe tiếng vỗ tay'],w:'Nhện giăng tơ là bản năng di truyền đặc trưng cho loài.'},
+    {d:2,q:'Tua cuốn của cây mướp, cây bầu quấn chặt quanh cọc giàn là biểu hiện của kiểu cảm ứng nào?',o:['Hướng tiếp xúc','Hướng nước','Hướng sáng âm','Hướng hóa'],w:'Tua cuốn phản ứng với tác nhân tiếp xúc cơ học.'},
+    {d:2,q:'Rễ cây luôn đâm sâu xuống lòng đất và hướng tới vùng đất ẩm có nguồn nước là biểu hiện của những tính hướng nào?',o:['Hướng trọng lực dương và hướng nước dương','Hướng sáng dương và hướng trọng lực âm','Hướng tiếp xúc và hướng sáng dương','Hướng nước âm'],w:'Rễ mọc theo chiều trọng lực (hướng đất dương) và tìm nguồn nước (hướng nước dương).'},
+    {d:2,q:'Đặc điểm của cảm ứng ở thực vật so với cảm ứng ở động vật có hệ thần kinh là gì?',o:['Thường diễn ra chậm hơn và khó nhận thấy ngay tức khắc','Luôn diễn ra nhanh gấp trăm lần động vật','Thực vật có não bộ điều khiển phản xạ','Thực vật không có khả năng cảm ứng'],w:'Thực vật không có hệ thần kinh nên phản ứng chủ yếu bằng hormone sinh trưởng chậm.'},
+    {d:3,q:'Biện pháp dùng đèn thắp sáng trên đồng ruộng ban đêm để thu hút và tiêu diệt sâu bướm hại lúa dựa trên cơ sở khoa học nào?',o:['Dựa vào tập tính hướng sáng của nhiều loài côn trùng hoạt động ban đêm','Để lúa quang hợp suốt ban đêm','Để làm khô hết nước trên mặt ruộng','Để sưởi ấm cho sâu bướm sinh sản'],w:'Côn trùng đêm có tập tính bay vào nguồn sáng (bẫy đèn sinh học an toàn).'},
+    {d:3,q:'Khi trồng cây ăn quả, người ta thường đào rãnh hoặc bón phân hữu cơ quanh tán lá (hơi xa gốc) thay vì đổ sát cổ rễ nhằm mục đích gì?',o:['Ứng dụng tính hướng hóa và hướng nước để kích thích bộ rễ lan rộng, bám đất chắc và hút nhiều dinh dưỡng','Để rễ cây không chạm tới phân bón','Để làm đứt rễ cọc của cây','Để lá cây tự rụng bớt'],w:'Đầu rễ có tính hướng hóa dương và hướng nước dương sẽ vươn dài ra vùng có phân ẩm.'},
+    {d:4,q:'Một học sinh đặt hạt đậu vừa nảy mầm nằm ngang trên đĩa xoay quay đều liên tục (loại bỏ tác động một chiều của trọng lực) trong hộp tối. Rễ mầm sẽ mọc theo hướng nào?',o:['Mọc thẳng tiếp theo hướng ban đầu mà không cong xuống','Vẫn cong gập thẳng đứng xuống đất','Cong ngược lên nắp hộp','Xoắn tròn thành lò xo'],w:'Khi lực tác động đều từ mọi phía do đĩa quay, rễ không nhận kích thích trọng lực một chiều nên mọc thẳng.'},
+    {d:4,q:'Hằng ngày người nuôi cá gõ nhẹ vào thành bể trước khi rải thức ăn. Sau vài tuần, chỉ cần gõ nhẹ thành bể là đàn cá đã bơi tụ lại dù chưa có thức ăn. Tập tính này có đặc điểm gì?',o:['Là tập tính học được, nếu gõ nhiều lần liên tiếp mà không cho ăn nữa thì tập tính này sẽ mai một dần','Là tập tính bẩm sinh di truyền cho mọi đời con','Không bao giờ thay đổi suốt đời cá','Do cá tự quang hợp khi nghe tiếng động'],w:'Tập tính học được hình thành do liên kết kích thích mới và có thể mất đi nếu không được củng cố.'}
+  ]},
+
+{ id:'l7-cam-ung-sinh-san', grade:7, term:'HK2', stage:4, weeks:'Tuần 31–34', periods:14, order:13, subj:'sinh', title:'Bài 13: Sinh trưởng, phát triển & sinh sản – Cơ thể thống nhất', prereq:['l7-cam-ung'],
   theory:[
     'Cảm ứng là khả năng sinh vật tiếp nhận và phản ứng thích nghi với các kích thích từ môi trường. Ở thực vật gọi là hướng động (hướng sáng, hướng nước, hướng trọng lực, hướng hóa, hướng tiếp xúc) hoặc ứng động (hoa nở theo giờ, lá trinh nữ cụp lại khi chạm).',
     'Tập tính ở động vật gồm: tập tính bẩm sinh (sinh ra đã có, di truyền từ bố mẹ, đặc trưng cho loài: nhện giăng tơ, tò vò xây tổ, ếch đực kêu mùa sinh sản) và tập tính học được (hình thành trong đời sống qua học tập, rút kinh nghiệm: chim non tập bay, người dừng đèn đỏ).',
@@ -533,12 +576,12 @@ KHTN.push(
     }
   ],
   questions:[
-    {d:1,q:'Ngọn cây trồng trong chậu đặt bên cửa sổ mọc cong về phía ánh sáng là hiện tượng gì?',o:['Hướng sáng dương','Hướng nước','Hướng trọng lực dương','Hướng tiếp xúc'],w:'Thân/ngọn cây mọc hướng về nguồn sáng gọi là hướng sáng dương.'},
+    {d:1,q:'Quá trình tăng lên về kích thước và khối lượng của cơ thể sinh vật do tế bào lớn lên và phân chia gọi là gì?',o:['Sinh trưởng','Cảm ứng','Bài tiết','Hô hấp'],w:'Sinh trưởng là sự tăng kích thước và khối lượng cơ thể.'},
     {d:1,q:'Hình thức nào sau đây là sinh sản VÔ TÍNH ở thực vật?',o:['Giâm cành rau muống, mía, sắn','Sự tạo hạt ở cây lúa sau thụ phấn','Gieo hạt đậu xanh','Ong thụ phấn cho hoa nhãn'],w:'Giâm cành tạo cây con từ đoạn thân mà không có sự kết hợp giao tử.'},
     {d:1,q:'Bản chất của quá trình thụ tinh trong sinh sản hữu tính là gì?',o:['Sự kết hợp giữa giao tử đực và giao tử cái tạo thành hợp tử','Sự bay của hạt phấn trong gió','Sự rụng cánh hoa','Sự chín của quả'],w:'Giao tử đực (n) + Giao tử cái (n) → Hợp tử (2n).'},
-    {d:2,q:'Tua cuốn của cây mướp, cây đậu Hà Lan quấn chặt quanh cọc tre là biểu hiện của kiểu hướng động nào?',o:['Hướng tiếp xúc','Hướng hóa','Hướng nước','Hướng sáng âm'],w:'Phản ứng sinh trưởng không đều khi tiếp xúc với giá thể cứng.'},
+    {d:2,q:'Ở cây thân gỗ hai lá mầm, bộ phận mô phân sinh nào giúp thân và rễ cây TĂNG ĐƯỜNG KÍNH (lớn to bề ngang) hằng năm?',o:['Mô phân sinh bên','Mô phân sinh đỉnh ngọn','Biểu bì lá','Lông hút'],w:'Mô phân sinh đỉnh làm cây dài ra; mô phân sinh bên làm thân, rễ to ngang.'},
     {d:2,q:'Ở thực vật có hoa, sau khi thụ tinh thì bộ phận nào phát triển thành QUẢ và bộ phận nào thành HẠT?',o:['Bầu nhụy thành quả; noãn đã thụ tinh thành hạt','Noãn thành quả; bầu nhụy thành hạt','Đài hoa thành quả; nhị thành hạt','Cánh hoa thành quả; cuống hoa thành hạt'],w:'Bầu nhụy biến đổi thành quả chứa hạt phát triển từ noãn.'},
-    {d:2,q:'Hiện tượng nào sau đây là tập tính BẨM SINH ở động vật?',o:['Nhện tự biết giăng tơ ngay mà không cần học','Vẹt nói tiếng người','Cá cảnh bơi lên mặt nước khi nghe tiếng gõ vào thành bể','Khỉ đạp xe trong rạp xiếc'],w:'Nhện giăng tơ do gene quy định, sinh ra đã có.'},
+    {d:2,q:'Vòng đời phát triển của loài động vật nào sau đây KHÔNG QUA BIẾN THÁI (con non mới sinh có hình thái tương tự con trưởng thành)?',o:['Gà, chó, mèo và người','Bướm cải','Ếch đồng','Muỗi vằn'],w:'Chim, thú, người phát triển không qua biến thái; ếch, bướm, muỗi phát triển qua biến thái.'},
     {d:3,q:'Trong vòng đời của bướm ăn lá cải (Trứng → Sâu → Nhộng → Bướm), giai đoạn nào phá hại mùa màng mạnh nhất?',o:['Giai đoạn sâu (ấu trùng)','Giai đoạn trứng','Giai đoạn nhộng','Giai đoạn bướm trưởng thành'],w:'Sâu non ăn rất nhiều lá để tích lũy chất dinh dưỡng trước khi hóa nhộng.'},
     {d:3,q:'Vì sao nông dân thường bấm ngọn (cắt đỉnh sinh trưởng ngọn) cho cây bầu, bí, mướp, đậu?',o:['Để kích thích mô phân sinh chồi bên phát triển nhiều nhánh, cho nhiều hoa quả','Để rễ cây ngừng hút nước','Để cây chuyển sang sinh sản vô tính','Để lá cây không thoát hơi nước'],w:'Mất ưu thế đỉnh giúp chồi nách mọc nhiều nhánh mang hoa cái.'},
     {d:4,q:'Ưu thế nổi bật của phương pháp nuôi cấy mô tế bào trong nhân giống cây trồng (chuối, phong lan, khoai tây) là gì?',o:['Nhân nhanh số lượng rất lớn cây con đồng nhất về đặc tính tốt và sạch bệnh','Tạo ra các cá thể con có kiểu gene khác hoàn toàn cây mẹ','Thực hiện ngay ngoài ruộng không cần điều kiện vô trùng','Chỉ áp dụng được cho động vật có xương sống'],w:'Nuôi cấy mô nhân giống vô tính với hệ số nhân cao và loại sạch mầm bệnh virus.'},

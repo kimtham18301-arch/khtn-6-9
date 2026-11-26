@@ -245,6 +245,45 @@ a.card:hover{border-color:var(--pri);transform:translateY(-1px)}
 .ladder-step b{display:block;font-size:.93rem}
 .ladder-step small{color:var(--mut);font-size:.81rem}
 
+/* Stage Roadmap & Circular 22 Gradebook */
+.stage-block{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:4px solid var(--pri);
+  border-radius:14px;
+  padding:16px;
+  margin:16px 0;
+  box-shadow:var(--shadow);
+}
+.stage-block.hk2{border-left-color:var(--ok)}
+.gb-wrap{overflow-x:auto;margin:10px 0}
+.gb-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.91rem;
+  min-width:640px;
+}
+.gb-table th,.gb-table td{
+  border:1px solid var(--line);
+  padding:8px 9px;
+  text-align:center;
+}
+.gb-table th{background:var(--surface);font-weight:700}
+.gb-cell-link{
+  display:inline-block;
+  text-decoration:none;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:6px;
+}
+.gb-cell-link:hover{background:var(--pri-soft)}
+.gb-inp{
+  width:56px !important;
+  padding:4px 6px !important;
+  text-align:center;
+  font-size:.9rem !important;
+}
+
 /* Worked Examples */
 .example-card{
   background:var(--surface);

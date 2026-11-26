@@ -54,6 +54,14 @@ var EXTRA_STATIC = {
     {d:3,q:'Vì sao đất trồng cây trên cạn cần được xới xáo tơi xốp và tiêu nước kịp thời khi ngập úng lâu ngày?',o:['Để rễ cây có đủ khí oxygen trong các khe đất thực hiện hô hấp tế bào, hút nước và khoáng tốt','Để rễ cây nhận được ánh sáng quang hợp','Để tiêu diệt toàn bộ giun đất','Để làm đứt hết lông hút của cây'],w:'Ngập úng lâu làm thiếu O₂, rễ hô hấp kị khí sinh chất độc làm thối rễ, cây héo chết.'},
     {d:4,q:'Trong một ngày nắng ráo mùa hè, vào khoảng 12 giờ trưa nắng gắt nhất, nhiều cây trên cạn lại có hiện tượng giảm nhẹ thoát hơi nước ("ngủ trưa"). Vì sao?',o:['Nhiệt độ quá cao và thiếu nước tạm thời làm tế bào khí khổng đóng bớt lại để bảo vệ cây khỏi héo','Vì 12 giờ trưa không có ánh sáng Mặt Trời','Vì mạch gỗ biến mất vào buổi trưa','Vì rễ cây ngừng sống vào buổi trưa'],w:'Cơ chế tự vệ đóng bớt khí khổng giữa trưa nắng gắt giúp cây tránh mất nước nguy kịch.'}
   ],
+  'l7-cam-ung': [
+    {d:1,q:'Khi chạm nhẹ tay vào lá cây trinh nữ (xấu hổ), lá cụp ngay xuống. Đây là biểu hiện của hiện tượng nào?',o:['Cảm ứng ở thực vật','Quang hợp','Hô hấp tế bào','Thoát hơi nước'],w:'Lá trinh nữ phản ứng với kích thích cơ học do thay đổi sức trương nước ở thể gối.'},
+    {d:1,q:'Tập tính nào sau đây là tập tính HỌC ĐƯỢC ở động vật?',o:['Chó chạy ra cửa đón chủ khi nghe tiếng xe quen thuộc','Nhện giăng tơ','Ve sầu kêu vào mùa hè','Ếch đực kêu gọi bạn tình'],w:'Nhận biết tiếng xe quen hình thành qua trải nghiệm sống lặp lại.'},
+    {d:2,q:'Hoa hướng dương luôn hướng về phía Mặt Trời là biểu hiện của tính cảm ứng nào?',o:['Hướng sáng dương','Hướng nước dương','Hướng tiếp xúc','Hướng trọng lực dương'],w:'Phản ứng hướng về nguồn chiếu sáng là hướng sáng dương.'},
+    {d:2,q:'Chim én bay từ phương Bắc về phương Nam tránh rét vào mùa đông là loại tập tính gì?',o:['Tập tính di cư bẩm sinh','Tập tính học được do con người dạy','Hướng động tiếp xúc','Phản xạ có điều kiện mới học'],w:'Di cư theo mùa của chim én là tập tính bẩm sinh di truyền.'},
+    {d:3,q:'Trong nông nghiệp, việc dựng bù nhìn rơm trên ruộng lúa mới gieo nhằm ứng dụng điều gì?',o:['Tác động vào thị giác để xua đuổi chim ăn hạt theo tập tính cảnh giác','Giúp lúa hướng sáng mạnh hơn','Làm tăng độ ẩm cho đất','Kích thích giun đất sinh sản'],w:'Chim thấy hình dáng giống người nên né tránh theo tập tính bảo vệ.'},
+    {d:4,q:'Nếu để bù nhìn rơm đứng yên một chỗ quá lâu không thay đổi, đàn chim không còn sợ nữa mà đậu ngay lên bù nhìn. Hiện tượng này giải thích thế nào?',o:['Chim hình thành tập tính quen nhờn khi kích thích lặp lại nhiều lần mà không kèm nguy hiểm thực sự','Vì chim bị mất thị giác','Vì bù nhìn biến thành thức ăn','Vì tập tính bẩm sinh của chim biến mất hoàn toàn ở thế hệ sau'],w:'Quen nhờn là hình thức học tập đơn giản khi kích thích vô hại lặp đi lặp lại.'}
+  ],
   'l7-cam-ung-sinh-san': [
     {d:1,q:'Khi chạm nhẹ tay vào lá cây trinh nữ (cây xấu hổ), lá lập tức cụp lại. Đây là hiện tượng gì?',o:['Cảm ứng (ứng động tiếp xúc) ở thực vật','Quang hợp của lá','Sinh sản vô tính','Hô hấp tế bào'],w:'Sức trương nước ở thể gối cuống lá giảm đột ngột làm lá cụp lại.'},
     {d:1,q:'Loài động vật nào sau đây sinh sản vô tính bằng hình thức NẢY CHỒI?',o:['Thủy tức','Chó nhà','Chim bồ câu','Cá chép'],w:'Cơ thể con mọc chồi từ thân thủy tức mẹ rồi tách ra sống độc lập.'},
@@ -395,24 +403,48 @@ var GENERATORS = {
 
   'l8-mol': function(){
     var out = [];
+    // Dạng 1 (Mức 1 - Dễ): Đổi đơn vị mol <-> mmol, L <-> mL, số hạt Avogadro
+    var mmol = pick([150, 250, 400, 500, 750, 1200]);
+    out.push({
+      d:1, q:'Đổi đơn vị lượng chất: ' + mmol + ' mmol (mili-mol) bằng bao nhiêu mol? (biết 1 mol = 1000 mmol)',
+      n:round(mmol / 1000, 3), t:0.001, u:'mol', w:mmol + ' : 1000 = ' + fmt(round(mmol / 1000, 3)) + ' mol.'
+    });
+    var vMlGas = pick([2479, 4958, 7437, 12395]);
+    var nFromMl = round((vMlGas / 1000) / 24.79, 2);
+    out.push({
+      d:2, q:'Đổi đơn vị và tính số mol: ' + vMlGas + ' mL một chất khí ở điều kiện chuẩn (25 °C, 1 bar) tương ứng với bao nhiêu mol khí? (1 L = 1000 mL)',
+      n:nFromMl, t:0.005, u:'mol', w:'Đổi V = ' + fmt(vMlGas/1000) + ' L ⇒ n = ' + fmt(vMlGas/1000) + ' / 24,79 = ' + fmt(nFromMl) + ' mol.'
+    });
+    // Dạng 2 (Mức 2 - TB): Tính số mol từ khối lượng m
     var g1 = pick(GASES.filter(function(g){ return g.M >= 16; }));
     var n1 = pick([0.1, 0.15, 0.2, 0.25, 0.4, 0.5]);
     var m1 = round(n1 * g1.M, 2);
     out.push({
-      d:2, q:'Tính số mol có trong ' + fmt(m1) + ' gam khí ' + g1.f + ' (' + g1.hint + ').',
+      d:2, q:'Tính số mol phân tử có trong ' + fmt(m1) + ' gam khí ' + g1.f + ' (' + g1.hint + ').',
       n:n1, t:0.005, u:'mol', w:'M(' + g1.f + ') = ' + g1.M + ' g/mol ⇒ n = ' + fmt(m1) + ' / ' + g1.M + ' = ' + fmt(n1) + ' mol.'
     });
+    // Dạng 3 (Mức 2 - TB): Tính thể tích khí ở 25 °C, 1 bar
     var n2 = pick([0.1, 0.2, 0.3, 0.4, 0.6, 0.8]);
     var v2 = round(n2 * 24.79, 2);
     out.push({
-      d:2, q:'Ở điều kiện chuẩn (25 °C, 1 bar), ' + fmt(n2) + ' mol khí bất kì chiếm thể tích bao nhiêu lít? (làm tròn đến 2 chữ số thập phân)',
+      d:2, q:'Ở điều kiện chuẩn (25 °C, 1 bar), ' + fmt(n2) + ' mol khí chiếm thể tích bao nhiêu lít? (làm tròn đến 2 chữ số thập phân)',
       n:v2, t:0.03, u:'L', w:'V = ' + fmt(n2) + ' × 24,79 = ' + fmt(round(n2 * 24.79, 3)) + ' L ≈ ' + fmt(v2) + ' L.'
+    });
+    // Dạng 4 (Mức 3 - Khá): Tính khối lượng từ thể tích khí hoặc tỉ khối
+    var g3 = pick([{f:'O₂',M:32,h:'O=16'},{f:'CO₂',M:44,h:'C=12, O=16'},{f:'N₂',M:28,h:'N=14'},{f:'SO₂',M:64,h:'S=32, O=16'}]);
+    var n3 = pick([0.1, 0.2, 0.25, 0.5]);
+    var v3 = round(n3 * 24.79, 3);
+    var m3 = round(n3 * g3.M, 2);
+    out.push({
+      d:3, q:'Khối lượng của ' + fmt(v3) + ' lít khí ' + g3.f + ' đo ở 25 °C, 1 bar (' + g3.h + ') là bao nhiêu gam?',
+      n:m3, t:0.05, u:'g', w:'n = ' + fmt(v3) + ' / 24,79 = ' + fmt(n3) + ' mol ⇒ m = ' + fmt(n3) + ' × ' + g3.M + ' = ' + fmt(m3) + ' g.'
     });
     var gHeavy = pick([{f:'O₂',M:32},{f:'CO₂',M:44},{f:'SO₂',M:64},{f:'CH₄',M:16}]);
     out.push({
       d:3, q:'Tỉ khối của khí ' + gHeavy.f + ' (M = ' + gHeavy.M + ') đối với khí H₂ (M = 2) bằng bao nhiêu?',
       n:gHeavy.M / 2, t:0.01, u:'', w:'d = ' + gHeavy.M + ' / 2 = ' + (gHeavy.M / 2) + '.'
     });
+    // Dạng 5 (Mức 4 - Khó): Hỗn hợp khí & tìm M từ tỉ khối
     var na = pick([0.1, 0.2, 0.3]), nb = pick([0.2, 0.3]);
     var Mtb = round((na * 28 + nb * 32) / (na + nb), 2);
     out.push({

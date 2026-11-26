@@ -5,7 +5,7 @@ var D = window.KHTN || [];
 var EXAMS = window.KHTN_EXAMS || [];
 var BANK = window.KHTNBank;
 var app = document.getElementById('app');
-var SUBJ = { hoa:'Hóa học', ly:'Vật lí', sinh:'Sinh học', td:'Trái Đất & chung' };
+var SUBJ = { hoa:'Hóa học', ly:'Vật lí', sinh:'Sinh học', td:'Mở đầu / Trái Đất' };
 var DIFF = {
   1:'Nhận biết (Dễ)',
   2:'Thông hiểu (TB)',
@@ -17,6 +17,13 @@ var DIFF_SHORT = {
   2:'Mức 2 · TB',
   3:'Mức 3 · Khá',
   4:'Mức 4 · Khó'
+};
+var STAGE_META = {
+  1: { term:'HK1', title:'Giai đoạn 1 – Nửa đầu Học kì I (Tuần 1 – Tuần 9 · Trước Giữa kì I)', note:'Học bài nào làm chắc 15 phút bài đó → Chốt cột ĐĐGtx 1, ĐĐGtx 2 và Kiểm tra Giữa kì I (Hệ số 2).' },
+  2: { term:'HK1', title:'Giai đoạn 2 – Nửa sau Học kì I (Tuần 10 – Tuần 18 · Sau Giữa kì I đến Cuối kì I)', note:'Bổ sung kiến thức nửa sau HK1 → Chốt cột ĐĐGtx 3, ĐĐGtx 4 và Kiểm tra Cuối kì I (Hệ số 3). Không chèn kiến thức HK2.' },
+  3: { term:'HK2', title:'Giai đoạn 3 – Nửa đầu Học kì II (Tuần 19 – Tuần 26 · Trước Giữa kì II)', note:'Kiến thức mới đầu HK2 → Chốt cột ĐĐGtx 1, ĐĐGtx 2 (HK2) và Kiểm tra Giữa kì II (Hệ số 2).' },
+  4: { term:'HK2', title:'Giai đoạn 4 – Nửa sau Học kì II (Tuần 27 – Tuần 35 · Sau Giữa kì II đến Cuối kì II)', note:'Hoàn thiện chương trình cả năm → Chốt cột ĐĐGtx 3, ĐĐGtx 4 (HK2) và Kiểm tra Cuối kì II (Hệ số 3).' },
+  5: { term:'Cả năm', title:'Giai đoạn 5 – Ôn tổng hợp chuyển lớp & Bồi dưỡng Nâng cao', note:'Chỉ dùng khi đã hoàn tất cả 2 học kì hoặc ôn thi học sinh giỏi.' }
 };
 
 var byId = {};
@@ -32,7 +39,7 @@ var KEY_META = 'khtn-meta-v1';
 var KEY_THEME = 'khtn-theme';
 
 var currentCleanup = null;
-var quickExamSpecs = {}; // cache per examId so quick print Phần 1 & Phần 2 on card share exact Mã đề
+var quickExamSpecs = {};
 
 // --- Storage helpers ---
 function readJSON(key, fallback){
@@ -103,6 +110,7 @@ function shuffle(a){
 }
 function fmtNum(n){ return String(n).replace('.', ','); }
 function score10(ratio){ return (Math.round(ratio * 100) / 10).toFixed(1).replace('.', ','); }
+function round1(val){ return Math.round(val * 10) / 10; }
 function parseNumInput(raw){
   var clean = String(raw || '').replace(/\s+/g, '').replace(',', '.');
   if (!/^[+-]?(\d+(\.\d+)?|\.\d+)$/.test(clean)) return NaN;
@@ -149,7 +157,7 @@ function pickHint(topic, q){
   return bestCand;
 }
 
-// Mistake tracking works for BOTH static and dynamically generated questions!
+// Mistake tracking
 function mistakeKey(topicId, qObj){
   return topicId + '::' + normVi(qObj && qObj.q ? qObj.q : '').slice(0, 90);
 }
@@ -170,7 +178,6 @@ function recordMistake(topicId, qIdx, ok, qObj){
     prev.lastWrongAt = Date.now();
     m[k] = prev;
     if (Object.keys(m).length > 120) {
-      // trim oldest
       var sortedKeys = Object.keys(m).sort(function(a,b){ return (m[b].lastWrongAt||0) - (m[a].lastWrongAt||0); });
       var nextM = {};
       sortedKeys.slice(0, 100).forEach(function(sk){ nextM[sk] = m[sk]; });
@@ -212,6 +219,150 @@ function updateNavActive(routeKey){
     if (active) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
+}
+
+// ============================================================================
+// SỔ ĐIỂM ĐIỆN TỬ & CÔNG THỨC TÍNH ĐTB MÔN THEO THÔNG TƯ 22/2021/TT-BGDĐT
+// Môn KHTN (140 tiết/năm > 70 tiết): 04 cột ĐĐGtx (hs 1) + 01 GK (hs 2) + 01 CK (hs 3) => chia 9
+// Cả năm: ĐTBmcn = (ĐTBmhk1 + 2 * ĐTBmhk2) / 3
+// ============================================================================
+function computeCircular22Gradebook(g){
+  var examStats = loadExams();
+  var gExams = EXAMS.filter(function(ex){ return ex.grade === g && ex.col; });
+  var byCol = {};
+  gExams.forEach(function(ex){
+    var st = examStats[ex.id];
+    byCol[ex.col] = {
+      exam: ex,
+      val: st && typeof st.best === 'number' ? round1(st.best * 10) : null
+    };
+  });
+
+  function calcTermAvg(prefix){
+    var cols = [prefix + '-tx1', prefix + '-tx2', prefix + '-tx3', prefix + '-tx4'];
+    var gk = byCol[prefix + '-gk'] ? byCol[prefix + '-gk'].val : null;
+    var ck = byCol[prefix + '-ck'] ? byCol[prefix + '-ck'].val : null;
+    var txs = cols.map(function(c){ return byCol[c] ? byCol[c].val : null; });
+    var allPresent = txs.every(function(v){ return v != null; }) && gk != null && ck != null;
+    if (!allPresent) return null;
+    var sum = txs[0] + txs[1] + txs[2] + txs[3] + 2 * gk + 3 * ck;
+    return round1(sum / 9);
+  }
+
+  var hk1 = calcTermAvg('hk1');
+  var hk2 = calcTermAvg('hk2');
+  var cn = (hk1 != null && hk2 != null) ? round1((hk1 + 2 * hk2) / 3) : null;
+
+  return { byCol: byCol, hk1: hk1, hk2: hk2, cn: cn };
+}
+
+function rankLabel(score){
+  if (score == null || isNaN(score)) return 'Chưa đủ cột điểm';
+  if (score >= 8.0) return 'Tốt (Giỏi)';
+  if (score >= 6.5) return 'Khá';
+  if (score >= 5.0) return 'Đạt';
+  return 'Chưa đạt';
+}
+
+function mountGradebookWidget(containerEl, g){
+  if (g !== 7 && g !== 8) {
+    containerEl.innerHTML = '';
+    return;
+  }
+  var gb = computeCircular22Gradebook(g);
+  var simMode = false;
+
+  function cellHtml(colKey){
+    var info = gb.byCol[colKey];
+    if (!info) return '<td>—</td>';
+    var v = info.val;
+    if (simMode) {
+      return '<td><input type="text" class="gb-inp" data-col="' + colKey + '" value="' + (v != null ? fmtNum(v) : '8,0') + '"></td>';
+    }
+    if (v != null) {
+      return '<td><a class="gb-cell-link ' + (v >= 6.5 ? 'done' : '') + '" href="#/lam-de/' + info.exam.id + '" title="Bấm để làm lại / cải thiện điểm">' + fmtNum(v.toFixed(1)) + '</a></td>';
+    }
+    return '<td><a class="gb-cell-link muted" href="#/lam-de/' + info.exam.id + '" title="' + esc(info.exam.title) + '">Làm bài</a></td>';
+  }
+
+  function render(){
+    var h =
+      '<section class="card" style="margin:14px 0">' +
+        '<div class="row between">' +
+          '<div>' +
+            '<b>Bảng điểm KHTN Lớp ' + g + ' chuẩn Thông tư 22/2021/TT-BGDĐT (140 tiết/năm)</b>' +
+            '<div class="muted" style="font-size:.86rem">Mỗi học kì có <b>4 cột ĐĐGtx (hệ số 1)</b> + <b>1 cột Giữa kì (hệ số 2)</b> + <b>1 cột Cuối kì (hệ số 3)</b>. Công thức: <code>ĐTBmhk = (TX1+TX2+TX3+TX4 + 2×GK + 3×CK) / 9</code> · <code>Cả năm = (HK1 + 2×HK2) / 3</code>.</div>' +
+          '</div>' +
+          '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? 'Đóng tính thử' : 'Tính thử mục tiêu điểm') + '</button>' +
+        '</div>' +
+        '<div class="gb-wrap">' +
+          '<table class="gb-table">' +
+            '<thead><tr>' +
+              '<th>Học kì</th>' +
+              '<th>ĐĐGtx 1<br><small>(hs 1)</small></th>' +
+              '<th>ĐĐGtx 2<br><small>(hs 1)</small></th>' +
+              '<th>ĐĐGtx 3<br><small>(hs 1)</small></th>' +
+              '<th>ĐĐGtx 4<br><small>(hs 1)</small></th>' +
+              '<th>Giữa kì<br><small>(hs 2)</small></th>' +
+              '<th>Cuối kì<br><small>(hs 3)</small></th>' +
+              '<th>ĐTB học kì</th>' +
+            '</tr></thead>' +
+            '<tbody>' +
+              '<tr>' +
+                '<td><b>Học kì I</b><br><small class="muted">72 tiết</small></td>' +
+                cellHtml('hk1-tx1') + cellHtml('hk1-tx2') + cellHtml('hk1-tx3') + cellHtml('hk1-tx4') +
+                cellHtml('hk1-gk') + cellHtml('hk1-ck') +
+                '<td id="gb-avg-hk1"><b>' + (gb.hk1 != null ? fmtNum(gb.hk1.toFixed(1)) : '—') + '</b></td>' +
+              '</tr>' +
+              '<tr>' +
+                '<td><b>Học kì II</b><br><small class="muted">68 tiết</small></td>' +
+                cellHtml('hk2-tx1') + cellHtml('hk2-tx2') + cellHtml('hk2-tx3') + cellHtml('hk2-tx4') +
+                cellHtml('hk2-gk') + cellHtml('hk2-ck') +
+                '<td id="gb-avg-hk2"><b>' + (gb.hk2 != null ? fmtNum(gb.hk2.toFixed(1)) : '—') + '</b></td>' +
+              '</tr>' +
+            '</tbody>' +
+          '</table>' +
+        '</div>' +
+        '<div class="row between" style="font-size:.92rem">' +
+          '<span id="gb-year-summary"><b>ĐTB cả năm:</b> ' + (gb.cn != null ? ('<b class="done">' + fmtNum(gb.cn.toFixed(1)) + '</b> (' + rankLabel(gb.cn) + ')') : 'Hoàn thành đủ cột điểm (hoặc bấm <b>Tính thử mục tiêu điểm</b>) để xem ĐTB cả năm.') + '</span>' +
+          '<span class="muted">Bấm vào từng ô trong bảng để mở đúng bài kiểm tra của cột đó</span>' +
+        '</div>' +
+      '</section>';
+
+    containerEl.innerHTML = h;
+    containerEl.querySelector('#gb-sim-btn').onclick = function(){
+      simMode = !simMode;
+      render();
+      if (simMode) recalcSim();
+    };
+
+    function recalcSim(){
+      var vals = {};
+      containerEl.querySelectorAll('.gb-inp').forEach(function(inp){
+        var v = parseNumInput(inp.value);
+        vals[inp.dataset.col] = (!isNaN(v) && v >= 0 && v <= 10) ? v : null;
+      });
+      function termSim(p){
+        var arr = [vals[p+'-tx1'], vals[p+'-tx2'], vals[p+'-tx3'], vals[p+'-tx4'], vals[p+'-gk'], vals[p+'-ck']];
+        if (arr.some(function(x){ return x == null; })) return null;
+        return round1((arr[0] + arr[1] + arr[2] + arr[3] + 2*arr[4] + 3*arr[5]) / 9);
+      }
+      var s1 = termSim('hk1'), s2 = termSim('hk2');
+      var scn = (s1 != null && s2 != null) ? round1((s1 + 2*s2) / 3) : null;
+      containerEl.querySelector('#gb-avg-hk1').innerHTML = '<b>' + (s1 != null ? fmtNum(s1.toFixed(1)) : '—') + '</b>';
+      containerEl.querySelector('#gb-avg-hk2').innerHTML = '<b>' + (s2 != null ? fmtNum(s2.toFixed(1)) : '—') + '</b>';
+      containerEl.querySelector('#gb-year-summary').innerHTML =
+        '<b>ĐTB cả năm (dự kiến):</b> ' + (scn != null ? ('<b class="done">' + fmtNum(scn.toFixed(1)) + ' / 10</b> — Mức đánh giá: <b>' + rankLabel(scn) + '</b>') : 'Nhập số từ 0 đến 10 vào các ô để tính.');
+    }
+
+    if (simMode) {
+      containerEl.querySelectorAll('.gb-inp').forEach(function(inp){
+        inp.oninput = recalcSim;
+      });
+    }
+  }
+
+  render();
 }
 
 // --- Shared Question Renderer ---
@@ -384,40 +535,37 @@ function renderQ(q, displayIdx, opts){
   return box;
 }
 
-// Helper: build fresh randomized printable worksheet & study handout for a lesson (immutable snapshot)
+// Helper: strictly single-lesson snapshot (ZERO leakage from other lessons!)
 function createFreshLessonSnapshot(topic, diffFilter, currentQuestions){
   var items = [];
-  if (currentQuestions && currentQuestions.length) {
-    currentQuestions.forEach(function(item){
-      if (diffFilter && diffFilter !== 'all' && String(item.d) !== String(diffFilter)) return;
-      items.push({ topicTitle: '', q: item.q });
-    });
-  } else {
-    var sampled = BANK ? BANK.sampleLessonSet(topic, 4).items : getTopicPool(topic, 3);
-    sampled.forEach(function(item){
-      if (diffFilter && diffFilter !== 'all' && String(item.d) !== String(diffFilter)) return;
-      items.push({ topicTitle: '', q: item.q });
-    });
-  }
+  var src = (currentQuestions && currentQuestions.length)
+    ? currentQuestions
+    : (BANK ? BANK.sampleLessonSet(topic, 4).items : getTopicPool(topic, 3));
 
-  var diffNote = diffFilter && diffFilter !== 'all' ? ' · ' + DIFF[Number(diffFilter)] : ' · Sắp xếp từ Dễ đến Khó';
+  src.forEach(function(item){
+    if (diffFilter && diffFilter !== 'all' && String(item.d) !== String(diffFilter)) return;
+    items.push({ topicTitle: '', q: item.q });
+  });
+
+  var diffNote = diffFilter && diffFilter !== 'all' ? ' · ' + DIFF[Number(diffFilter)] : ' · Chỉ xoay quanh đúng bài học này';
   return window.KHTNPrint.prepare({
     prefix: 'L' + topic.grade,
-    docTitle: 'ĐỀ BÀI TẬP KHTN LỚP ' + topic.grade,
+    docTitle: 'ĐỀ BÀI TẬP THEO BÀI – KHTN LỚP ' + topic.grade,
     subtitle: topic.title + diffNote,
     lesson: (!diffFilter || diffFilter === 'all') ? topic : null,
     items: items
   });
 }
 
-// Helper: select fresh randomized questions for an exam using expanded + parametric bank
+// Helper: STRICTLY scoped exam item builder — ONLY pulls from `exam.topics`, NEVER from later stages/semesters!
 function buildExamItems(exam, levelMode){
   var all = [];
   var seenQ = {};
   (exam.topics || []).forEach(function(tid){
     var t = byId[tid];
     if (!t) return;
-    getTopicPool(t, 6).forEach(function(item){
+    var rounds = exam.topics.length === 1 ? 2 : 3;
+    getTopicPool(t, rounds).forEach(function(item){
       if (seenQ[item.q.q]) return;
       seenQ[item.q.q] = true;
       all.push({ t: t, q: item.q, qIndex: item.staticIdx, d: item.d });
@@ -480,7 +628,7 @@ function createFreshExamSnapshot(ex, levelMode){
   var snap = window.KHTNPrint.prepare({
     prefix: 'KT' + ex.grade,
     docTitle: ex.title.toUpperCase(),
-    subtitle: 'KHTN Lớp ' + ex.grade + ' · ' + ex.term + ' · ' + mTxt + ' · Phạm vi: ' + ex.scope,
+    subtitle: 'KHTN Lớp ' + ex.grade + ' · ' + ex.term + (ex.weeks ? ' (' + ex.weeks + ')' : '') + ' · ' + mTxt + ' · ' + ex.scope,
     minutes: ex.minutes,
     items: picks.map(function(p){ return { topicTitle: p.t.title.replace(/^Bài \d+:\s*/, ''), q: p.q }; })
   });
@@ -490,10 +638,7 @@ function createFreshExamSnapshot(ex, levelMode){
 
 function getOrCreateExamPrintSpec(ex, levelMode){
   var key = ex.id + '::' + (levelMode || ex.presetLevel || 'standard');
-  if (!quickExamSpecs[key]) {
-    return createFreshExamSnapshot(ex, levelMode);
-  }
-  return quickExamSpecs[key];
+  return quickExamSpecs[key] || createFreshExamSnapshot(ex, levelMode);
 }
 
 // --- VIEW 1: Home ---
@@ -512,12 +657,12 @@ function home(){
 
   var h =
     '<section class="hero">' +
-      '<h1>Hệ thống Tự học & Ngân hàng Đề Random KHTN (Trọng tâm Lớp 7 – 8)</h1>' +
-      '<p>Đầy đủ kiến thức Bộ GD&ĐT (GDPT 2018), củng cố từ <b>Dễ → Khó</b>. <b>Mỗi lần bấm vào bài học hoặc đề kiểm tra đều sinh bộ câu hỏi random mới</b>; khi tải về tự động tách độc lập <b>Phần 1: Đề (Không đáp án)</b> và <b>Phần 2: Đáp án riêng</b> theo Mã đề.</p>' +
+      '<h1>Lộ trình Học & Tính điểm KHTN chuẩn Trường THCS (Lớp 7 – 8)</h1>' +
+      '<p>Chia rõ <b>4 giai đoạn năm học (140 tiết / 35 tuần)</b> và tính điểm theo <b>Thông tư 22/2021/TT-BGDĐT</b> (4 cột ĐĐGtx 15p + Giữa kì hệ số 2 + Cuối kì hệ số 3). Học đến bài nào chỉ random đúng dạng bài đó, <b>tuyệt đối không chèn kiến thức học kì sau</b>.</p>' +
       '<div class="row">' +
-        '<a class="btn" href="#/lop/7">Vào học Lớp 7 (12 bài · 18 đề)</a>' +
-        '<a class="btn" href="#/lop/8">Vào học Lớp 8 (16 bài · 19 đề)</a>' +
-        '<a class="btn ghost" href="#/de-kiem-tra/7">Kho Đề 15p · Giữa kì · Cuối kì</a>' +
+        '<a class="btn" href="#/lop/7">Lộ trình & Sổ điểm Lớp 7</a>' +
+        '<a class="btn" href="#/lop/8">Lộ trình & Sổ điểm Lớp 8</a>' +
+        '<a class="btn ghost" href="#/de-kiem-tra/8">Kho Đề theo Giai đoạn & Học kì</a>' +
       '</div>' +
     '</section>';
 
@@ -528,22 +673,23 @@ function home(){
   var estQ7 = BANK ? BANK.estimateTotalQuestions(l7) : l7.reduce(function(s,t){ return s+t.questions.length; },0);
   var estQ8 = BANK ? BANK.estimateTotalQuestions(l8) : l8.reduce(function(s,t){ return s+t.questions.length; },0);
 
-  h += '<h2>Trọng tâm củng cố Lớp 7 & Lớp 8 (Chuẩn Bộ GD&ĐT)</h2><div class="grid two" style="margin-bottom:18px">';
+  h += '<h2>Lộ trình 4 Giai đoạn & Sổ điểm Thông tư 22 (Trọng tâm Lớp 7 – 8)</h2><div class="grid two" style="margin-bottom:18px">';
   [
-    { g:7, list:l7, qTotal:estQ7, exs:ex7, desc:'Đủ 4 mạch Mở đầu – Hóa (Nguyên tử → Hóa trị) – Lý (Tốc độ, Âm, Quang, Từ) – Sinh (Quang hợp, Hô hấp, Vận chuyển, Cảm ứng, Sinh sản).' },
-    { g:8, list:l8, qTotal:estQ8, exs:ex8, desc:'Đủ Hóa 8 (Phản ứng, Mol, Dung dịch, PTHH, Acid–Base–Muối) – Lý 8 (Áp suất, Archimedes, Đòn bẩy, Điện, Nhiệt) – Sinh học người & Hệ sinh thái.' }
+    { g:7, list:l7, qTotal:estQ7, exs:ex7, desc:'HK1 (72 tiết): Mở đầu, Nguyên tử, Bảng tuần hoàn, Tốc độ → GK1 → Phân tử, Hóa trị, Âm thanh, Ánh sáng → CK1. HK2 (68 tiết): Từ trường, Quang hợp – Hô hấp, Vận chuyển → GK2 → Cảm ứng, Sinh sản → CK2.' },
+    { g:8, list:l8, qTotal:estQ8, exs:ex8, desc:'HK1 (72 tiết): Thí nghiệm, Phản ứng – BTKL, Mol – Thể tích khí, Áp suất → GK1 → Dung dịch, PTHH, Archimedes, Đòn bẩy, Tiêu hóa → CK1. HK2 (68 tiết): Acid–Base, Oxide–Muối, Điện, Tuần hoàn → GK2 → Nhiệt, Thần kinh, Sinh thái → CK2.' }
   ].forEach(function(item){
     var p = pct(item.list);
+    var gb = computeCircular22Gradebook(item.g);
     h +=
       '<div class="card highlight">' +
-        '<div class="row between"><h2 style="margin:0">KHTN Lớp ' + item.g + '</h2><span class="badge pri">Random mỗi lần mở · Tải 2 phần</span></div>' +
-        '<p class="muted" style="font-size:.92rem;margin:.45em 0">' + esc(item.desc) + '</p>' +
-        '<div class="muted" style="font-size:.9rem"><b>' + item.list.length + ' bài</b> · <b>' + item.qTotal + '+ câu & biến thể động</b> · <b>' + item.exs.length + ' bộ đề KT</b></div>' +
+        '<div class="row between"><h2 style="margin:0">KHTN Lớp ' + item.g + '</h2><span class="badge pri">4 Giai đoạn · 12 cột điểm TT22</span></div>' +
+        '<p class="muted" style="font-size:.9rem;margin:.45em 0">' + esc(item.desc) + '</p>' +
+        '<div class="muted" style="font-size:.9rem"><b>' + item.list.length + ' bài</b> · <b>' + item.qTotal + '+ câu khóa đúng bài</b> · <b>' + item.exs.length + ' đề theo giai đoạn</b></div>' +
         '<div class="bar"><i style="width:' + p + '%"></i></div>' +
-        '<div class="row" style="margin-top:10px">' +
-          '<a class="btn sm" href="#/lop/' + item.g + '">Học từ dễ đến khó</a>' +
-          '<a class="btn sm alt" href="#/de-kiem-tra/' + item.g + '">Đề 15p · Giữa kì · Cuối kì</a>' +
-          '<a class="btn sm subtle" href="#/kiem-tra/' + item.g + '">Kiểm tra nền</a>' +
+        '<div class="muted" style="font-size:.86rem;margin-bottom:8px">ĐTB HK1: <b>' + (gb.hk1 != null ? fmtNum(gb.hk1.toFixed(1)) : '—') + '</b> · ĐTB HK2: <b>' + (gb.hk2 != null ? fmtNum(gb.hk2.toFixed(1)) : '—') + '</b> · Cả năm: <b>' + (gb.cn != null ? fmtNum(gb.cn.toFixed(1)) : '—') + '</b></div>' +
+        '<div class="row">' +
+          '<a class="btn sm" href="#/lop/' + item.g + '">Vào lộ trình từng giai đoạn</a>' +
+          '<a class="btn sm alt" href="#/de-kiem-tra/' + item.g + '">Làm cột ĐĐGtx · GK · CK</a>' +
         '</div>' +
       '</div>';
   });
@@ -551,20 +697,19 @@ function home(){
 
   h += '<div class="grid two" style="margin-bottom:18px">';
   if (resumeTopic) {
-    var resumeLabel = resume.kind === 'recent' ? 'Bài học gần nhất' : 'Gợi ý bắt đầu';
     h +=
       '<a class="card" href="#/bai/' + resumeTopic.id + '">' +
-        '<div class="row between"><span class="badge pri">' + resumeLabel + '</span>' + tag(resumeTopic.subj) + '</div>' +
+        '<div class="row between"><span class="badge pri">Bài học gần nhất</span>' + tag(resumeTopic.subj) + '</div>' +
         '<h3 style="margin:.45em 0 .2em;font-size:1.12rem">Học tiếp: ' + esc(resumeTopic.title) + '</h3>' +
-        '<div class="muted">Lớp ' + resumeTopic.grade + ' · Tự động sinh bộ câu hỏi ngẫu nhiên mới khi bấm vào</div>' +
+        '<div class="muted">Lớp ' + resumeTopic.grade + (resumeTopic.weeks ? ' · ' + resumeTopic.weeks : '') + ' · Chỉ random xoay quanh kiến thức bài này</div>' +
       '</a>';
   }
   h +=
     '<div class="card">' +
-      '<div class="row between"><span class="badge">Tổng quan tiến độ</span><a href="#/tien-do" style="font-size:.9rem;font-weight:600">Xem chi tiết</a></div>' +
+      '<div class="row between"><span class="badge">Tổng quan tiến độ</span><a href="#/tien-do" style="font-size:.9rem;font-weight:600">Xem sổ điểm & tiến độ</a></div>' +
       '<div class="row" style="gap:18px;margin-top:10px">' +
         '<div><div class="stat-val">' + completed + '/' + D.length + '</div><div class="muted" style="font-size:.84rem">Bài đạt chuẩn</div></div>' +
-        '<div><div class="stat-val">' + avgScore + '</div><div class="muted" style="font-size:.84rem">Điểm TB (/10)</div></div>' +
+        '<div><div class="stat-val">' + avgScore + '</div><div class="muted" style="font-size:.84rem">Điểm TB bài</div></div>' +
         '<div><div class="stat-val">' + examsDone + '</div><div class="muted" style="font-size:.84rem">Đề KT đã làm</div></div>' +
         '<div><div class="stat-val">' + mistakeCount + '</div><div class="muted" style="font-size:.84rem">Câu cần ôn</div></div>' +
       '</div>' +
@@ -580,7 +725,7 @@ function home(){
     var totalQ = BANK ? BANK.estimateTotalQuestions(l) : l.reduce(function(s,t){ return s + t.questions.length; }, 0);
     h +=
       '<a class="card" href="#/lop/' + g + '">' +
-        '<div class="row between"><h2 style="margin:0">Lớp ' + g + '</h2><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? 'Trọng tâm' : p + '%') + '</span></div>' +
+        '<div class="row between"><h2 style="margin:0">Lớp ' + g + '</h2><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? 'Chuẩn TT22' : p + '%') + '</span></div>' +
         '<div class="muted" style="margin-top:4px">' + l.length + ' bài · ' + totalQ + '+ câu · ' + exCount + ' đề KT</div>' +
         '<div class="bar"><i style="width:' + p + '%"></i></div>' +
         '<small class="muted">Hoàn thành ' + p + '% (' + l.filter(function(t){ return isMastered(t.id); }).length + '/' + l.length + ' bài)</small>' +
@@ -591,26 +736,76 @@ function home(){
   app.innerHTML = h;
 }
 
-// --- Categorized Exam List Renderer ---
-var EXAM_CATEGORIES = [
-  { key:'all',      label:'Tất cả loại đề' },
-  { key:'15p-hk1',  label:'15 phút – Học kì I' },
-  { key:'15p-hk2',  label:'15 phút – Học kì II' },
-  { key:'45p',      label:'45 phút / Chuyên đề' },
-  { key:'gk',       label:'Đề Giữa kì' },
-  { key:'ck',       label:'Đề Cuối kì' },
-  { key:'nc',       label:'Củng cố & Nâng cao' }
+// --- Stage-Based Exam Explorer Renderer ---
+var EXAM_STAGE_FILTERS = [
+  { key:'all', label:'Cả năm theo 4 giai đoạn' },
+  { key:'s1',  label:'GĐ1: Trước Giữa kì I' },
+  { key:'s2',  label:'GĐ2: Nửa sau HK1 → Cuối kì I' },
+  { key:'s3',  label:'GĐ3: Trước Giữa kì II' },
+  { key:'s4',  label:'GĐ4: Nửa sau HK2 → Cuối kì II' },
+  { key:'15p', label:'Chỉ đề 15 phút (ĐĐGtx)' },
+  { key:'gkck',label:'Chỉ đề Giữa kì & Cuối kì' }
 ];
 
-function matchExamCat(ex, catKey){
-  if (!catKey || catKey === 'all') return true;
-  if (catKey === '15p-hk1') return ex.kind === '15p' && ex.term === 'HK1';
-  if (catKey === '15p-hk2') return ex.kind === '15p' && ex.term === 'HK2';
-  return ex.kind === catKey;
+function matchStageFilter(ex, fKey){
+  if (!fKey || fKey === 'all') return true;
+  if (fKey === 's1') return ex.stage === 1;
+  if (fKey === 's2') return ex.stage === 2;
+  if (fKey === 's3') return ex.stage === 3;
+  if (fKey === 's4') return ex.stage === 4;
+  if (fKey === '15p') return ex.kind === '15p';
+  if (fKey === 'gkck') return ex.kind === 'gk' || ex.kind === 'ck';
+  return true;
 }
 
-function mountExamExplorer(containerEl, g, initialCat){
-  var cat = initialCat || 'all';
+function renderExamCardHtml(ex, saved){
+  var st = saved[ex.id];
+  var colBadge = ex.col
+    ? '<span class="badge ' + (ex.coef === 3 ? 'd4' : (ex.coef === 2 ? 'warn' : 'pri')) + '">' +
+      (ex.coef === 3 ? 'Cột Cuối kì · Hệ số 3' : (ex.coef === 2 ? 'Cột Giữa kì · Hệ số 2' : 'Cột sổ điểm ĐĐGtx · Hệ số 1')) + '</span>'
+    : '<span class="badge ok">15p tự luyện thêm theo bài</span>';
+
+  return (
+    '<div class="card">' +
+      '<div class="row between">' +
+        colBadge +
+        '<span class="badge">' + (ex.weeks ? esc(ex.weeks) + ' · ' : '') + ex.minutes + 'p · ' + ex.count + ' câu</span>' +
+      '</div>' +
+      '<h3 style="margin:.5em 0 .2em;font-size:1.06rem">' + esc(ex.title) + '</h3>' +
+      '<div class="muted" style="font-size:.89rem;margin-bottom:10px">' + esc(ex.scope) + '</div>' +
+      (st ? '<div class="' + (st.best >= 0.65 ? 'done' : 'muted') + '" style="font-size:.89rem;margin-bottom:10px">Điểm cột: ' + score10(st.best) + '/10 · Gần nhất: ' + score10(st.last) + '/10 (' + st.attempts + ' lượt)</div>' : '') +
+      '<div class="row">' +
+        '<a class="btn sm" href="#/lam-de/' + ex.id + '">Làm đề (Random trong phạm vi)</a>' +
+        '<button type="button" class="btn sm alt" data-print-quiz="' + ex.id + '">Phần 1: Đề</button>' +
+        '<button type="button" class="btn sm subtle" data-print-key="' + ex.id + '">Phần 2: Đáp án</button>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function wirePrintButtons(rootEl){
+  rootEl.querySelectorAll('[data-print-quiz]').forEach(function(b){
+    b.onclick = function(){
+      var ex = examById[b.getAttribute('data-print-quiz')];
+      if (!ex) return;
+      window.KHTNPrint.open(getOrCreateExamPrintSpec(ex), 'quiz', {
+        onRegenerate: function(){ return createFreshExamSnapshot(ex); }
+      });
+    };
+  });
+  rootEl.querySelectorAll('[data-print-key]').forEach(function(b){
+    b.onclick = function(){
+      var ex = examById[b.getAttribute('data-print-key')];
+      if (!ex) return;
+      window.KHTNPrint.open(getOrCreateExamPrintSpec(ex), 'key', {
+        onRegenerate: function(){ return createFreshExamSnapshot(ex); }
+      });
+    };
+  });
+}
+
+function mountExamExplorer(containerEl, g, initialFilter){
+  var fKey = initialFilter || 'all';
   var examsAll = EXAMS.filter(function(ex){ return ex.grade === g; });
   var saved = loadExams();
 
@@ -619,88 +814,42 @@ function mountExamExplorer(containerEl, g, initialCat){
       containerEl.innerHTML = '<div class="empty">Chưa có đề kiểm tra cho lớp này.</div>';
       return;
     }
-    var presentCats = EXAM_CATEGORIES.filter(function(c){
-      return c.key === 'all' || examsAll.some(function(ex){ return matchExamCat(ex, c.key); });
-    });
-
-    var h = '<div class="filters" id="ex-cat-bar">' +
-      presentCats.map(function(c){
-        var cnt = examsAll.filter(function(ex){ return matchExamCat(ex, c.key); }).length;
-        return '<button type="button" data-ec="' + c.key + '" class="' + (cat === c.key ? 'on' : '') + '">' + c.label + ' (' + cnt + ')</button>';
+    var h = '<div class="filters" id="ex-stage-bar">' +
+      EXAM_STAGE_FILTERS.filter(function(f){
+        return f.key === 'all' || examsAll.some(function(ex){ return matchStageFilter(ex, f.key); });
+      }).map(function(f){
+        var cnt = examsAll.filter(function(ex){ return matchStageFilter(ex, f.key); }).length;
+        return '<button type="button" data-ef="' + f.key + '" class="' + (fKey === f.key ? 'on' : '') + '">' + f.label + ' (' + cnt + ')</button>';
       }).join('') +
       '</div>';
 
-    var sections = [
-      { key:'15p-hk1', title:'1. Đề kiểm tra 15 phút – Học kì I (Đánh giá thường xuyên)' },
-      { key:'15p-hk2', title:'2. Đề kiểm tra 15 phút – Học kì II (Đánh giá thường xuyên)' },
-      { key:'45p',     title:'3. Đề kiểm tra 45 phút / Chuyên đề theo phân môn (Hóa · Lý · Sinh)' },
-      { key:'gk',      title:'4. Đề kiểm tra Giữa học kì (Giữa kì I & Giữa kì II)' },
-      { key:'ck',      title:'5. Đề kiểm tra Cuối học kì (Cuối kì I & Cuối kì II)' },
-      { key:'nc',      title:'6. Đề Củng cố chắc gốc & Bồi dưỡng Vận dụng cao' }
-    ];
-
-    sections.forEach(function(sec){
-      if (cat !== 'all' && cat !== sec.key) return;
-      var group = examsAll.filter(function(ex){ return matchExamCat(ex, sec.key); });
-      if (!group.length) return;
-
-      h += '<h2 style="margin-top:1.1em">' + sec.title + '</h2><div class="grid two">';
-      group.forEach(function(ex){
-        var st = saved[ex.id];
-        var badgeTxt = ex.kind === '15p'
-          ? '15 phút · ' + ex.term
-          : (ex.kind === '45p' ? 'Chuyên đề · ' + ex.minutes + ' phút'
-            : (ex.kind === 'gk' ? 'Giữa kì · ' + ex.minutes + ' phút'
-              : (ex.kind === 'ck' ? 'Cuối kì · ' + ex.minutes + ' phút' : 'Củng cố / Nâng cao · ' + ex.minutes + ' phút')));
-        var badgeCls = ex.kind === '15p' ? 'pri' : (ex.kind === 'nc' ? 'ok' : 'warn');
-
-        h +=
-          '<div class="card">' +
-            '<div class="row between">' +
-              '<span class="badge ' + badgeCls + '">' + badgeTxt + '</span>' +
-              '<span class="badge">' + ex.count + ' câu random</span>' +
-            '</div>' +
-            '<h3 style="margin:.5em 0 .2em;font-size:1.1rem">' + esc(ex.title) + '</h3>' +
-            '<div class="muted" style="font-size:.91rem;margin-bottom:10px">Phạm vi: ' + esc(ex.scope) + '</div>' +
-            (st ? '<div class="' + (st.best >= 0.67 ? 'done' : 'muted') + '" style="font-size:.89rem;margin-bottom:10px">Cao nhất: ' + score10(st.best) + '/10 · Gần nhất: ' + score10(st.last) + '/10 (' + st.attempts + ' lượt)</div>' : '') +
-            '<div class="row">' +
-              '<a class="btn sm" href="#/lam-de/' + ex.id + '">Làm đề (Random mới)</a>' +
-              '<button type="button" class="btn sm alt" data-print-quiz="' + ex.id + '">Phần 1: Đề (Không đáp án)</button>' +
-              '<button type="button" class="btn sm subtle" data-print-key="' + ex.id + '">Phần 2: Đáp án</button>' +
-            '</div>' +
-          '</div>';
+    [1, 2, 3, 4, 5].forEach(function(stNum){
+      var group = examsAll.filter(function(ex){
+        return (ex.stage || 1) === stNum && matchStageFilter(ex, fKey);
       });
-      h += '</div>';
+      if (!group.length) return;
+      var sm = STAGE_META[stNum];
+      h +=
+        '<div class="stage-block ' + (sm.term === 'HK2' ? 'hk2' : '') + '">' +
+          '<h2 style="margin-top:0">' + esc(sm.title) + '</h2>' +
+          '<p class="muted" style="margin:.2em 0 .9em;font-size:.9rem">' + esc(sm.note) + '</p>' +
+          '<div class="grid two">' +
+            group.map(function(ex){ return renderExamCardHtml(ex, saved); }).join('') +
+          '</div>' +
+        '</div>';
     });
 
     containerEl.innerHTML = h;
-    containerEl.querySelectorAll('#ex-cat-bar button').forEach(function(b){
-      b.onclick = function(){ cat = b.dataset.ec; render(); };
+    containerEl.querySelectorAll('#ex-stage-bar button').forEach(function(b){
+      b.onclick = function(){ fKey = b.dataset.ef; render(); };
     });
-    containerEl.querySelectorAll('[data-print-quiz]').forEach(function(b){
-      b.onclick = function(){
-        var ex = examById[b.getAttribute('data-print-quiz')];
-        if (!ex) return;
-        window.KHTNPrint.open(getOrCreateExamPrintSpec(ex), 'quiz', {
-          onRegenerate: function(){ return createFreshExamSnapshot(ex); }
-        });
-      };
-    });
-    containerEl.querySelectorAll('[data-print-key]').forEach(function(b){
-      b.onclick = function(){
-        var ex = examById[b.getAttribute('data-print-key')];
-        if (!ex) return;
-        window.KHTNPrint.open(getOrCreateExamPrintSpec(ex), 'key', {
-          onRegenerate: function(){ return createFreshExamSnapshot(ex); }
-        });
-      };
-    });
+    wirePrintButtons(containerEl);
   }
 
   render();
 }
 
-// --- VIEW 2: Grade ---
+// --- VIEW 2: Grade (Integrated 4-Stage Learning + Exam Timeline + Circular 22 Gradebook) ---
 function grade(g, activeTab){
   if ([6,7,8,9].indexOf(g) === -1) {
     updateNavActive('');
@@ -708,66 +857,55 @@ function grade(g, activeTab){
     return;
   }
   updateNavActive('lop-' + g);
-  var tab = activeTab === 'exams' ? 'exams' : 'lessons';
-  var filterTerm = 'all';
+  var hasStages = (g === 7 || g === 8);
+  var tab = activeTab === 'exams' ? 'exams' : (hasStages ? 'roadmap' : 'lessons');
   var filterSubj = 'all';
-  var filterStatus = 'all';
   var searchText = '';
 
   var list = D.filter(function(t){ return t.grade === g; }).slice().sort(function(a, b){
     return (a.order || 99) - (b.order || 99);
   });
-  var examCount = EXAMS.filter(function(ex){ return ex.grade === g; }).length;
+  var gExams = EXAMS.filter(function(ex){ return ex.grade === g; });
   var presentSubjs = Object.keys(SUBJ).filter(function(s){
     return list.some(function(t){ return t.subj === s; });
   });
-  var hasTerms = list.some(function(t){ return !!t.term; });
+
+  function renderLessonCard(t){
+    var b = best(t.id);
+    var poolCount = getTopicPool(t, 4).length;
+    return (
+      '<a class="card" href="#/bai/' + t.id + '">' +
+        '<div class="row between">' +
+          '<div class="row" style="gap:5px">' + tag(t.subj) + (t.weeks ? '<span class="badge">' + esc(t.weeks) + '</span>' : '') + '</div>' +
+          (b != null && b >= 0.67 ? '<span class="badge ok">Đạt</span>' : '<span class="badge pri">Dễ → Khó</span>') +
+        '</div>' +
+        '<h3 style="margin:.45em 0 .25em;font-size:1.04rem">' + esc(t.title) + '</h3>' +
+        '<div class="muted" style="font-size:.86rem">' + (t.periods ? t.periods + ' tiết · ' : '') + 'Kho ' + poolCount + '+ câu khóa đúng bài</div>' +
+        (b == null ? '' : '<div style="margin-top:6px;font-size:.89rem" class="' + (b >= 0.67 ? 'done' : 'muted') + '">Điểm tốt nhất: ' + score10(b) + '/10</div>') +
+      '</a>'
+    );
+  }
 
   function renderView(){
     var h =
       '<div class="crumb"><a href="#/">Trang chủ</a> › Lớp ' + g + '</div>' +
       '<div class="row between">' +
-        '<h1>Khoa học tự nhiên lớp ' + g + '</h1>' +
+        '<h1>Lộ trình & Hệ thống Kiểm tra KHTN Lớp ' + g + '</h1>' +
         '<div class="row">' +
           '<button type="button" class="btn sm alt" id="g-print-formulas">In PDF Sổ tay công thức lớp ' + g + '</button>' +
           '<a class="btn sm subtle" href="#/kiem-tra/' + g + '">Kiểm tra nền</a>' +
         '</div>' +
       '</div>' +
-      '<div class="bar"><i style="width:' + pct(list) + '%"></i></div>' +
-      '<div class="muted" style="font-size:.9rem;margin-bottom:10px">Hoàn thành ' + pct(list) + '% (' +
-        list.filter(function(t){ return isMastered(t.id); }).length + '/' + list.length + ' bài đạt từ 6,7/10) · Mỗi lần mở bài đều sinh câu hỏi random mới</div>' +
+      '<div id="gb-slot"></div>' +
       '<div class="tabs">' +
-        '<button type="button" data-gtab="lessons" class="' + (tab === 'lessons' ? 'on' : '') + '">Lộ trình từng bài từ Dễ → Khó (' + list.length + ')</button>' +
-        '<button type="button" data-gtab="exams" class="' + (tab === 'exams' ? 'on' : '') + '">Đề kiểm tra 15p · 45p · Giữa kì · Cuối kì (' + examCount + ')</button>' +
-      '</div>';
-
-    if (tab === 'lessons') {
-      h +=
-        '<input type="search" id="g-search" placeholder="Tìm nhanh bài học hoặc công thức lớp ' + g + ' (không cần gõ dấu)…" value="' + esc(searchText) + '">' +
-        (hasTerms ? '<div class="filters" id="g-term">' +
-          '<button type="button" data-tm="all" class="' + (filterTerm === 'all' ? 'on' : '') + '">Cả năm (' + list.length + ')</button>' +
-          '<button type="button" data-tm="HK1" class="' + (filterTerm === 'HK1' ? 'on' : '') + '">Học kì I (' + list.filter(function(t){ return t.term === 'HK1'; }).length + ')</button>' +
-          '<button type="button" data-tm="HK2" class="' + (filterTerm === 'HK2' ? 'on' : '') + '">Học kì II (' + list.filter(function(t){ return t.term === 'HK2'; }).length + ')</button>' +
-        '</div>' : '') +
-        '<div class="filters" id="g-subj">' +
-          '<button type="button" data-s="all" class="' + (filterSubj === 'all' ? 'on' : '') + '">Tất cả mạch (' + list.length + ')</button>' +
-          presentSubjs.map(function(s){
-            var cnt = list.filter(function(t){ return t.subj === s; }).length;
-            return '<button type="button" data-s="' + s + '" class="' + (filterSubj === s ? 'on' : '') + '">' + SUBJ[s] + ' (' + cnt + ')</button>';
-          }).join('') +
-        '</div>' +
-        '<div class="filters" id="g-stat">' +
-          '<button type="button" data-st="all" class="' + (filterStatus === 'all' ? 'on' : '') + '">Mọi trạng thái</button>' +
-          '<button type="button" data-st="todo" class="' + (filterStatus === 'todo' ? 'on' : '') + '">Chưa đạt</button>' +
-          '<button type="button" data-st="done" class="' + (filterStatus === 'done' ? 'on' : '') + '">Đã nắm vững</button>' +
-        '</div>' +
-        '<div id="g-cards"></div>';
-    } else {
-      h += '<p class="muted">Mỗi lần bấm làm đề hoặc tạo mã đề đều sinh bộ câu hỏi khác nhau. Khi tải/in luôn tách riêng <b>Phần 1: Đề (Không đáp án)</b> và <b>Phần 2: Đáp án</b> khóa theo Mã đề riêng.</p>' +
-        '<div id="g-exams-box"></div>';
-    }
+        (hasStages ? '<button type="button" data-gtab="roadmap" class="' + (tab === 'roadmap' ? 'on' : '') + '">Lộ trình 4 Giai đoạn (Học bài → KT 15p → Giữa kì → Cuối kì)</button>' : '') +
+        '<button type="button" data-gtab="lessons" class="' + (tab === 'lessons' ? 'on' : '') + '">Tra cứu theo môn (' + list.length + ' bài)</button>' +
+        '<button type="button" data-gtab="exams" class="' + (tab === 'exams' ? 'on' : '') + '">Tất cả Đề kiểm tra (' + gExams.length + ' đề)</button>' +
+      '</div>' +
+      '<div id="g-body"></div>';
 
     app.innerHTML = h;
+    mountGradebookWidget(document.getElementById('gb-slot'), g);
 
     document.getElementById('g-print-formulas').onclick = function(){
       var spec = window.KHTNPrint.prepare({
@@ -782,77 +920,68 @@ function grade(g, activeTab){
       b.onclick = function(){ tab = b.dataset.gtab; renderView(); };
     });
 
-    if (tab === 'lessons') {
-      renderCards();
-      app.querySelectorAll('#g-term button').forEach(function(b){
-        b.onclick = function(){
-          filterTerm = b.dataset.tm;
-          app.querySelectorAll('#g-term button').forEach(function(x){ x.classList.toggle('on', x === b); });
-          renderCards();
-        };
+    var bodyEl = document.getElementById('g-body');
+    var savedEx = loadExams();
+
+    if (tab === 'roadmap') {
+      var rHtml = '';
+      [1, 2, 3, 4].forEach(function(stNum){
+        var stLessons = list.filter(function(t){ return t.stage === stNum; });
+        var stExams = gExams.filter(function(ex){ return ex.stage === stNum; });
+        var sm = STAGE_META[stNum];
+        rHtml +=
+          '<section class="stage-block ' + (sm.term === 'HK2' ? 'hk2' : '') + '">' +
+            '<h2 style="margin-top:0">' + esc(sm.title) + '</h2>' +
+            '<p class="muted" style="margin:.2em 0 .8em;font-size:.9rem">' + esc(sm.note) + '</p>' +
+            '<h3>Bước 1: Học & củng cố từng bài trong giai đoạn (' + stLessons.length + ' bài)</h3>' +
+            '<div class="grid">' + stLessons.map(renderLessonCard).join('') + '</div>' +
+            '<h3 style="margin-top:14px">Bước 2: Bài kiểm tra 15 phút (ĐĐGtx) & Định kì của giai đoạn này (' + stExams.length + ' đề)</h3>' +
+            '<div class="grid two">' + stExams.map(function(ex){ return renderExamCardHtml(ex, savedEx); }).join('') + '</div>' +
+          '</section>';
       });
-      app.querySelectorAll('#g-subj button').forEach(function(b){
+      bodyEl.innerHTML = rHtml;
+      wirePrintButtons(bodyEl);
+    } else if (tab === 'lessons') {
+      bodyEl.innerHTML =
+        '<input type="search" id="g-search" placeholder="Tìm nhanh bài học hoặc công thức lớp ' + g + '…" value="' + esc(searchText) + '">' +
+        '<div class="filters" id="g-subj">' +
+          '<button type="button" data-s="all" class="' + (filterSubj === 'all' ? 'on' : '') + '">Tất cả (' + list.length + ')</button>' +
+          presentSubjs.map(function(s){
+            var cnt = list.filter(function(t){ return t.subj === s; }).length;
+            return '<button type="button" data-s="' + s + '" class="' + (filterSubj === s ? 'on' : '') + '">' + SUBJ[s] + ' (' + cnt + ')</button>';
+          }).join('') +
+        '</div>' +
+        '<div id="g-cards"></div>';
+
+      function refreshCards(){
+        var q = normVi(searchText);
+        var filtered = list.filter(function(t){
+          if (filterSubj !== 'all' && t.subj !== filterSubj) return false;
+          if (q && normVi(t.title + ' ' + t.formulas.join(' ')).indexOf(q) === -1) return false;
+          return true;
+        });
+        document.getElementById('g-cards').innerHTML = filtered.length
+          ? '<div class="grid">' + filtered.map(renderLessonCard).join('') + '</div>'
+          : '<div class="empty">Không tìm thấy bài phù hợp.</div>';
+      }
+      refreshCards();
+      bodyEl.querySelectorAll('#g-subj button').forEach(function(b){
         b.onclick = function(){
           filterSubj = b.dataset.s;
-          app.querySelectorAll('#g-subj button').forEach(function(x){ x.classList.toggle('on', x === b); });
-          renderCards();
+          bodyEl.querySelectorAll('#g-subj button').forEach(function(x){ x.classList.toggle('on', x === b); });
+          refreshCards();
         };
       });
-      app.querySelectorAll('#g-stat button').forEach(function(b){
-        b.onclick = function(){
-          filterStatus = b.dataset.st;
-          app.querySelectorAll('#g-stat button').forEach(function(x){ x.classList.toggle('on', x === b); });
-          renderCards();
-        };
-      });
-      document.getElementById('g-search').oninput = function(e){
-        searchText = e.target.value;
-        renderCards();
-      };
+      document.getElementById('g-search').oninput = function(e){ searchText = e.target.value; refreshCards(); };
     } else {
-      mountExamExplorer(document.getElementById('g-exams-box'), g, 'all');
+      mountExamExplorer(bodyEl, g, 'all');
     }
-  }
-
-  function renderCards(){
-    var q = normVi(searchText);
-    var filtered = list.filter(function(t){
-      if (filterTerm !== 'all' && t.term !== filterTerm) return false;
-      if (filterSubj !== 'all' && t.subj !== filterSubj) return false;
-      if (filterStatus === 'todo' && isMastered(t.id)) return false;
-      if (filterStatus === 'done' && !isMastered(t.id)) return false;
-      if (q && normVi(t.title + ' ' + t.formulas.join(' ')).indexOf(q) === -1) return false;
-      return true;
-    });
-
-    var container = document.getElementById('g-cards');
-    if (!filtered.length) {
-      container.innerHTML = '<div class="empty">Không có bài nào khớp với bộ lọc hiện tại.</div>';
-      return;
-    }
-    var out = '<div class="grid">';
-    filtered.forEach(function(t){
-      var b = best(t.id);
-      var poolCount = getTopicPool(t, 4).length;
-      out +=
-        '<a class="card" href="#/bai/' + t.id + '">' +
-          '<div class="row between">' +
-            '<div class="row" style="gap:5px">' + tag(t.subj) + (t.term ? '<span class="badge">' + t.term + '</span>' : '') + '</div>' +
-            (b != null && b >= 0.67 ? '<span class="badge ok">Đạt</span>' : '<span class="badge pri">Random Dễ → Khó</span>') +
-          '</div>' +
-          '<h2 style="margin:.45em 0 .25em;font-size:1.06rem">' + esc(t.title) + '</h2>' +
-          '<div class="muted" style="font-size:.88rem">Kho ' + poolCount + '+ câu & biến thể' + (t.examples ? ' · ' + t.examples.length + ' ví dụ' : '') + '</div>' +
-          (b == null ? '' : '<div style="margin-top:6px;font-size:.9rem" class="' + (b >= 0.67 ? 'done' : 'muted') + '">Điểm tốt nhất: ' + score10(b) + '/10 (' + Math.round(b * 100) + '%)</div>') +
-        '</a>';
-    });
-    out += '</div>';
-    container.innerHTML = out;
   }
 
   renderView();
 }
 
-// --- VIEW 3: Lesson (Fresh Random Set Every Time Opened + Isolated 2-Part Download) ---
+// --- VIEW 3: Lesson (Strictly Scoped Random Questions of ONLY This Lesson) ---
 function lesson(id){
   var t = byId[id];
   if (!t) {
@@ -866,7 +995,6 @@ function lesson(id){
   meta.lastLessonId = id;
   saveMeta(meta);
 
-  // Scratchpad strokes can stay handy per lesson, while EVERY visit draws a FRESH random set of questions!
   var allDrafts = loadDrafts();
   var padDraft = allDrafts[id] || { strokes: [] };
 
@@ -876,15 +1004,18 @@ function lesson(id){
   var pos = sameGrade.findIndex(function(x){ return x.id === id; });
   var prevLesson = pos > 0 ? sameGrade[pos - 1] : null;
   var nextLesson = pos > -1 && pos < sameGrade.length - 1 ? sameGrade[pos + 1] : null;
-  var relatedExams = EXAMS.filter(function(ex){ return ex.topics.indexOf(id) > -1; });
 
-  // Draw a brand-new random workout for this visit!
+  // Only show exams from the SAME stage/term (never jump ahead to a future semester exam!)
+  var relatedExams = EXAMS.filter(function(ex){
+    return ex.topics.indexOf(id) > -1 && (!t.stage || !ex.stage || ex.stage <= t.stage || ex.topics.length === 1);
+  });
+
   var sampled = BANK ? BANK.sampleLessonSet(t, 4) : { totalAvailable: t.questions.length, items: getTopicPool(t, 1) };
-  var sessionItems = sampled.items; // array of { q, staticIdx, d }
+  var sessionItems = sampled.items;
   var totalBankCount = sampled.totalAvailable;
   var sessionAnswers = {};
   var sessionOrders = {};
-  var lockedPrintSpec = null; // frozen snapshot for current sessionItems so Phần 1 & Phần 2 match 100%!
+  var lockedPrintSpec = null;
 
   var availDiffs = [1, 2, 3, 4].filter(function(lv){
     return sessionItems.some(function(it){ return it.d === lv; });
@@ -896,8 +1027,8 @@ function lesson(id){
     '<div class="row between">' +
       '<div class="row">' +
         tag(t.subj) +
-        '<span class="badge">Lớp ' + t.grade + (t.term ? ' · ' + t.term : '') + '</span>' +
-        '<span class="badge pri" id="bank-info">Bộ ' + sessionItems.length + ' câu ngẫu nhiên (kho ' + totalBankCount + '+ câu)</span>' +
+        '<span class="badge">Lớp ' + t.grade + (t.term ? ' · ' + t.term : '') + (t.weeks ? ' · ' + t.weeks : '') + '</span>' +
+        '<span class="badge pri" id="bank-info">Random ' + sessionItems.length + ' câu đúng bài này (kho ' + totalBankCount + '+ câu)</span>' +
       '</div>' +
       '<div class="row">' +
         '<button type="button" class="btn sm alt" id="top-dl-2part">Tải / In 2 phần (Đề + Đáp án)</button>' +
@@ -906,7 +1037,7 @@ function lesson(id){
     '<h1>' + esc(t.title) + '</h1>';
 
   if (t.prereq && t.prereq.length) {
-    h += '<div class="card soft" style="margin-bottom:14px"><b>Kiến thức nền liên quan:</b> ' +
+    h += '<div class="card soft" style="margin-bottom:14px"><b>Kiến thức nền đã học trước đó:</b> ' +
       t.prereq.map(function(pid){
         var b = byId[pid];
         if (!b) return '';
@@ -919,7 +1050,7 @@ function lesson(id){
     '<section class="card" style="margin-bottom:14px">' +
       '<h2 style="margin-top:0">1. Kiến thức trọng tâm (Bộ GD&ĐT)</h2>' +
       '<ul class="tight">' + t.theory.map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' +
-      '<h2>2. Công thức & quy tắc cần thuộc</h2>' +
+      '<h2>2. Công thức & quy tắc chuẩn</h2>' +
       t.formulas.map(function(f){ return '<div class="formula">' + esc(f) + '</div>'; }).join('');
 
   if (t.examples && t.examples.length) {
@@ -940,8 +1071,8 @@ function lesson(id){
 
   h +=
     '<div class="row between">' +
-      '<h2 style="margin:.4em 0">4. Bài tập củng cố từ Dễ đến Khó (Random mới mỗi lần mở)</h2>' +
-      '<button type="button" class="btn sm alt" id="btn-reroll">Đổi bộ câu hỏi khác (Random)</button>' +
+      '<h2 style="margin:.4em 0">4. Bài tập củng cố đúng trọng tâm bài (Không chèn bài sau)</h2>' +
+      '<button type="button" class="btn sm alt" id="btn-reroll">Đổi bộ câu hỏi khác (Random trong bài)</button>' +
     '</div>' +
     (availDiffs.length > 1 ? '<div class="ladder" id="diff-ladder"></div>' : '') +
     '<div class="workspace has-pad">' +
@@ -955,7 +1086,7 @@ function lesson(id){
   h +=
     '<div class="card soft" style="margin-top:16px">' +
       '<div class="row between">' +
-        '<div><b>Tải về / In PDF tách riêng 2 phần độc lập (Khổ A4)</b><div class="muted" style="font-size:.9rem">Tách rõ <b>Phần 1: Đề bài (Không có đáp án)</b> và <b>Phần 2: Đáp án riêng</b> theo Mã đề cố định — khi bấm Random bộ đề mới sẽ không ảnh hưởng đến bộ đề đã tải.</div></div>' +
+        '<div><b>Tải về / In PDF tách riêng 2 phần độc lập (Khổ A4)</b><div class="muted" style="font-size:.9rem">Chỉ xuất câu hỏi của riêng bài này. Tách rõ <b>Phần 1: Đề (Không đáp án)</b> và <b>Phần 2: Đáp án riêng</b> khóa theo Mã đề cố định.</div></div>' +
         '<div class="row">' +
           '<button type="button" class="btn sm" id="pdf-quiz">Phần 1: Đề (Không đáp án)</button>' +
           '<button type="button" class="btn sm alt" id="pdf-key">Phần 2: Đáp án riêng</button>' +
@@ -965,8 +1096,8 @@ function lesson(id){
     '</div>';
 
   if (relatedExams.length) {
-    h += '<div class="card soft" style="margin-top:12px"><b>Đề kiểm tra 15p / Giữa kì / Cuối kì có bài này:</b><div class="row" style="margin-top:8px">' +
-      relatedExams.slice(0, 6).map(function(ex){
+    h += '<div class="card soft" style="margin-top:12px"><b>Bài kiểm tra 15 phút / Giữa kì của giai đoạn này:</b><div class="row" style="margin-top:8px">' +
+      relatedExams.map(function(ex){
         return '<a class="btn sm subtle" href="#/lam-de/' + ex.id + '">' + esc(ex.title) + '</a>';
       }).join('') + '</div></div>';
   }
@@ -974,7 +1105,7 @@ function lesson(id){
   h +=
     '<div class="lesson-nav">' +
       (prevLesson ? '<a class="btn subtle" href="#/bai/' + prevLesson.id + '">← ' + esc(prevLesson.title) + '</a>' : '<span></span>') +
-      (nextLesson ? '<a class="btn" href="#/bai/' + nextLesson.id + '">' + esc(nextLesson.title) + ' →</a>' : '<a class="btn" href="#/lop/' + t.grade + '/exams">Làm đề kiểm tra lớp ' + t.grade + ' →</a>') +
+      (nextLesson ? '<a class="btn" href="#/bai/' + nextLesson.id + '">' + esc(nextLesson.title) + ' →</a>' : '<a class="btn" href="#/lop/' + t.grade + '/exams">Vào đề kiểm tra lớp ' + t.grade + ' →</a>') +
     '</div>';
 
   app.innerHTML = h;
@@ -990,7 +1121,7 @@ function lesson(id){
     totalBankCount = sampled.totalAvailable;
     sessionAnswers = {};
     sessionOrders = {};
-    lockedPrintSpec = null; // new set gets its own new Mã đề when printed, old snapshots stay untouched in history!
+    lockedPrintSpec = null;
     availDiffs = [1, 2, 3, 4].filter(function(lv){
       return sessionItems.some(function(it){ return it.d === lv; });
     });
@@ -998,7 +1129,7 @@ function lesson(id){
       selectedDiff = availDiffs.length ? String(availDiffs[0]) : 'all';
     }
     if (bankInfoEl) {
-      bankInfoEl.textContent = 'Đã random bộ ' + sessionItems.length + ' câu mới (kho ' + totalBankCount + '+ câu)';
+      bankInfoEl.textContent = 'Đã random bộ ' + sessionItems.length + ' câu mới đúng bài này (kho ' + totalBankCount + '+ câu)';
     }
     renderQuestionsForSelectedDiff();
   }
@@ -1078,6 +1209,7 @@ function lesson(id){
       if (curPos > -1 && curPos < availDiffs.length - 1) nextDiff = String(availDiffs[curPos + 1]);
     }
     var levelTitle = selectedDiff === 'all' ? 'toàn bài (Dễ → Khó)' : DIFF[Number(selectedDiff)];
+    var singleTopicExam = EXAMS.find(function(ex){ return ex.topics.length === 1 && ex.topics[0] === id; });
 
     resEl.className = 'card highlight';
     resEl.style.marginTop = '12px';
@@ -1088,12 +1220,12 @@ function lesson(id){
         '<span class="badge ' + (ratio >= 0.67 ? 'ok' : 'warn') + '">' + (ratio >= 0.67 ? 'Đã vững mức này' : 'Nên củng cố thêm') + '</span>' +
       '</div>' +
       '<p style="margin:.6em 0">' + (ratio >= 0.67
-        ? (nextDiff ? 'Rất tốt! Bạn đã nắm chắc bậc này. Hãy bước tiếp lên <b>' + DIFF[Number(nextDiff)] + '</b> nhé.' : 'Xuất sắc! Bạn có thể bấm Random bộ câu mới để luyện thêm các biến thể khác.')
-        : 'Hãy xem kĩ lời giải từng câu rồi bấm Random bộ câu mới ở mức này để luyện lại cho chắc gốc nhé!') + '</p>' +
+        ? (nextDiff ? 'Rất tốt! Hãy bước tiếp lên <b>' + DIFF[Number(nextDiff)] + '</b> trong chính bài này nhé.' : 'Xuất sắc! Bạn đã nắm vững cả 4 mức độ của bài này — có thể làm thử bài Kiểm tra 15 phút riêng của chủ đề này.')
+        : 'Hãy đọc lại lời giải từng câu rồi bấm Random bộ câu mới ở mức này để rèn thêm nhé!') + '</p>' +
       '<div class="row">' +
         (nextDiff ? '<button type="button" class="btn" id="next-diff">Tiến lên ' + DIFF[Number(nextDiff)] + ' →</button>' : '') +
-        '<button type="button" class="btn ' + (nextDiff ? 'alt' : '') + '" id="again-rand">Random bộ câu mới</button>' +
-        (nextLesson ? '<a class="btn subtle" href="#/bai/' + nextLesson.id + '">Sang bài tiếp theo</a>' : '') +
+        (!nextDiff && singleTopicExam ? '<a class="btn" href="#/lam-de/' + singleTopicExam.id + '">Làm KT 15 phút bài này →</a>' : '') +
+        '<button type="button" class="btn alt" id="again-rand">Random bộ câu mới trong bài</button>' +
       '</div>';
 
     var btnNextDiff = document.getElementById('next-diff');
@@ -1148,7 +1280,6 @@ function lesson(id){
   document.getElementById('padw').appendChild(padEl);
   currentCleanup = function(){ if (padEl && padEl._destroy) padEl._destroy(); };
 
-  // Locked snapshot for current lesson session + isolated regeneration
   function getLockedSnapshot(){
     if (!lockedPrintSpec) {
       lockedPrintSpec = createFreshLessonSnapshot(t, 'all', sessionItems);
@@ -1171,13 +1302,13 @@ function lesson(id){
 
 // --- VIEW 4: Exam Catalog (#/de-kiem-tra/:g/:cat) ---
 function examCatalog(g, initialCat){
-  if ([6,7,8,9].indexOf(g) === -1) g = 7;
+  if ([6,7,8,9].indexOf(g) === -1) g = 8;
   updateNavActive('de-kiem-tra');
 
   var h =
-    '<div class="crumb"><a href="#/">Trang chủ</a> › Kho đề kiểm tra lớp ' + g + '</div>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › Lộ trình đề kiểm tra lớp ' + g + '</div>' +
     '<div class="row between">' +
-      '<h1>Kho Đề Kiểm Tra Random – Lớp ' + g + '</h1>' +
+      '<h1>Lộ trình Đề Kiểm Tra & Cột Điểm Trường – Lớp ' + g + '</h1>' +
       '<div class="row">' +
         [7,8,6,9].map(function(gr){
           var lbl = (gr === 7 || gr === 8) ? ('Lớp ' + gr + ' ★') : ('Lớp ' + gr);
@@ -1185,10 +1316,12 @@ function examCatalog(g, initialCat){
         }).join('') +
       '</div>' +
     '</div>' +
-    '<p class="muted">Mỗi lần bấm vào đề đều random bộ câu hỏi mới sắp từ dễ đến khó. Khi tải về chia rõ <b>Phần 1: Đề bài (Không có đáp án)</b> và <b>Phần 2: Đáp án riêng</b> khóa theo từng Mã đề độc lập.</p>' +
+    '<div id="cat-gb-slot"></div>' +
+    '<p class="muted">Mỗi đề kiểm tra được <b>khóa chặt theo đúng phạm vi bài đã học của từng giai đoạn</b>: bài 15 phút chỉ xoay quanh đúng bài vừa học (đổi số liệu/câu hỏi trong bài đó), đề Giữa kì chỉ lấy nửa đầu học kì, đề Cuối kì chỉ lấy trong học kì đó — tuyệt đối không chèn kiến thức học kì sau.</p>' +
     '<div id="cat-exams-box"></div>';
 
   app.innerHTML = h;
+  mountGradebookWidget(document.getElementById('cat-gb-slot'), g);
   mountExamExplorer(document.getElementById('cat-exams-box'), g, initialCat || 'all');
 }
 
@@ -1197,7 +1330,7 @@ function examRunner(examId){
   var ex = examById[examId];
   if (!ex) {
     updateNavActive('de-kiem-tra');
-    app.innerHTML = '<div class="empty"><p>Không tìm thấy đề kiểm tra.</p><a class="btn" href="#/de-kiem-tra/7">Xem danh sách đề</a></div>';
+    app.innerHTML = '<div class="empty"><p>Không tìm thấy đề kiểm tra.</p><a class="btn" href="#/de-kiem-tra/8">Xem danh sách đề</a></div>';
     return;
   }
   updateNavActive('de-kiem-tra');
@@ -1215,16 +1348,19 @@ function examRunner(examId){
     if (currentCleanup) { currentCleanup(); currentCleanup = null; }
     var st = loadExams()[ex.id];
     var setupPrintSpec = null;
+    var coefNote = ex.col
+      ? ('Tính vào cột sổ điểm Thông tư 22 · Hệ số ' + (ex.coef || 1))
+      : 'Đề 15 phút tự luyện chuyên sâu theo bài';
 
     var h =
       '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
       '<div class="row" style="margin-bottom:6px">' +
-        '<span class="badge pri">Lớp ' + ex.grade + ' · ' + esc(ex.term) + '</span>' +
-        '<span class="badge">' + ex.minutes + ' phút</span>' +
-        '<span class="badge">' + ex.count + ' câu random (Dễ → Khó)</span>' +
+        '<span class="badge pri">Lớp ' + ex.grade + ' · ' + esc(ex.term) + (ex.weeks ? ' · ' + esc(ex.weeks) : '') + '</span>' +
+        '<span class="badge warn">' + esc(coefNote) + '</span>' +
+        '<span class="badge">' + ex.minutes + ' phút · ' + ex.count + ' câu</span>' +
       '</div>' +
       '<h1>' + esc(ex.title) + '</h1>' +
-      '<p class="muted"><b>Phạm vi kiến thức:</b> ' + esc(ex.scope) + '</p>' +
+      '<p class="muted"><b>Phạm vi khóa chặt:</b> ' + esc(ex.scope) + '</p>' +
       (st ? '<div class="card soft" style="margin-bottom:14px">Lịch sử làm đề này: <b>' + st.attempts + ' lượt</b> · Điểm cao nhất: <b class="done">' + score10(st.best) + '/10</b> · Gần nhất: <b>' + score10(st.last) + '/10</b></div>' : '') +
       '<section class="card">' +
         '<h2 style="margin-top:0">Tùy chọn mức độ & hình thức làm đề</h2>' +
@@ -1240,7 +1376,7 @@ function examRunner(examId){
           '</select></div>' +
         '</div>' +
         '<div class="card soft" style="margin:10px 0 14px">' +
-          '<b>Các bài học trong phạm vi đề:</b> ' +
+          '<b>Chỉ lấy câu hỏi từ ' + ex.topics.length + ' bài đã học sau (không lẫn bài ngoài phạm vi):</b> ' +
           ex.topics.map(function(tid){
             var bt = byId[tid];
             return bt ? '<a href="#/bai/' + tid + '">' + esc(bt.title) + '</a>' : '';
@@ -1286,8 +1422,6 @@ function examRunner(examId){
     var isDeferred = examMode === 'exam';
     var levelTxt = levelMode === 'basic' ? 'Củng cố gốc' : (levelMode === 'advanced' ? 'Nâng cao' : 'Chuẩn ma trận Bộ GD&ĐT');
 
-    // Freeze this exact online attempt into its own immutable snapshot immediately!
-    // Even if user later clicks "Random đề khác", this attempt's Phần 1 & Phần 2 remain 100% locked together!
     var attemptSpec = window.KHTNPrint.prepare({
       prefix: 'KT' + ex.grade,
       docTitle: ex.title.toUpperCase(),
@@ -1314,9 +1448,9 @@ function examRunner(examId){
       '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
       '<div class="row between">' +
         '<div><h1 style="margin-bottom:.15em">' + esc(ex.title) + '</h1>' +
-        '<div class="muted">Mã đề hiện tại: <b>' + esc(attemptSpec.code) + '</b> · ' + esc(levelTxt) + ' · ' + picks.length + ' câu</div></div>' +
+        '<div class="muted">Mã đề: <b>' + esc(attemptSpec.code) + '</b> · Khóa đúng phạm vi: ' + esc(ex.scope) + '</div></div>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm alt" id="ex-top-pdf">Tải / In Đề & Đáp án (' + esc(attemptSpec.code) + ')</button>' +
+          '<button type="button" class="btn sm alt" id="ex-top-pdf">Tải / In 2 phần (' + esc(attemptSpec.code) + ')</button>' +
           '<button type="button" class="btn sm subtle" id="ex-new">Random đề khác</button>' +
           '<button type="button" class="btn sm subtle" id="ex-cfg">Cấu hình</button>' +
         '</div>' +
@@ -1425,9 +1559,10 @@ function examRunner(examId){
       resEl.innerHTML =
         '<div class="row between">' +
           '<div><div class="score-big">Điểm bài kiểm tra: ' + score10(ratio) + ' / 10</div>' +
-          '<div>Mã đề: <b>' + esc(attemptSpec.code) + '</b> · Đúng <b>' + right + '/' + picks.length + '</b> câu (' + Math.round(ratio * 100) + '%) · Thời gian: ' + spentTxt + '</div></div>' +
+          '<div>Mã đề: <b>' + esc(attemptSpec.code) + '</b> · Đúng <b>' + right + '/' + picks.length + '</b> câu · ' +
+          (ex.col ? 'Đã cập nhật vào cột điểm hệ số ' + (ex.coef || 1) + ' trên sổ điểm!' : 'Thời gian: ' + spentTxt) + '</div></div>' +
           '<span class="badge ' + (ratio >= 0.8 ? 'ok' : (ratio >= 0.65 ? 'pri' : 'warn')) + '">' +
-            (ratio >= 0.8 ? 'Giỏi' : (ratio >= 0.65 ? 'Khá / Đạt' : 'Cần củng cố thêm')) +
+            (ratio >= 0.8 ? 'Tốt (Giỏi)' : (ratio >= 0.65 ? 'Khá' : (ratio >= 0.5 ? 'Đạt' : 'Chưa đạt'))) +
           '</span>' +
         '</div>' +
         '<div class="diff-grid">' +
@@ -1437,15 +1572,15 @@ function examRunner(examId){
           }).join('') +
         '</div>' +
         (weakList.length
-          ? '<b>Các bài cần ôn củng cố lại từ đề này:</b><ul class="tight">' + weakList.map(function(t){
+          ? '<b>Các bài trong giai đoạn này cần xem lại:</b><ul class="tight">' + weakList.map(function(t){
               return '<li><a href="#/bai/' + t.id + '">' + esc(t.title) + '</a> (Lớp ' + t.grade + ')</li>';
             }).join('') + '</ul>'
-          : '<p class="done">Tuyệt vời! Bạn làm đúng 100% các mức độ trong đề này.</p>') +
+          : '<p class="done">Tuyệt vời! Bạn nắm chắc toàn bộ kiến thức của bài kiểm tra này.</p>') +
         '<div class="row" style="margin-top:12px">' +
-          '<button type="button" class="btn" id="ex-retry">Random bộ đề mới</button>' +
+          '<button type="button" class="btn" id="ex-retry">Random mã đề mới (cùng phạm vi)</button>' +
           '<button type="button" class="btn alt" id="ex-pdf-q">Phần 1: Đề (Không đáp án)</button>' +
           '<button type="button" class="btn subtle" id="ex-pdf-k">Phần 2: Đáp án riêng</button>' +
-          '<a class="btn subtle" href="#/de-kiem-tra/' + ex.grade + '">Danh sách đề</a>' +
+          '<a class="btn subtle" href="#/de-kiem-tra/' + ex.grade + '">Xem Sổ điểm & Lộ trình</a>' +
         '</div>';
 
       document.getElementById('ex-retry').onclick = function(){ startExam(); };
@@ -1463,7 +1598,7 @@ function examRunner(examId){
         topic: p.t,
         qIndex: p.qIndex,
         order: itemChoiceOrder,
-        showTopic: true,
+        showTopic: ex.topics.length > 1,
         deferred: isDeferred,
         hintText: pickHint(p.t, p.q),
         onSelect: updateAnsweredCount,
@@ -1505,7 +1640,7 @@ function examRunner(examId){
 // --- Natural Vietnamese Practice Command Parser ---
 function parsePracticePrompt(text){
   var s = normVi(text);
-  var cfg = { grade:'all', subj:'all', diff:'all', qtype:'all', count:10, keyword:'' };
+  var cfg = { grade:'8', stageCap:'all', subj:'all', diff:'all', qtype:'all', count:10, keyword:'' };
   if (!s) return cfg;
 
   var cm = s.match(/(\d+)\s*(cau|bai)/);
@@ -1515,11 +1650,21 @@ function parsePracticePrompt(text){
     s = s.replace(cm[0], ' ');
   }
 
+  if (/hoc ki 1|hk1|giua ki 1/.test(s)) {
+    cfg.stageCap = /giua ki 1/.test(s) ? '1' : '2';
+    s = s.replace(/giua ki 1|hoc ki 1|hk1/g, ' ');
+  } else if (/giua ki 2/.test(s)) {
+    cfg.stageCap = '3';
+    s = s.replace(/giua ki 2/g, ' ');
+  }
+
   var gm = s.match(/(?:lop|khtn|l)\s*([6-9])/);
   if (!gm) gm = s.match(/\b([6-9])\b/);
   if (gm) {
     cfg.grade = gm[1];
     s = s.replace(gm[0], ' ');
+  } else {
+    cfg.grade = 'all';
   }
 
   if (/van dung cao|rat kho/.test(s)) {
@@ -1562,7 +1707,7 @@ function parsePracticePrompt(text){
   return cfg;
 }
 
-// --- VIEW 6: Custom Practice Builder & Runner ---
+// --- VIEW 6: Custom Practice Builder (Now with Strict Stage / Semester Cap!) ---
 function practice(presetMode){
   updateNavActive('luyen-tap');
   var mistakesMap = loadMistakes();
@@ -1571,7 +1716,9 @@ function practice(presetMode){
   });
 
   var state = {
-    grade: 'all',
+    grade: '8',
+    stageCap: '1', // default to Stage 1 so students don't get future semester questions unless chosen!
+    topicId: 'all',
     subj: 'all',
     diff: 'all',
     qtype: 'all',
@@ -1580,6 +1727,15 @@ function practice(presetMode){
     onlyMistakes: presetMode === 'cau-sai',
     sortEasyToHard: true
   };
+
+  function allowedByStageCap(t){
+    if (state.stageCap === 'all' || !t.stage) return true;
+    if (state.stageCap === '1') return t.stage === 1;
+    if (state.stageCap === '2') return t.stage <= 2; // Trọn HK1
+    if (state.stageCap === '3only') return t.stage === 3; // Nửa đầu HK2
+    if (state.stageCap === 'hk2') return t.term === 'HK2'; // Trọn HK2
+    return true;
+  }
 
   function collectPool(){
     if (state.onlyMistakes) {
@@ -1592,10 +1748,13 @@ function practice(presetMode){
     var pool = [];
     D.forEach(function(t){
       if (state.grade !== 'all' && String(t.grade) !== String(state.grade)) return;
+      if (state.topicId !== 'all' && t.id !== state.topicId) return;
+      if (state.topicId === 'all' && !allowedByStageCap(t)) return;
       if (state.subj !== 'all' && t.subj !== state.subj) return;
       var topicText = normVi(t.title + ' ' + t.formulas.join(' ') + ' ' + t.theory.join(' '));
       var kw = normVi(state.keyword);
-      getTopicPool(t, 4).forEach(function(item){
+      var rounds = state.topicId !== 'all' ? 7 : 4;
+      getTopicPool(t, rounds).forEach(function(item){
         var q = item.q;
         var qd = item.d;
         if (state.diff === '12' && qd > 2) return;
@@ -1615,28 +1774,36 @@ function practice(presetMode){
   function renderBuilder(){
     if (currentCleanup) { currentCleanup(); currentCleanup = null; }
     var h =
-      '<div class="crumb"><a href="#/">Trang chủ</a> › Chọn bài luyện</div>' +
-      '<h1>Tạo bộ đề luyện Random theo yêu cầu</h1>' +
-      '<p class="muted">Mỗi lần tạo đều sinh câu hỏi mới từ kho mở rộng & biến thể động. Khi tải/in tách riêng <b>Phần 1: Đề (Không đáp án)</b> và <b>Phần 2: Đáp án</b> khóa theo Mã đề.</p>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › Chọn bài luyện khóa theo giai đoạn</div>' +
+      '<h1>Tạo bộ đề luyện Random (Khóa chặt theo bài / học kì đã học)</h1>' +
+      '<p class="muted">Chọn <b>đúng 1 bài vừa học</b> hoặc <b>giai đoạn hiện tại ở trường</b> để hệ thống chỉ random câu hỏi trong phạm vi đó — tuyệt đối không chèn kiến thức học kì sau.</p>' +
       '<section class="card" style="margin-bottom:14px">' +
         '<label for="quick-cmd" style="display:block;font-weight:700;margin-bottom:6px">Yêu cầu nhanh</label>' +
         '<div class="row">' +
-          '<input type="text" id="quick-cmd" style="flex:1;min-width:220px" placeholder="Ví dụ: 10 câu hóa lớp 8 cơ bản, 10 câu lý lớp 7 vận dụng, 8 câu mol…">' +
+          '<input type="text" id="quick-cmd" style="flex:1;min-width:220px" placeholder="Ví dụ: 10 câu mol lớp 8, 10 câu hóa lớp 7 giữa kì 1, 10 câu tốc độ lớp 7…">' +
           '<button type="button" class="btn" id="apply-cmd">Áp dụng</button>' +
         '</div>' +
         '<div class="row" style="margin-top:8px">' +
-          '<span class="muted" style="font-size:.86rem">Gợi ý:</span>' +
-          '<button type="button" class="chip" data-ex="10 câu hóa lớp 7 cơ bản">10 câu hóa 7 dễ</button>' +
-          '<button type="button" class="chip" data-ex="10 câu hóa lớp 8 vận dụng">10 câu hóa 8 vận dụng</button>' +
-          '<button type="button" class="chip" data-ex="10 câu lý lớp 8 thông hiểu">10 câu lý 8 thông hiểu</button>' +
-          '<button type="button" class="chip" data-ex="12 câu sinh lớp 8">12 câu sinh 8</button>' +
+          '<span class="muted" style="font-size:.86rem">Ví dụ khóa đúng bài:</span>' +
+          '<button type="button" class="chip" data-ex="10 câu mol lớp 8">10 câu riêng bài Mol 8</button>' +
+          '<button type="button" class="chip" data-ex="10 câu hóa lớp 7 giữa kì 1">10 câu Hóa 7 trước GK1</button>' +
+          '<button type="button" class="chip" data-ex="10 câu tốc độ lớp 7">10 câu riêng Tốc độ 7</button>' +
+          '<button type="button" class="chip" data-ex="10 câu áp suất lớp 8">10 câu riêng Áp suất 8</button>' +
         '</div>' +
       '</section>' +
       '<section class="card">' +
         '<div class="form-grid">' +
           '<div class="field"><label for="p-grade">Lớp</label><select id="p-grade">' +
-            '<option value="all">Tất cả (6–9)</option><option value="7">Lớp 7 (Trọng tâm)</option><option value="8">Lớp 8 (Trọng tâm)</option><option value="6">Lớp 6</option><option value="9">Lớp 9</option>' +
+            '<option value="7">Lớp 7</option><option value="8">Lớp 8</option><option value="6">Lớp 6</option><option value="9">Lớp 9</option><option value="all">Tất cả (6–9)</option>' +
           '</select></div>' +
+          '<div class="field"><label for="p-stage">Giai đoạn đã học trên lớp</label><select id="p-stage">' +
+            '<option value="1">GĐ1: Nửa đầu HK1 (Trước Giữa kì I)</option>' +
+            '<option value="2">Trọn Học kì I (Không chèn HK2)</option>' +
+            '<option value="3only">GĐ3: Nửa đầu HK2 (Trước Giữa kì II)</option>' +
+            '<option value="hk2">Trọn Học kì II</option>' +
+            '<option value="all">Toàn bộ cả năm</option>' +
+          '</select></div>' +
+          '<div class="field"><label for="p-topic">Hoặc khóa cứng 1 bài cụ thể</label><select id="p-topic"></select></div>' +
           '<div class="field"><label for="p-subj">Môn / Mạch</label><select id="p-subj">' +
             '<option value="all">Tất cả môn</option><option value="hoa">Hóa học (Chất)</option><option value="ly">Vật lí (Năng lượng)</option><option value="sinh">Sinh học (Vật sống)</option><option value="td">Mở đầu / Trái Đất</option>' +
           '</select></div>' +
@@ -1649,13 +1816,9 @@ function practice(presetMode){
             '<option value="4">Mức 4: Vận dụng cao (Khó)</option>' +
             '<option value="34">Nâng cao (Mức 3 + Mức 4)</option>' +
           '</select></div>' +
-          '<div class="field"><label for="p-type">Dạng câu</label><select id="p-type">' +
-            '<option value="all">Trắc nghiệm + Điền số</option><option value="mc">Chỉ trắc nghiệm</option><option value="num">Chỉ điền số / tính toán</option>' +
-          '</select></div>' +
           '<div class="field"><label for="p-count">Số câu</label><select id="p-count">' +
-            '<option value="6">6 câu</option><option value="10">10 câu</option><option value="15">15 câu</option><option value="20">20 câu</option><option value="25">25 câu</option>' +
+            '<option value="6">6 câu</option><option value="10">10 câu (Chuẩn 15p)</option><option value="15">15 câu</option><option value="20">20 câu (Chuẩn GK)</option><option value="24">24 câu (Chuẩn CK)</option>' +
           '</select></div>' +
-          '<div class="field"><label for="p-kw">Từ khóa chủ đề</label><input type="text" id="p-kw" placeholder="VD: mol, áp suất, đòn bẩy, máu…"></div>' +
         '</div>' +
         '<div class="row" style="margin:8px 0 14px">' +
           '<label class="row" style="cursor:pointer"><input type="checkbox" id="p-order"> Sắp xếp câu hỏi tăng dần từ Dễ đến Khó</label>' +
@@ -1672,11 +1835,11 @@ function practice(presetMode){
     app.innerHTML = h;
 
     var elGrade = document.getElementById('p-grade');
+    var elStage = document.getElementById('p-stage');
+    var elTopic = document.getElementById('p-topic');
     var elSubj = document.getElementById('p-subj');
     var elDiff = document.getElementById('p-diff');
-    var elType = document.getElementById('p-type');
     var elCount = document.getElementById('p-count');
-    var elKw = document.getElementById('p-kw');
     var elOrder = document.getElementById('p-order');
     var elOnlyErr = document.getElementById('p-only-err');
     var elSummary = document.getElementById('p-summary');
@@ -1685,11 +1848,28 @@ function practice(presetMode){
     var btnPrintKey = document.getElementById('p-print-key');
     var cachedBuilderSpec = null;
 
+    function rebuildTopicDropdown(){
+      var gTopics = D.filter(function(t){
+        return (state.grade === 'all' || String(t.grade) === String(state.grade)) && allowedByStageCap(t);
+      }).sort(function(a,b){ return a.grade - b.grade || (a.order||99) - (b.order||99); });
+
+      var optsHtml = '<option value="all">-- Tất cả bài trong giai đoạn đã chọn (' + gTopics.length + ' bài) --</option>';
+      gTopics.forEach(function(t){
+        optsHtml += '<option value="' + t.id + '">' + (state.grade === 'all' ? 'Lớp ' + t.grade + ' – ' : '') + esc(t.title) + '</option>';
+      });
+      elTopic.innerHTML = optsHtml;
+      if (state.topicId !== 'all' && !gTopics.some(function(t){ return t.id === state.topicId; })) {
+        state.topicId = 'all';
+      }
+      elTopic.value = state.topicId;
+    }
+
     function syncInputs(){
       elGrade.value = state.grade;
+      elStage.value = state.stageCap;
+      rebuildTopicDropdown();
       elSubj.value = state.subj;
       elDiff.value = state.diff;
-      elType.value = state.qtype;
       if (!Array.prototype.some.call(elCount.options, function(o){ return String(o.value) === String(state.count); })) {
         var opt = document.createElement('option');
         opt.value = state.count;
@@ -1697,7 +1877,6 @@ function practice(presetMode){
         elCount.appendChild(opt);
       }
       elCount.value = String(state.count);
-      elKw.value = state.keyword;
       elOrder.checked = state.sortEasyToHard;
       if (elOnlyErr) elOnlyErr.checked = state.onlyMistakes;
       cachedBuilderSpec = null;
@@ -1709,15 +1888,16 @@ function practice(presetMode){
       var pool = collectPool();
       var take = Math.min(pool.length, Number(state.count) || 10);
       if (!pool.length) {
-        elSummary.innerHTML = '<b>Không tìm thấy câu hỏi phù hợp.</b> Hãy nới rộng bộ lọc hoặc đổi mức độ.';
+        elSummary.innerHTML = '<b>Không có câu hỏi khớp bộ lọc này.</b> Hãy chọn "Toàn bộ cả năm" hoặc đổi môn học.';
         btnStart.disabled = true;
         btnPrint.disabled = true;
         btnPrintKey.disabled = true;
       } else {
-        elSummary.innerHTML =
-          'Kho câu hỏi & biến thể khớp: <b>' + pool.length + '+ câu</b> · Sẽ random ra <b>' + take + ' câu</b>' +
-          (state.sortEasyToHard ? ' (sắp từ Dễ → Khó)' : '') +
-          ' · Dự kiến <b>~' + estMinutes(take, false) + ' phút</b>.';
+        var scopeNote = state.topicId !== 'all' && byId[state.topicId]
+          ? ('Khóa cứng duy nhất: <b>' + esc(byId[state.topicId].title) + '</b>')
+          : ('Khóa trong giai đoạn đã chọn · Ngân hàng khớp: <b>' + pool.length + '+ câu</b>');
+        elSummary.innerHTML = scopeNote + ' · Sẽ random ra <b>' + take + ' câu</b>' +
+          (state.sortEasyToHard ? ' (từ Dễ → Khó)' : '') + '.';
         btnStart.disabled = false;
         btnPrint.disabled = false;
         btnPrintKey.disabled = false;
@@ -1727,37 +1907,35 @@ function practice(presetMode){
     function pickItems(){
       var pool = collectPool();
       var take = Math.min(pool.length, Number(state.count) || 10);
-      var high = shuffle(pool.filter(function(x){ return x.weight >= 3; }));
-      var mid = shuffle(pool.filter(function(x){ return x.weight > 0 && x.weight < 3; }));
-      var low = shuffle(pool.filter(function(x){ return x.weight === 0; }));
-      var chosen = high.concat(mid, low).slice(0, take);
-      if (state.sortEasyToHard) {
-        chosen.sort(function(a, b){ return a.d - b.d; });
-      }
+      var seen = {};
+      var uniq = shuffle(pool).filter(function(x){
+        if (seen[x.q.q]) return false;
+        seen[x.q.q] = true;
+        return true;
+      });
+      var chosen = uniq.slice(0, take);
+      if (state.sortEasyToHard) chosen.sort(function(a, b){ return a.d - b.d; });
       return chosen;
     }
 
     function makeFreshBuilderSpec(){
       var picks = pickItems();
+      var singleT = state.topicId !== 'all' ? byId[state.topicId] : null;
       cachedBuilderSpec = window.KHTNPrint.prepare({
         prefix: state.grade === 'all' ? 'LT' : 'L' + state.grade,
-        docTitle: 'ĐỀ BÀI TẬP TỰ CHỌN KHTN',
-        subtitle: (state.grade !== 'all' ? 'Lớp ' + state.grade + ' · ' : '') + (state.subj !== 'all' ? SUBJ[state.subj] + ' · ' : '') + 'Sắp xếp từ Dễ đến Khó',
-        items: picks.map(function(p){ return { topicTitle: p.t.title.replace(/^Bài \d+:\s*/, ''), q: p.q }; })
+        docTitle: singleT ? ('ĐỀ KIỂM TRA 15 PHÚT – ' + singleT.title.toUpperCase()) : 'ĐỀ BÀI TẬP THEO GIAI ĐOẠN KHTN',
+        subtitle: singleT ? ('Lớp ' + singleT.grade + ' · Chỉ xoay quanh ' + singleT.title) : ('Lớp ' + state.grade + ' · Khóa chặt theo giai đoạn đã học'),
+        items: picks.map(function(p){ return { topicTitle: singleT ? '' : p.t.title.replace(/^Bài \d+:\s*/, ''), q: p.q }; })
       });
       return cachedBuilderSpec;
     }
 
-    function getBuilderSpec(){
-      return cachedBuilderSpec || makeFreshBuilderSpec();
-    }
-
-    elGrade.onchange = function(){ state.grade = elGrade.value; updateSummary(); };
+    elGrade.onchange = function(){ state.grade = elGrade.value; state.topicId = 'all'; rebuildTopicDropdown(); updateSummary(); };
+    elStage.onchange = function(){ state.stageCap = elStage.value; state.topicId = 'all'; rebuildTopicDropdown(); updateSummary(); };
+    elTopic.onchange = function(){ state.topicId = elTopic.value; updateSummary(); };
     elSubj.onchange = function(){ state.subj = elSubj.value; updateSummary(); };
     elDiff.onchange = function(){ state.diff = elDiff.value; updateSummary(); };
-    elType.onchange = function(){ state.qtype = elType.value; updateSummary(); };
     elCount.onchange = function(){ state.count = parseInt(elCount.value, 10) || 10; updateSummary(); };
-    elKw.oninput = function(){ state.keyword = elKw.value; updateSummary(); };
     elOrder.onchange = function(){ state.sortEasyToHard = elOrder.checked; updateSummary(); };
     if (elOnlyErr) elOnlyErr.onchange = function(){ state.onlyMistakes = elOnlyErr.checked; updateSummary(); };
 
@@ -1765,12 +1943,30 @@ function practice(presetMode){
     function applyPrompt(txt){
       var parsed = parsePracticePrompt(txt);
       state.grade = parsed.grade;
+      state.stageCap = parsed.stageCap;
       state.subj = parsed.subj;
       state.diff = parsed.diff;
-      state.qtype = parsed.qtype;
       state.count = parsed.count;
-      state.keyword = parsed.keyword;
+      state.keyword = '';
+      state.topicId = 'all';
       state.onlyMistakes = false;
+
+      // If prompt names a specific single lesson (e.g. "mol", "tốc độ", "áp suất", "hóa trị"), lock strictly to that 1 lesson!
+      if (parsed.keyword) {
+        var candidates = D.filter(function(t){
+          return (state.grade === 'all' || String(t.grade) === String(state.grade)) &&
+                 normVi(t.title).indexOf(parsed.keyword) > -1;
+        });
+        if (candidates.length === 1) {
+          state.grade = String(candidates[0].grade);
+          state.stageCap = 'all';
+          state.topicId = candidates[0].id;
+          state.subj = 'all';
+        } else {
+          state.stageCap = parsed.stageCap === 'all' ? 'all' : parsed.stageCap;
+          state.keyword = parsed.keyword;
+        }
+      }
       syncInputs();
     }
     document.getElementById('apply-cmd').onclick = function(){ applyPrompt(cmdInput.value); };
@@ -1782,12 +1978,15 @@ function practice(presetMode){
       };
     });
 
-    btnStart.onclick = function(){ runPracticeSession(pickItems()); };
+    btnStart.onclick = function(){
+      var singleT = state.topicId !== 'all' ? byId[state.topicId] : null;
+      runPracticeSession(pickItems(), singleT ? ('Luyện chuyên biệt: ' + singleT.title) : null);
+    };
     btnPrint.onclick = function(){
-      window.KHTNPrint.open(getBuilderSpec(), 'quiz', { onRegenerate: makeFreshBuilderSpec });
+      window.KHTNPrint.open(cachedBuilderSpec || makeFreshBuilderSpec(), 'quiz', { onRegenerate: makeFreshBuilderSpec });
     };
     btnPrintKey.onclick = function(){
-      window.KHTNPrint.open(getBuilderSpec(), 'key', { onRegenerate: makeFreshBuilderSpec });
+      window.KHTNPrint.open(cachedBuilderSpec || makeFreshBuilderSpec(), 'key', { onRegenerate: makeFreshBuilderSpec });
     };
 
     syncInputs();
@@ -1877,7 +2076,7 @@ function practice(presetMode){
   renderBuilder();
 }
 
-// --- VIEW 7: Placement Test (Kiểm tra nền) ---
+// --- VIEW 7: Placement Test ---
 function placement(g){
   if ([6,7,8,9].indexOf(g) === -1) g = 8;
   updateNavActive('');
@@ -1910,7 +2109,7 @@ function placement(g){
       '</div>' +
     '</div>' +
     '<div class="row between" style="margin-bottom:8px">' +
-      '<span class="muted">Mã đề: <b>' + esc(sheetSpec.code) + '</b> · ' + picks.length + ' câu ngẫu nhiên từ dễ đến trung bình.</span>' +
+      '<span class="muted">Mã đề: <b>' + esc(sheetSpec.code) + '</b> · ' + picks.length + ' câu cốt lõi từ lớp trước.</span>' +
       '<div class="row">' +
         '<button type="button" class="btn sm alt" id="pl-top-pdf">Tải / In 2 phần (Đề + Đáp án)</button>' +
         '<button type="button" class="btn sm subtle" id="pl-reroll">Random đề nền khác</button>' +
@@ -2039,7 +2238,7 @@ function notebook(initialTab){
       function matchingFormulaGroups(){
         var q = normVi(query);
         var groups = [];
-        D.forEach(function(t){
+        D.slice().sort(function(a,b){ return a.grade - b.grade || (a.order||99) - (b.order||99); }).forEach(function(t){
           if (gradeFilter !== 'all' && String(t.grade) !== gradeFilter) return;
           if (subjFilter !== 'all' && t.subj !== subjFilter) return;
           var hit = t.formulas.filter(function(f){
@@ -2058,7 +2257,7 @@ function notebook(initialTab){
           out +=
             '<div class="card" style="margin:10px 0">' +
               '<div class="row between">' +
-                '<div>' + tag(t.subj) + ' <a href="#/bai/' + t.id + '" style="font-weight:700">Lớp ' + t.grade + ' – ' + esc(t.title) + '</a></div>' +
+                '<div>' + tag(t.subj) + ' <a href="#/bai/' + t.id + '" style="font-weight:700">Lớp ' + t.grade + (t.term ? ' (' + t.term + ')' : '') + ' – ' + esc(t.title) + '</a></div>' +
                 '<a href="#/bai/' + t.id + '" style="font-size:.88rem">Học bài →</a>' +
               '</div>' +
               g.formulas.map(function(f){ return '<div class="formula">' + esc(f) + '</div>'; }).join('') +
@@ -2110,7 +2309,7 @@ function notebook(initialTab){
       };
 
       if (!mList.length) {
-        box.innerHTML = '<div class="empty">Hiện chưa có câu làm sai nào được ghi nhận. Khi làm bài hoặc đề kiểm tra, các câu sai sẽ tự động lưu ở đây để bạn củng cố lại.</div>';
+        box.innerHTML = '<div class="empty">Hiện chưa có câu làm sai nào được ghi nhận.</div>';
       } else {
         var out =
           '<div class="row between" style="margin-bottom:12px">' +
@@ -2140,7 +2339,7 @@ function notebook(initialTab){
   render();
 }
 
-// --- VIEW 9: Progress ---
+// --- VIEW 9: Progress (Includes Circular 22 Gradebooks for Grade 7 & Grade 8) ---
 function progress(){
   updateNavActive('tien-do');
   var prog = loadProg();
@@ -2154,28 +2353,16 @@ function progress(){
   var doneExamIds = Object.keys(examStats).filter(function(id){ return examById[id]; });
 
   var h =
-    '<div class="crumb"><a href="#/">Trang chủ</a> › Tiến độ học tập</div>' +
-    '<h1>Tiến độ học tập & Lịch sử kiểm tra</h1>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › Sổ điểm & Tiến độ học tập</div>' +
+    '<h1>Sổ điểm Thông tư 22 & Tiến độ học tập</h1>' +
     '<div class="grid stats" style="margin-bottom:16px">' +
       '<div class="card"><div class="muted">Bài đạt chuẩn</div><div class="stat-val">' + completed + ' / ' + D.length + '</div></div>' +
       '<div class="card"><div class="muted">Điểm TB bài học</div><div class="stat-val">' + avgScore + '</div></div>' +
       '<div class="card"><div class="muted">Đề KT đã làm</div><div class="stat-val">' + doneExamIds.length + ' / ' + EXAMS.length + '</div></div>' +
       '<div class="card"><div class="muted">Câu cần ôn lại</div><div class="stat-val">' + mistakeCount + '</div></div>' +
-    '</div>';
-
-  if (doneExamIds.length) {
-    h += '<section class="card" style="margin-bottom:16px"><h2 style="margin-top:0">Kết quả đề kiểm tra (15 phút · 45 phút · Giữa kì · Cuối kì)</h2><div class="grid two">';
-    doneExamIds.forEach(function(id){
-      var ex = examById[id], st = examStats[id];
-      h +=
-        '<div class="card soft">' +
-          '<div class="row between"><b>' + esc(ex.title) + ' (Lớp ' + ex.grade + ')</b><span class="badge ' + (st.best >= 0.67 ? 'ok' : 'warn') + '">' + score10(st.best) + '/10</span></div>' +
-          '<div class="muted" style="font-size:.88rem;margin:4px 0 8px">Gần nhất: ' + score10(st.last) + '/10 · ' + st.attempts + ' lượt làm</div>' +
-          '<a class="btn sm alt" href="#/lam-de/' + id + '">Random đề mới</a>' +
-        '</div>';
-    });
-    h += '</div></section>';
-  }
+    '</div>' +
+    '<div id="prog-gb-7"></div>' +
+    '<div id="prog-gb-8"></div>';
 
   if (meta.lastPlacement) {
     var lp = meta.lastPlacement;
@@ -2199,7 +2386,7 @@ function progress(){
   }
 
   h += '<div class="grid two">';
-  h += '<section class="card"><h2 style="margin-top:0">Tiến độ theo lớp</h2>';
+  h += '<section class="card"><h2 style="margin-top:0">Tiến độ bài học theo lớp</h2>';
   [7,8,6,9].forEach(function(g){
     var l = D.filter(function(t){ return t.grade === g; });
     var p = pct(l);
@@ -2223,27 +2410,10 @@ function progress(){
   });
   h += '</section></div>';
 
-  var weakLessons = D.filter(function(t){ var b = best(t.id); return b != null && b < 0.67; });
-  h += '<h2>Bài cần củng cố lại (dưới 6,7 / 10)</h2>';
-  if (weakLessons.length) {
-    h += '<div class="grid">';
-    weakLessons.forEach(function(t){
-      h +=
-        '<a class="card" href="#/bai/' + t.id + '">' +
-          tag(t.subj) +
-          '<h3 style="margin:.4em 0 .2em">' + esc(t.title) + '</h3>' +
-          '<div class="muted">Lớp ' + t.grade + ' · Điểm hiện tại: ' + score10(best(t.id)) + '/10</div>' +
-        '</a>';
-    });
-    h += '</div>';
-  } else {
-    h += '<div class="card soft muted">Chưa có bài nào dưới 6,7/10.</div>';
-  }
-
   h +=
     '<h2>Quản lý dữ liệu trên thiết bị</h2>' +
     '<div class="card">' +
-      '<p class="muted" style="margin-top:0">Bạn có thể sao lưu tiến độ để chuyển sang iPad/máy khác hoặc xóa toàn bộ dữ liệu học tập trên thiết bị này.</p>' +
+      '<p class="muted" style="margin-top:0">Sao lưu sổ điểm & tiến độ sang thiết bị khác hoặc xóa dữ liệu trên máy này.</p>' +
       '<div class="row">' +
         '<button type="button" class="btn sm alt" id="btn-export">Sao lưu tiến độ (JSON)</button>' +
         '<button type="button" class="btn sm subtle" id="btn-import">Khôi phục từ tệp</button>' +
@@ -2253,10 +2423,12 @@ function progress(){
     '</div>';
 
   app.innerHTML = h;
+  mountGradebookWidget(document.getElementById('prog-gb-7'), 7);
+  mountGradebookWidget(document.getElementById('prog-gb-8'), 8);
 
   document.getElementById('btn-export').onclick = function(){
     var payload = {
-      version: 5,
+      version: 6,
       exportedAt: new Date().toISOString(),
       progress: loadProg(),
       exams: loadExams(),
