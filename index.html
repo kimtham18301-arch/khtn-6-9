@@ -2,35 +2,61 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SciBook – Pastel Science Book · KHTN 6–9</title>
-<meta name="description" content="SciBook: quyển sách pastel tự học và rèn đề Khoa học tự nhiên lớp 6, 7, 8, 9 theo Chương trình GDPT 2018 và Thông tư 22 Bộ GD&ĐT.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Học Tốt KHTN 6–9 (SciBook) – Tự học &amp; Luyện đề Khoa học tự nhiên miễn phí</title>
+<meta name="description" content="Trang web tự học, tra cứu công thức và làm đề kiểm tra 15 phút, Giữa kì, Cuối kì môn Khoa học tự nhiên lớp 6, 7, 8, 9. Dễ dùng cho mọi lứa tuổi, miễn phí, không cần đăng nhập.">
+<meta name="theme-color" content="#6d5dfc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KHTN 6–9">
+
+<!-- Open Graph / Chia sẻ đẹp trên Zalo, Messenger, Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:site_name" content="SciBook – Học Tốt KHTN 6–9">
+<meta property="og:title" content="Học Tốt Khoa Học Tự Nhiên Lớp 6, 7, 8, 9 – Miễn phí &amp; Cực dễ dùng">
+<meta property="og:description" content="50 bài học dễ hiểu, 630+ câu hỏi từ Dễ đến Khó, 44 đề kiểm tra 15p · Giữa kì · Cuối kì chuẩn Bộ GD&amp;ĐT. Bấm vào học ngay hoặc in PDF kèm đáp án riêng, không cần đăng nhập!">
+<meta property="og:url" content="https://kimtham18301-arch.github.io/khtn-6-9/">
+<meta property="og:image" content="https://kimtham18301-arch.github.io/khtn-6-9/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ede9fe'/%3E%3Cpath d='M5 8c4-1.2 8 0 11 2.5C19 8 23 6.8 27 8v15c-4-1.2-8 0-11 2.5C13 23 9 21.8 5 23V8z' fill='%23fff' stroke='%236d5dfc' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M16 10.5v15' stroke='%23f472b6' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/style.css?v=20261126h">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css?v=20261126v">
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="#/">
+<header class="top" id="site-header">
+  <a class="brand" href="#/" aria-label="Về trang chủ Học Tốt KHTN 6–9">
     <svg class="brand-book" viewBox="0 0 28 24" width="28" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M2 4c4-1 8 0 12 2.5C18 4 22 3 26 4v15c-4-1-8 0-12 2.5C10 19 6 18 2 19V4z"/>
       <path d="M14 6.5v15"/>
     </svg>
     <span>
-      <strong>SciBook</strong>
-      <small>Pastel Science Book · 6–9</small>
+      <strong>KHTN 6–9 · SciBook</strong>
+      <small>Học dễ hiểu · Không cần tài khoản</small>
     </span>
   </a>
-  <nav id="main-nav" aria-label="Mục lục sách">
-    <a href="#/lop/6" data-nav="lop-6">Tập 6</a>
-    <a href="#/lop/7" data-nav="lop-7">Tập 7</a>
-    <a href="#/lop/8" data-nav="lop-8">Tập 8</a>
-    <a href="#/lop/9" data-nav="lop-9">Tập 9</a>
-    <a href="#/de-kiem-tra/8" data-nav="de-kiem-tra">Đề kiểm tra</a>
-    <a href="#/luyen-tap" data-nav="luyen-tap">Luyện theo bài</a>
-    <a href="#/so-tay" data-nav="so-tay">Sổ tay</a>
-    <a href="#/tien-do" data-nav="tien-do">Sổ điểm</a>
+
+  <nav id="main-nav" aria-label="Menu chính">
+    <a href="#/" data-nav="home">🏠 Trang chủ</a>
+    <a href="#/lop/6" data-nav="lop-6">Lớp 6</a>
+    <a href="#/lop/7" data-nav="lop-7">Lớp 7</a>
+    <a href="#/lop/8" data-nav="lop-8">Lớp 8</a>
+    <a href="#/lop/9" data-nav="lop-9">Lớp 9</a>
+    <a href="#/de-kiem-tra/8" data-nav="de-kiem-tra" id="nav-exam-link">📝 Đề kiểm tra</a>
+    <a href="#/in-nhanh" data-nav="in-nhanh">🖨️ In đề A4</a>
+    <a href="#/so-tay" data-nav="so-tay">📖 Công thức</a>
+    <a href="#/tien-do" data-nav="tien-do">🏆 Sổ điểm</a>
   </nav>
-  <button type="button" class="theme-btn" id="theme-toggle" aria-label="Đổi chế độ đọc sách">Đọc ban đêm</button>
+
+  <div class="top-actions">
+    <button type="button" class="tool-pill" id="font-toggle" title="Đổi cỡ chữ to hơn cho dễ đọc" aria-label="Đổi cỡ chữ">A+ Chữ to</button>
+    <button type="button" class="tool-pill" id="theme-toggle" title="Đổi chế độ nền sáng hoặc tối" aria-label="Đổi chế độ sáng tối">🌙 Ban đêm</button>
+    <button type="button" class="tool-pill share-pill" id="share-btn" title="Sao chép link gửi qua Zalo hoặc Messenger" aria-label="Chia sẻ link">📤 Chia sẻ</button>
+    <button type="button" class="tool-pill help-pill" id="help-btn" title="Xem hướng dẫn sử dụng cực dễ" aria-label="Hướng dẫn sử dụng">❓ Hướng dẫn</button>
+  </div>
 </header>
 
 <div class="desk-stage">
@@ -38,24 +64,58 @@
     <div class="book-ribbon" aria-hidden="true"></div>
     <main id="app" class="book-pages" tabindex="-1"></main>
     <footer class="book-colophon">
-      <span>✦ <b>SciBook</b> · Pastel Science Study Book · GDPT 2018 &amp; Thông tư 22/2021/TT-BGDĐT ✦</span>
-      <small>Bài học, nét nháp và sổ điểm được lưu tự động ngay trên thiết bị của bạn.</small>
+      <span>✦ <b>Học Tốt KHTN 6–9 (SciBook)</b> · Bám sát Chương trình GDPT 2018 của Bộ GD&amp;ĐT ✦</span>
+      <small>Miễn phí 100% · Không cần đăng kí tài khoản · Kết quả học và sổ điểm tự lưu ngay trên máy của bạn.</small>
     </footer>
   </div>
 </div>
 
+<!-- Thanh điều hướng dưới cùng trên điện thoại (giống Zalo / ứng dụng quen thuộc) -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Menu nhanh trên điện thoại">
+  <a href="#/" data-bnav="home">
+    <span class="bnav-ico" aria-hidden="true">🏠</span>
+    <span>Trang chủ</span>
+  </a>
+  <a href="#/lop/8" data-bnav="lop" id="bnav-grade-link">
+    <span class="bnav-ico" aria-hidden="true">📚</span>
+    <span id="bnav-grade-lbl">Học bài</span>
+  </a>
+  <a href="#/de-kiem-tra/8" data-bnav="de-kiem-tra" id="bnav-exam-link">
+    <span class="bnav-ico" aria-hidden="true">📝</span>
+    <span>Đề KT</span>
+  </a>
+  <a href="#/in-nhanh" data-bnav="in-nhanh">
+    <span class="bnav-ico" aria-hidden="true">🖨️</span>
+    <span>In A4</span>
+  </a>
+  <a href="#/so-tay" data-bnav="so-tay">
+    <span class="bnav-ico" aria-hidden="true">📖</span>
+    <span>Công thức</span>
+  </a>
+</nav>
+
 <div id="print-modal" class="modal" hidden aria-modal="true" role="dialog" aria-labelledby="print-modal-title"></div>
+<div id="info-modal" class="modal" hidden aria-modal="true" role="dialog" aria-labelledby="info-modal-title"></div>
+<div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
 <div id="print-root" class="print-only"></div>
 
-<script src="js/data/lop6.js?v=20261126h"></script>
-<script src="js/data/lop7.js?v=20261126h"></script>
-<script src="js/data/lop8.js?v=20261126h"></script>
-<script src="js/data/lop9.js?v=20261126h"></script>
-<script src="js/data/exams.js?v=20261126h"></script>
-<script src="js/mathfmt.js?v=20261126h"></script>
-<script src="js/qbank.js?v=20261126h"></script>
-<script src="js/pad.js?v=20261126h"></script>
-<script src="js/print.js?v=20261126h"></script>
-<script src="js/app.js?v=20261126h"></script>
+<script src="js/data/lop6.js?v=20261126v"></script>
+<script src="js/data/lop7.js?v=20261126v"></script>
+<script src="js/data/lop8.js?v=20261126v"></script>
+<script src="js/data/lop9.js?v=20261126v"></script>
+<script src="js/data/types.js?v=20261126v"></script>
+<script src="js/data/exams.js?v=20261126v"></script>
+<script src="js/mathfmt.js?v=20261126v"></script>
+<script src="js/qbank.js?v=20261126v"></script>
+<script src="js/pad.js?v=20261126v"></script>
+<script src="js/print.js?v=20261126v"></script>
+<script src="js/app.js?v=20261126v"></script>
+<script>
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
 </body>
 </html>

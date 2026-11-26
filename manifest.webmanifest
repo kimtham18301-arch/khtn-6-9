@@ -1,0 +1,23 @@
+{
+  "name": "Học Tốt KHTN 6–9 (SciBook)",
+  "short_name": "KHTN 6–9",
+  "description": "Tự học, tra cứu công thức và luyện đề Khoa học tự nhiên lớp 6, 7, 8, 9 miễn phí, dễ dùng cho mọi người.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f4ff",
+  "theme_color": "#6d5dfc",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

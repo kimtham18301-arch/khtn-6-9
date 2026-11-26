@@ -21,6 +21,167 @@ function shuffle(a){
 // 1. NGÂN HÀNG CÂU HỎI TĨNH BỔ SUNG CHO CÁC BÀI LÍ THUYẾT / SINH HỌC / THỰC HÀNH
 // ============================================================================
 var EXTRA_STATIC = {
+  // --- BỔ SUNG TRẮC NGHIỆM LÍ THUYẾT CHO CÁC BÀI TÍNH TOÁN LỚP 7 & LỚP 8 ---
+  'l7-nguyen-tu': [
+    {d:1,cat:'lt',q:'Trong nguyên tử, hạt mang điện tích âm (−1) chuyển động xung quanh hạt nhân là hạt nào?',o:['Electron','Proton','Neutron','Hạt nhân'],w:'Lớp vỏ nguyên tử chứa các hạt electron mang điện tích −1.'},
+    {d:1,cat:'lt',q:'Vì sao nguyên tử luôn trung hòa về điện ở trạng thái bình thường?',o:['Vì số proton (+1) trong hạt nhân luôn bằng số electron (−1) ở lớp vỏ','Vì nguyên tử chỉ chứa toàn hạt neutron','Vì proton và neutron có điện tích trái dấu nhau','Vì các electron đứng yên trong hạt nhân'],w:'Tổng điện tích dương của các proton cân bằng đúng với tổng điện tích âm của các electron.'},
+    {d:2,cat:'lt',q:'Theo mô hình nguyên tử Rutherford – Bohr, lớp electron thứ hai (tính từ trong ra ngoài) chứa tối đa bao nhiêu electron?',o:['8 electron','2 electron','4 electron','18 electron'],w:'Lớp thứ nhất chứa tối đa 2e, lớp thứ hai chứa tối đa 8e.'},
+    {d:2,cat:'lt',q:'Đơn vị khối lượng nguyên tử (amu) được dùng vì lí do nào sau đây?',o:['Vì khối lượng nguyên tử tính bằng gam hoặc kilôgam quá nhỏ, rất bất tiện khi ghi chép','Vì nguyên tử không có khối lượng','Vì 1 amu đúng bằng 1 kilôgam','Vì chỉ dùng để đo thể tích chất khí'],w:'1 amu ≈ 1,6605 × 10⁻²⁴ g giúp biểu diễn khối lượng nguyên tử gọn và dễ so sánh.'}
+  ],
+  'l7-phan-tu': [
+    {d:1,cat:'lt',q:'Dãy chất nào sau đây chỉ gồm toàn các HỢP CHẤT?',o:['H₂O, CO₂, NaCl, NH₃','O₂, H₂, N₂, Fe','H₂O, O₂, Cu, NaCl','Cl₂, O₃, He, Al'],w:'Hợp chất được tạo nên từ 2 nguyên tố hóa học trở lên.'},
+    {d:2,cat:'lt',q:'Tính chất chung điển hình của các hợp chất ion (như muối ăn NaCl, MgO) ở điều kiện thường là gì?',o:['Là chất rắn ở điều kiện thường, nhiệt độ nóng chảy và nhiệt độ sôi cao','Luôn là chất khí ở điều kiện thường','Rất dễ bay hơi ở nhiệt độ phòng','Không tan trong bất kì dung môi nào'],w:'Lực hút tĩnh điện giữa các ion ngược dấu rất bền nên hợp chất ion là chất rắn khó nóng chảy.'},
+    {d:2,cat:'lt',q:'Bản chất của liên kết cộng hóa trị trong các phân tử như H₂, O₂, H₂O, CO₂ là gì?',o:['Sự dùng chung một hay nhiều cặp electron giữa hai nguyên tử','Sự nhường hẳn electron của kim loại cho khí hiếm','Lực hút từ trường giữa hai cực nam châm','Sự trộn lẫn cơ học không có liên kết'],w:'Các nguyên tử phi kim góp chung electron tạo thành các cặp e dùng chung.'}
+  ],
+  'l7-toc-do': [
+    {d:1,cat:'lt',q:'Đơn vị đo tốc độ hợp pháp trong hệ đo lường quốc tế SI là gì?',o:['Mét trên giây (m/s)','Kilômét nhân giờ (km·h)','Giây trên mét (s/m)','Niutơn trên mét (N/m)'],w:'Quãng đường chuẩn SI là mét (m), thời gian là giây (s) nên đơn vị tốc độ là m/s.'},
+    {d:2,cat:'lt',q:'Trên cùng một hệ trục đồ thị quãng đường – thời gian (s – t) của hai xe chuyển động đều, đường biểu diễn của xe A dốc hơn xe B cho biết điều gì?',o:['Tốc độ của xe A lớn hơn tốc độ của xe B','Xe A đi chậm hơn xe B','Xe A đang đứng yên','Hai xe có tốc độ bằng nhau'],w:'Trong cùng khoảng thời gian t, đường dốc hơn đi được quãng đường s lớn hơn nên tốc độ lớn hơn.'},
+    {d:2,cat:'lt',q:'Vì sao khi trời mưa đường trơn trượt, người lái xe phải GIẢM tốc độ và TĂNG khoảng cách an toàn với xe phía trước?',o:['Vì lực ma sát giảm làm quãng đường phanh dài hơn, dễ xảy ra va chạm nếu đi sát','Vì trời mưa làm khối lượng xe giảm đi một nửa','Vì đồng hồ đo tốc độ không hoạt động khi trời mưa','Để xe tiêu tốn nhiều xăng hơn'],w:'Đường trơn giảm ma sát bám đường nên xe trượt dài hơn khi phanh gấp.'}
+  ],
+  'l7-anh-sang': [
+    {d:1,cat:'lt',q:'Trong môi trường trong suốt và đồng tính, ánh sáng truyền đi theo đường nào?',o:['Theo đường thẳng','Theo đường gấp khúc bất kì','Theo đường xoắn ốc','Theo đường tròn khép kín'],w:'Định luật truyền thẳng của ánh sáng trong môi trường trong suốt và đồng tính.'},
+    {d:2,cat:'lt',q:'Hiện tượng NHẬT THỰC toàn phần quan sát được ở nơi trên Trái Đất nằm trong vùng nào?',o:['Vùng bóng tối của Mặt Trăng in trên mặt đất (khi Mặt Trăng nằm giữa Mặt Trời và Trái Đất)','Vùng bóng tối của Trái Đất che Mặt Trăng','Nơi đang là ban đêm trên Trái Đất','Khi Mặt Trời nằm giữa Trái Đất và Mặt Trăng'],w:'Mặt Trăng che khuất hoàn toàn ánh sáng Mặt Trời chiếu tới vùng bóng tối trên Trái Đất.'},
+    {d:2,cat:'lt',q:'Phát biểu nào sau đây ĐÚNG về đường pháp tuyến tại điểm tới trên gương phẳng?',o:['Là đường thẳng vuông góc với mặt gương phẳng tại điểm tới','Là đường thẳng nằm trùng với mặt gương','Là tia sáng chiếu từ nguồn sáng tới gương','Luôn hợp với mặt gương một góc 45°'],w:'Pháp tuyến luôn vuông góc (90°) với mặt gương tại điểm tới I.'}
+  ],
+  'l8-phan-ung': [
+    {d:1,cat:'lt',q:'Dấu hiệu nào sau đây chứng tỏ chắc chắn ĐÃ XẢY RA phản ứng hóa học khi cho viên kẽm vào dung dịch HCl?',o:['Có các bọt khí không màu sủi lên trên bề mặt viên kẽm và viên kẽm tan dần','Dung dịch vẫn trong suốt ở trong ống nghiệm thủy tinh','Ống nghiệm được kẹp trên giá đỡ','Viên kẽm chìm xuống đáy ống nghiệm do nặng hơn nước'],w:'Xuất hiện chất khí mới (H₂↑) và kẽm biến đổi thành muối tan là dấu hiệu phản ứng hóa học.'},
+    {d:2,cat:'lt',q:'Khi lập phương trình hóa học, thao tác nào sau đây bị NGHIÊM CẤM?',o:['Tự ý thay đổi các chỉ số nguyên tử có sẵn trong công thức hóa học của chất','Đặt hệ số nguyên trước công thức hóa học các chất','Kiểm tra lại số nguyên tử mỗi nguyên tố ở hai vế','Thay dấu nét đứt bằng dấu mũi tên sau khi cân bằng xong'],w:'Sửa chỉ số chân sẽ làm biến đổi chất đó thành một chất khác sai công thức hóa học.'},
+    {d:2,cat:'lt',q:'Phản ứng nào sau đây là phản ứng THU NHIỆT?',o:['Nung nóng để phân hủy đá vôi (CaCO₃) thành vôi sống và khí CO₂','Đốt cháy than đá trong lò nhiệt điện','Đốt cháy cồn y tế trong đèn cồn','Tôi vôi sống (CaO tác dụng với nước tỏa hơi nóng)'],w:'Nung đá vôi phải cung cấp nhiệt liên tục; ngừng đun phản ứng dừng ngay.'}
+  ],
+  'l8-mol': [
+    {d:1,cat:'lt',q:'1 mol nguyên tử sắt (Fe) và 1 mol phân tử nước (H₂O) có cùng đại lượng nào sau đây?',o:['Cùng chứa 6,022 × 10²³ hạt vi mô (nguyên tử Fe / phân tử H₂O)','Cùng có khối lượng bằng 56 gam','Cùng chiếm thể tích 24,79 lít ở 25 °C, 1 bar','Cùng là đơn chất kim loại'],w:'Theo định nghĩa mol, 1 mol bất kì chất nào cũng chứa N_A = 6,022 × 10²³ hạt đại diện.'},
+    {d:1,cat:'lt',q:'Đơn vị của khối lượng mol (kí hiệu M) là gì?',o:['Gam trên mol (g/mol)','Gam trên lít (g/L)','Mol trên lít (mol/L)','Lít trên mol (L/mol)'],w:'Khối lượng mol M là khối lượng tính bằng gam của 1 mol chất, đơn vị g/mol.'},
+    {d:2,cat:'lt',q:'Vì sao KHÔNG ĐƯỢC áp dụng công thức V = n × 24,79 (L) để tính thể tích của 1 mol nước lỏng (H₂O lỏng) ở 25 °C, 1 bar?',o:['Vì công thức V = n × 24,79 chỉ đúng cho CHẤT KHÍ, còn nước lỏng 1 mol (18 g) chỉ có thể tích khoảng 18 mL','Vì nước lỏng không có khối lượng mol','Vì nước lỏng nhẹ hơn khí hydrogen','Vì 1 mol nước lỏng chiếm tới 1000 lít'],w:'Khoảng cách giữa các phân tử lỏng rất nhỏ so với chất khí nên 24,79 L/mol chỉ áp dụng cho chất khí.'},
+    {d:2,cat:'lt',q:'Trong phòng thí nghiệm, muốn thu một chất khí NẶNG HƠN không khí (như CO₂, O₂) bằng phương pháp đẩy không khí, ta phải đặt ống nghiệm thu khí như thế nào?',o:['Đặt đứng ống nghiệm (miệng hướng lên trên)','Đặt úp ngược ống nghiệm (miệng hướng xuống dưới)','Bịt kín hoàn toàn không cho ống dẫn khí vào','Phải nhúng ngập trong dầu ăn'],w:'Khí nặng hơn không khí (d > 1) sẽ chìm xuống đáy bình và đẩy không khí nhẹ hơn ra ngoài miệng trên.'}
+  ],
+  'l8-dung-dich': [
+    {d:1,cat:'lt',q:'Trong dung dịch nước đường (hòa tan đường kính trắng vào cốc nước cất), chất nào đóng vai trò là DUNG MÔI?',o:['Nước cất','Đường kính trắng','Cốc thủy tinh','Không khí trên mặt cốc'],w:'Nước hòa tan đường nên nước là dung môi, đường là chất tan.'},
+    {d:2,cat:'lt',q:'Khi tăng nhiệt độ của nước thì độ tan của phần lớn các chất rắn (như đường, muối KNO₃) thay đổi như thế nào?',o:['Độ tan tăng lên (hòa tan được nhiều chất rắn hơn)','Độ tan giảm về 0','Không bao giờ thay đổi','Chất rắn biến hết thành chất khí'],w:'Phần lớn chất rắn tan nhiều hơn trong nước nóng so với nước lạnh.'},
+    {d:2,cat:'lt',q:'Khi rót thêm nước cất vào một cốc dung dịch muối ăn để pha loãng, đại lượng nào sau đây KHÔNG THAY ĐỔI?',o:['Khối lượng và số mol chất tan (muối ăn) có trong cốc','Khối lượng dung dịch trong cốc','Nồng độ phần trăm (C%) của dung dịch','Nồng độ mol (C_M) của dung dịch'],w:'Chỉ thêm dung môi nước nên lượng muối chất tan giữ nguyên, còn nồng độ giảm xuống.'}
+  ],
+  'l8-tinh-pthh': [
+    {d:1,cat:'lt',q:'Khi cho viên sủi vitamin C vào cốc nước ấm thấy sủi bọt mạnh và tan nhanh hơn hẳn so với cho vào cốc nước đá lạnh. Yếu tố nào đã làm tăng tốc độ phản ứng?',o:['Nhiệt độ','Áp suất khí quyển','Chất ức chế','Khối lượng cốc thủy tinh'],w:'Nhiệt độ cao làm các hạt chuyển động nhanh, va chạm hiệu quả nhiều hơn nên phản ứng nhanh hơn.'},
+    {d:2,cat:'lt',q:'Trong bài toán cho biết số mol của cả hai chất tham gia phản ứng (có 1 chất dư), khối lượng sản phẩm tạo thành PHẢI được tính theo chất nào?',o:['Tính theo chất phản ứng HẾT','Tính theo chất còn DƯ nhiều hơn','Tính theo trung bình cộng số mol hai chất','Cộng số mol cả hai chất lại rồi tính'],w:'Khi chất hết đã dùng cạn kiệt thì phản ứng dừng lại ngay, nên lượng sản phẩm phụ thuộc hoàn toàn vào chất hết.'},
+    {d:2,cat:'lt',q:'Vì sao trong thực tế sản xuất hóa học, hiệu suất phản ứng (H%) thường nhỏ hơn 100%?',o:['Do phản ứng không hoàn toàn, có phản ứng phụ hoặc hao hụt trong quá trình thu gom sản phẩm','Vì định luật bảo toàn khối lượng không đúng trong nhà máy','Vì chất xúc tác làm mất sản phẩm','Vì khối lượng mol thay đổi theo mùa'],w:'Sự thất thoát và phản ứng thuận nghịch làm lượng thực tế thu được nhỏ hơn lí thuyết.'}
+  ],
+  'l8-khoi-luong-rieng': [
+    {d:1,cat:'lt',q:'Áp lực là lực có đặc điểm nào sau đây?',o:['Là lực ép có phương vuông góc với mặt bị ép','Là mọi lực song song với mặt đất','Là lực đẩy Archimedes của nước','Chỉ là lực từ của nam châm'],w:'Áp lực phải là lực ép vuông góc với diện tích bị ép.'},
+    {d:2,cat:'lt',q:'Vì sao người ta phải mài thật mỏng và sắc lưỡi dao, lưỡi kéo hoặc vót nhọn đầu đinh?',o:['Để giảm diện tích bị ép S, giúp tăng mạnh áp suất p chỉ với lực tác dụng vừa phải','Để làm tăng diện tích bị ép S','Để làm giảm áp suất xuống nhỏ nhất','Để dao nặng thêm nhiều kilôgam'],w:'Theo p = F / S, diện tích S càng nhỏ thì áp suất p càng lớn giúp cắt gọt, đóng đinh dễ dàng.'},
+    {d:2,cat:'lt',q:'Trong bình thông nhau chứa cùng một chất lỏng đang đứng yên, mực mặt thoáng của chất lỏng ở các nhánh khác nhau có đặc điểm gì?',o:['Luôn nằm trên cùng một mặt phẳng ngang (cùng độ cao)','Nhánh nào to hơn thì mực nước thấp hơn','Nhánh nào hẹp hơn thì mực nước cao gấp đôi','Phụ thuộc vào hình dạng cong hay thẳng của ống'],w:'Quy tắc bình thông nhau: cùng một chất lỏng đứng yên thì các mặt thoáng ở cùng một độ cao.'}
+  ],
+  'l8-archimedes': [
+    {d:2,cat:'lt',q:'Độ lớn của lực đẩy Archimedes tác dụng lên một vật nhúng chìm hoàn toàn trong nước PHỤ THUỘC vào những yếu tố nào?',o:['Trọng lượng riêng của chất lỏng và thể tích của phần vật chìm trong chất lỏng','Khối lượng riêng của chất làm vật và độ sâu nhúng vật','Hình dạng tròn hay vuông của vật','Khối lượng của bình chứa nước'],w:'Theo F_A = d_lỏng · V_chìm, lực đẩy chỉ phụ thuộc bản chất chất lỏng và thể tích phần chìm.'}
+  ],
+  'l8-don-bay': [
+    {d:2,cat:'lt',q:'Cánh tay đòn của lực đối với trục quay O được xác định như thế nào?',o:['Là khoảng cách vuông góc từ trục quay O đến giá của lực','Là tổng chiều dài của cả thanh đòn bẩy','Là khoảng cách từ tay người đến mặt đất','Là trọng lượng của thanh đòn bẩy'],w:'Cánh tay đòn d luôn là đoạn hạ vuông góc từ tâm quay O tới đường thẳng chứa lực (giá của lực).'}
+  ],
+
+  // --- MỞ RỘNG TRẮC NGHIỆM LÍ THUYẾT & BÀI TẬP CỦNG CỐ CHO LỚP 6 & LỚP 9 ---
+  'l6-mo-dau': [
+    {d:1,cat:'lt',q:'Hoạt động nào sau đây là hoạt động nghiên cứu Khoa học tự nhiên?',o:['Tìm hiểu sự phát triển của mầm đậu xanh dưới ánh sáng Mặt Trời','Sáng tác bài thơ mùa thu','Dịch truyện cổ tích sang tiếng Anh','Luyện tập hát hợp xướng'],w:'Nghiên cứu quy luật thế giới tự nhiên và vật sống thuộc lĩnh vực KHTN.'},
+    {d:2,cat:'bt',q:'Đổi khối lượng 2,4 kg sang đơn vị gam (g).',n:2400,t:0,u:'g',w:'2,4 × 1000 = 2400 g.'},
+    {d:2,cat:'bt',q:'Đổi khoảng thời gian 15 phút sang đơn vị giây (s).',n:900,t:0,u:'s',w:'15 × 60 = 900 s.'},
+    {d:3,cat:'bt',q:'Nhiệt độ cơ thể người khỏe mạnh là 37 °C thì tương ứng bao nhiêu độ Fahrenheit (°F)? (biết °F = °C × 1,8 + 32)',n:98.6,t:0.1,u:'°F',w:'37 × 1,8 + 32 = 98,6 °F.'}
+  ],
+  'l6-the-chat': [
+    {d:1,cat:'lt',q:'Hiện tượng sương đọng thành giọt nước trên lá cây vào buổi sáng sớm là quá trình chuyển thể nào?',o:['Sự ngưng tụ (hơi nước trong không khí lạnh đi thành nước lỏng)','Sự nóng chảy','Sự đông đặc','Sự sôi'],w:'Hơi nước (thể khí) gặp lạnh chuyển thành giọt sương (thể lỏng) gọi là sự ngưng tụ.'},
+    {d:2,cat:'bt',q:'Ở áp suất thường, nước tinh khiết sôi ở bao nhiêu °C và trong suốt thời gian đang sôi nhiệt độ nước thay đổi thế nào?',o:['Sôi ở 100 °C và nhiệt độ giữ không đổi ở 100 °C trong suốt lúc đang sôi','Sôi ở 100 °C rồi tăng vọt lên 200 °C','Sôi ở 50 °C','Sôi ở 0 °C'],w:'Trong suốt quá trình sôi, nhiệt độ của chất lỏng không thay đổi.'},
+    {d:3,cat:'bt',q:'Phơi quần áo ướt ở nơi nắng ấm, thoáng gió và căng rộng quần áo ra giúp nước bay hơi nhanh hơn vì sao?',o:['Vì tăng đồng thời nhiệt độ, gió và diện tích mặt thoáng của nước','Vì làm nước đông đặc thành đá','Vì ngăn không cho không khí tiếp xúc','Vì làm tăng độ ẩm không khí'],w:'Tốc độ bay hơi phụ thuộc nhiệt độ, gió và diện tích mặt thoáng.'}
+  ],
+  'l6-oxy-kk': [
+    {d:1,cat:'lt',q:'Ba điều kiện cần thiết để sự cháy phát sinh và duy trì là gì?',o:['Chất cháy, khí oxygen và nhiệt độ đạt tới điểm cháy','Chất cháy, khí nitrogen và nước lạnh','Khí carbon dioxide, cát và gió','Ánh sáng đèn pin và nước'],w:'Thiếu 1 trong 3 yếu tố (chất cháy, O₂, nhiệt độ đủ cao) thì đám cháy sẽ tắt.'},
+    {d:2,cat:'bt',q:'Trong 500 lít không khí khô sạch có chứa khoảng bao nhiêu lít khí oxygen (biết O₂ chiếm khoảng 21% thể tích không khí)?',n:105,t:1,u:'L',w:'V(O₂) = 500 × 21% = 105 lít.'},
+    {d:3,cat:'bt',q:'Khi chảo dầu ăn trên bếp bốc cháy, vì sao người ta đậy kín vung nồi và tắt bếp thay vì tạt nước vào?',o:['Đậy vung giúp ngăn khí oxygen tiếp xúc với dầu đang cháy và tắt bếp hạ nhiệt; tạt nước làm dầu bắn bùng to hơn','Vì vung nồi sinh ra khí oxygen','Vì nước là chất dễ cháy','Để dầu sôi nhanh hơn'],w:'Ngăn nguồn O₂ và không dùng nước với đám cháy xăng dầu.'}
+  ],
+  'l6-hon-hop': [
+    {d:1,cat:'lt',q:'Nước cất y tế (chỉ gồm các phân tử H₂O) được xếp vào loại nào?',o:['Chất tinh khiết','Hỗn hợp không đồng nhất','Huyền phù','Nhũ tương'],w:'Chất tinh khiết chỉ gồm duy nhất 1 chất, không lẫn chất khác.'},
+    {d:2,cat:'bt',q:'Dầu ăn và nước không tan vào nhau mà tách thành hai lớp riêng biệt trong bình. Dùng dụng cụ và phương pháp nào để tách riêng dầu ăn ra khỏi nước?',o:['Dùng phễu chiết theo phương pháp chiết','Dùng nam châm hút dầu ăn','Dùng giấy lọc thông thường','Để ngoài nắng cho dầu ăn hóa rắn'],w:'Chiết dùng để tách hai chất lỏng không hòa tan vào nhau.'},
+    {d:3,cat:'bt',q:'Một hỗn hợp bột gồm bột sắt (Fe), muối ăn (NaCl) và cát mịn. Thứ tự các bước hợp lí nhất để tách riêng cả 3 chất là gì?',o:['Dùng nam châm hút sắt → hòa tan phần còn lại vào nước rồi lọc lấy cát → cô cạn nước lọc thu muối ăn','Đun chảy cả 3 chất ở 100 °C','Chỉ dùng giấy lọc khô','Đổ dầu ăn vào khuấy đều'],w:'Sắt có từ tính hút bằng nam châm; cát không tan tách bằng lọc; muối tan thu bằng cô cạn.'}
+  ],
+  'l6-te-bao': [
+    {d:1,cat:'lt',q:'Thành phần nào có ở tế bào thực vật giúp tế bào có hình dạng cứng cáp ổn định nhưng KHÔNG có ở tế bào động vật?',o:['Thành tế bào bằng cellulose','Màng tế bào','Tế bào chất','Nhân tế bào'],w:'Tế bào thực vật có thành tế bào và lục lạp mà tế bào động vật không có.'},
+    {d:2,cat:'bt',q:'Một tế bào vi khuẩn tiến hành phân chia liên tiếp 4 lần. Số tế bào con tạo thành là bao nhiêu?',n:16,t:0,u:'tế bào',w:'N = 2⁴ = 16 tế bào.'},
+    {d:3,cat:'bt',q:'Từ 3 tế bào ban đầu cùng phân chia liên tiếp 3 lần như nhau thì tổng số tế bào con thu được là bao nhiêu?',n:24,t:0,u:'tế bào',w:'Mỗi tế bào tạo 2³ = 8 tế bào con ⇒ 3 tế bào tạo 3 × 8 = 24 tế bào.'}
+  ],
+  'l6-phan-loai': [
+    {d:1,cat:'lt',q:'Sinh vật nào sau đây thuộc giới KHỞI SINH (cấu tạo tế bào nhân sơ)?',o:['Vi khuẩn','Nấm rơm','Cây lúa','Con mèo'],w:'Vi khuẩn có cấu tạo đơn bào nhân sơ thuộc giới Khởi sinh.'},
+    {d:2,cat:'bt',q:'Cá voi sống dưới biển nhưng nuôi con bằng sữa mẹ và hô hấp bằng phổi. Cá voi được xếp vào lớp động vật nào?',o:['Lớp Thú (Động vật có vú)','Lớp Cá','Lớp Lưỡng cư','Động vật không xương sống'],w:'Đẻ con và nuôi con bằng sữa là đặc điểm đặc trưng của lớp Thú.'},
+    {d:3,cat:'bt',q:'Nhóm thực vật nào đã có mạch dẫn trong thân rễ, sinh sản bằng bào tử và chưa có hoa, hạt?',o:['Dương xỉ','Rêu tường','Thông (Hạt trần)','Cam, bưởi (Hạt kín)'],w:'Dương xỉ có mạch dẫn nhưng sinh sản bằng bào tử, chưa có hạt.'}
+  ],
+  'l6-luc': [
+    {d:1,cat:'lt',q:'Dụng cụ dùng để đo độ lớn của lực trong phòng thí nghiệm là gì?',o:['Lực kế lò xo','Cân Rô-béc-van','Ống đong','Thước kẹp'],w:'Lực kế đo độ lớn lực theo đơn vị Niutơn (N).'},
+    {d:2,cat:'bt',q:'Một túi gạo có trọng lượng đo được là 35 N. Khối lượng của túi gạo đó khoảng bao nhiêu kg?',n:3.5,t:0.05,u:'kg',w:'m = P / 10 = 35 / 10 = 3,5 kg.'},
+    {d:3,cat:'bt',q:'Treo quả nặng vào một lò xo thẳng đứng có chiều dài tự nhiên 12 cm thì lò xo dãn ra tới chiều dài 15 cm. Độ biến dạng (độ dãn) của lò xo là bao nhiêu cm?',n:3,t:0,u:'cm',w:'Δl = l − l₀ = 15 − 12 = 3 cm.'}
+  ],
+  'l6-nang-luong': [
+    {d:1,cat:'lt',q:'Khi bật quạt điện hoạt động, điện năng đã chuyển hóa chủ yếu thành dạng năng lượng có ích nào?',o:['Cơ năng (động năng của cánh quạt tạo gió)','Hóa năng','Quang năng phát sáng','Năng lượng hạt nhân'],w:'Quạt biến đổi điện năng chủ yếu thành cơ năng quay cánh quạt và một phần nhỏ nhiệt năng hao phí.'},
+    {d:2,cat:'bt',q:'Một khẩu phần sữa cung cấp năng lượng 650 kJ. Đổi giá trị năng lượng này sang đơn vị Jun (J).',n:650000,t:0,u:'J',w:'650 × 1000 = 650 000 J.'},
+    {d:3,cat:'bt',q:'Một bóng đèn sợi đốt nhận 100 J điện năng nhưng chỉ tạo ra 12 J quang năng chiếu sáng, phần còn lại tỏa nhiệt. Năng lượng nhiệt hao phí bằng bao nhiêu J?',n:88,t:0,u:'J',w:'Theo bảo toàn năng lượng: W_hao phí = 100 − 12 = 88 J.'}
+  ],
+  'l6-trai-dat': [
+    {d:1,cat:'lt',q:'Vì sao hằng ngày ta nhìn thấy Mặt Trời mọc ở đằng Đông và lặn ở đằng Tây?',o:['Do Trái Đất tự quay quanh trục theo chiều từ Tây sang Đông','Do Mặt Trời quay quanh Trái Đất mỗi ngày 1 vòng','Do Mặt Trăng đẩy Mặt Trời đi','Do Ngân Hà đứng yên'],w:'Trái Đất tự quay từ Tây sang Đông nên ta thấy biểu kiến Mặt Trời chuyển động từ Đông sang Tây.'},
+    {d:2,cat:'bt',q:'Hiện tượng NGUYỆT THỰC xảy ra khi ba thiên thể sắp xếp theo vị trí nào?',o:['Trái Đất nằm ở giữa Mặt Trời và Mặt Trăng (Mặt Trăng đi vào bóng tối của Trái Đất)','Mặt Trăng nằm giữa Mặt Trời và Trái Đất','Sao Hỏa che khuất Mặt Trời','Ban ngày khi Trăng non'],w:'Trái Đất cản ánh sáng Mặt Trời chiếu tới Mặt Trăng gây hiện tượng nguyệt thực.'},
+    {d:3,cat:'bt',q:'Trái Đất tự quay hết 1 vòng (360°) quanh trục mất khoảng 24 giờ. Vậy trong 1 giờ Trái Đất quay được một góc khoảng bao nhiêu độ?',n:15,t:0,u:'°',w:'360° : 24 = 15° (tương ứng 1 múi giờ trên Trái Đất rộng 15° kinh tuyến).'}
+  ],
+  'l9-nang-luong-co': [
+    {d:1,cat:'lt',q:'Động năng của một vật phụ thuộc vào những đại lượng nào?',o:['Khối lượng và tốc độ chuyển động của vật','Chỉ phụ thuộc độ cao của vật','Màu sắc và nhiệt độ của vật','Thể tích bình chứa'],w:'Theo W_đ = ½mv², động năng phụ thuộc khối lượng m và tốc độ v.'},
+    {d:1,cat:'lt',q:'Đơn vị đo công suất trong hệ SI là gì?',o:['Oát (W)','Jun (J)','Niutơn (N)','Ampe (A)'],w:'Công suất P = A / t có đơn vị J/s gọi là Oát (W).'},
+    {d:2,cat:'lt',q:'Khi thả một quả bóng rơi tự do từ trên cao xuống đất (bỏ qua sức cản không khí), sự chuyển hóa cơ năng diễn ra như thế nào?',o:['Thế năng trọng trường giảm dần, động năng tăng dần','Động năng giảm dần, thế năng tăng dần','Cả động năng và thế năng đều giảm về 0','Cơ năng tăng lên gấp đôi'],w:'Độ cao h giảm làm thế năng giảm, tốc độ v tăng làm động năng tăng.'},
+    {d:3,cat:'bt',q:'Cần cẩu nâng đều kiện hàng khối lượng 500 kg lên cao 6 m trong thời gian 15 giây (lấy P = 10m). Công suất của cần cẩu là bao nhiêu kW?',n:2,t:0.05,u:'kW',w:'F = P = 5000 N ⇒ A = 5000 × 6 = 30 000 J ⇒ P = 30 000 / 15 = 2000 W = 2 kW.'}
+  ],
+  'l9-anh-sang': [
+    {d:1,cat:'lt',q:'Khi chiếu chùm ánh sáng trắng hẹp đi qua lăng kính thủy tinh thì chùm sáng tách thành dải màu từ đỏ đến tím. Hiện tượng này gọi là gì?',o:['Sự tán sắc ánh sáng','Phản xạ gương phẳng','Truyền thẳng ánh sáng','Nhiễm điện ánh sáng'],w:'Ánh sáng trắng là tập hợp nhiều ánh sáng đơn sắc bị lệch khác nhau qua lăng kính.'},
+    {d:2,cat:'bt',q:'Đặt vật sáng ngoài khoảng tiêu cự (d > f) trước một thấu kính hội tụ thì thu được ảnh có tính chất gì?',o:['Ảnh thật, ngược chiều với vật (hứng được trên màn chắn)','Ảnh ảo, cùng chiều và nhỏ hơn vật','Không tạo ra ảnh nào','Luôn là ảnh ảo lớn gấp 10 lần'],w:'Vật đặt ngoài tiêu cự thấu kính hội tụ luôn cho ảnh thật ngược chiều.'},
+    {d:3,cat:'bt',q:'Một kính lúp trên vành ghi kí hiệu "5x" (biết G = 25 / f với f tính bằng cm). Tiêu cự f của kính lúp này là bao nhiêu cm?',n:5,t:0,u:'cm',w:'f = 25 / 5 = 5 cm.'}
+  ],
+  'l9-dien-ohm': [
+    {d:1,cat:'lt',q:'Phát biểu nào sau đây đúng với nội dung định luật Ohm?',o:['Cường độ dòng điện chạy qua dây dẫn tỉ lệ thuận với hiệu điện thế đặt vào hai đầu dây và tỉ lệ nghịch với điện trở của dây','Cường độ dòng điện tỉ lệ thuận với điện trở của dây','Điện trở của dây dẫn tỉ lệ thuận với cường độ dòng điện','Hiệu điện thế luôn bằng 0 khi có điện trở'],w:'I = U / R (điện trở R chỉ phụ thuộc bản chất dây dẫn và nhiệt độ, không phụ thuộc U, I).'},
+    {d:1,cat:'lt',q:'Đơn vị đo điện trở là gì?',o:['Ôm (Ω)','Vôn (V)','Ampe (A)','Oát (W)'],w:'Điện trở đo bằng đơn vị Ôm (kí hiệu Ω).'},
+    {d:3,cat:'bt',q:'Mắc nối tiếp hai điện trở R₁ = 8 Ω và R₂ = 12 Ω vào hiệu điện thế U = 10 V. Cường độ dòng điện chạy trong mạch là bao nhiêu A?',n:0.5,t:0.01,u:'A',w:'R_nt = 8 + 12 = 20 Ω ⇒ I = U / R_nt = 10 / 20 = 0,5 A.'}
+  ],
+  'l9-nang-luong-dien': [
+    {d:1,cat:'lt',q:'Số ghi "220 V – 1000 W" trên vỏ một bàn là điện cho biết điều gì?',o:['Hiệu điện thế định mức 220 V và công suất tiêu thụ định mức 1000 W khi hoạt động bình thường','Bàn là chỉ dùng được ở 1000 V','Điện trở của bàn là bằng 1000 Ω','Cường độ dòng điện định mức là 220 A'],w:'220 V là điện áp định mức; 1000 W là công suất định mức khi mắc đúng vào 220 V.'},
+    {d:1,cat:'lt',q:'Công tơ điện lắp ở mỗi hộ gia đình dùng để đo đại lượng nào?',o:['Điện năng tiêu thụ (tính bằng kW·h hay "số điện")','Cường độ dòng điện tức thời','Hiệu điện thế của pin','Nhiệt độ dây điện'],w:'Mỗi số đếm trên công tơ điện ứng với 1 kW·h điện năng tiêu thụ.'},
+    {d:2,cat:'lt',q:'Biện pháp nào sau đây vừa tiết kiệm điện năng vừa an toàn hiệu quả trong gia đình?',o:['Thay đèn sợi đốt bằng đèn LED và tắt các thiết bị điện khi không sử dụng','Bật điều hòa 16 °C suốt ngày và mở toang cửa sổ','Dùng dây đồng to thay cho cầu chì','Cắm chung thật nhiều bếp điện công suất lớn vào một ổ cắm nhỏ'],w:'Đèn LED có hiệu suất phát sáng cao, ít tỏa nhiệt hao phí.'},
+    {d:3,cat:'bt',q:'Một máy nước nóng công suất 2 kW sử dụng trung bình mỗi ngày 0,5 giờ. Trong 30 ngày máy tiêu thụ bao nhiêu kW·h điện năng?',n:30,t:0.1,u:'kW·h',w:'A = P · t = 2 × (0,5 × 30) = 2 × 15 = 30 kW·h.'}
+  ],
+  'l9-cam-ung': [
+    {d:1,cat:'lt',q:'Dòng điện trong mạng điện sinh hoạt gia đình ở Việt Nam là dòng điện loại gì?',o:['Dòng điện xoay chiều có hiệu điện thế hiệu dụng 220 V, tần số 50 Hz','Dòng điện một chiều không đổi 220 V','Dòng điện một chiều 12 V','Dòng điện xoay chiều 5 V'],w:'Mạng điện dân dụng Việt Nam chuẩn 220 V – 50 Hz.'},
+    {d:3,cat:'bt',q:'Một máy biến áp hạ áp có số vòng cuộn sơ cấp N₁ = 2200 vòng, nối vào điện áp xoay chiều U₁ = 220 V. Muốn lấy ra ở cuộn thứ cấp U₂ = 12 V thì N₂ phải có bao nhiêu vòng?',n:120,t:0,u:'vòng',w:'N₂ = N₁ · (U₂ / U₁) = 2200 × 12 / 220 = 120 vòng.'}
+  ],
+  'l9-kim-loai': [
+    {d:1,cat:'lt',q:'Kim loại nào dẫn điện tốt nhất trong tất cả các kim loại?',o:['Bạc (Ag), sau đó đến Đồng (Cu), Vàng (Au), Nhôm (Al)','Sắt (Fe)','Chì (Pb)','Thủy ngân (Hg)'],w:'Thứ tự dẫn điện giảm dần: Ag > Cu > Au > Al > Fe.'},
+    {d:2,cat:'bt',q:'Để làm sạch dung dịch FeSO₄ có lẫn tạp chất muối CuSO₄, ta ngâm dư kim loại nào vào dung dịch rồi lọc bỏ chất rắn?',o:['Bột sắt (Fe)','Lá bạc (Ag)','Dây đồng (Cu)','Đinh vàng (Au)'],w:'Fe đẩy hết Cu ra khỏi CuSO₄ tạo thêm chính FeSO₄ tinh khiết: Fe + CuSO₄ → FeSO₄ + Cu↓.'},
+    {d:3,cat:'bt',q:'Ngâm một đinh sắt dư vào 100 mL dung dịch CuSO₄ 1 M. Sau khi phản ứng hoàn toàn (Fe + CuSO₄ → FeSO₄ + Cu↓), khối lượng đồng (M = 64) bám ra là bao nhiêu gam?',n:6.4,t:0.05,u:'g',w:'n(CuSO₄) = 0,1 × 1 = 0,1 mol ⇒ n(Cu) = 0,1 mol ⇒ m(Cu) = 6,4 g.'}
+  ],
+  'l9-phi-kim': [
+    {d:2,cat:'lt',q:'Vì sao than hoạt tính được dùng làm lõi lọc nước uống và mặt nạ phòng độc?',o:['Vì than hoạt tính có cấu trúc xốp rỗng với khả năng hấp phụ rất mạnh chất màu, mùi và khí độc','Vì than hoạt tính tan hoàn toàn vào nước tạo vị ngọt','Vì than hoạt tính phản ứng nổ với nước','Vì than hoạt tính là kim loại nặng'],w:'Tính hấp phụ bề mặt cao là đặc trưng ứng dụng của than hoạt tính.'},
+    {d:2,cat:'bt',q:'Đốt cháy hoàn toàn 6 g carbon nguyên chất (M = 12) trong khí oxygen dư (C + O₂ —(t°)→ CO₂). Thể tích khí CO₂ thu được ở 25 °C, 1 bar là bao nhiêu lít? (làm tròn 2 chữ số thập phân)',n:12.4,t:0.03,u:'L',w:'n(C) = 6/12 = 0,5 mol ⇒ n(CO₂) = 0,5 mol ⇒ V = 0,5 × 24,79 = 12,395 L ≈ 12,40 L.'},
+    {d:3,cat:'bt',q:'Dẫn 0,2 mol khí CO₂ vào dung dịch Ca(OH)₂ dư. Khối lượng kết tủa CaCO₃ (M = 100) tạo thành là bao nhiêu gam?',n:20,t:0.1,u:'g',w:'n(CaCO₃) = n(CO₂) = 0,2 mol ⇒ m = 0,2 × 100 = 20 g.'}
+  ],
+  'l9-huu-co': [
+    {d:1,cat:'lt',q:'Thành phần chính của khí thiên nhiên và khí hầm biogas là hydrocarbon nào?',o:['Methane (CH₄)','Acetic acid (CH₃COOH)','Ethylic alcohol (C₂H₅OH)','Glucose (C₆H₁₂O₆)'],w:'CH₄ chiếm phần lớn trong khí thiên nhiên và khí sinh học biogas.'},
+    {d:2,cat:'bt',q:'Trên nhãn chai cồn y tế ghi "Cồn 70°". Điều đó có ý nghĩa gì?',o:['Trong 100 mL dung dịch cồn có chứa 70 mL ethylic alcohol nguyên chất','Cồn sôi ở đúng 70 °C','Trong 100 g cồn có 70 mol nước','Nghiêng chai góc 70° mới rót được'],w:'Độ cồn là số mL ethylic alcohol nguyên chất có trong 100 mL dung dịch rượu/cồn.'},
+    {d:3,cat:'bt',q:'Trong 250 mL cồn y tế 70° có chứa bao nhiêu mL ethylic alcohol nguyên chất?',n:175,t:0.1,u:'mL',w:'V_rượu = 250 × 70 / 100 = 175 mL.'}
+  ],
+  'l9-lipid-carb': [
+    {d:1,cat:'lt',q:'Nhỏ vài giọt dung dịch iodine (i-ốt) lên mặt cắt củ khoai lang hoặc cơm trắng thì xuất hiện màu gì?',o:['Màu xanh tím đặc trưng','Màu đỏ gạch','Màu hồng nhạt','Vẫn không màu'],w:'Hồ tinh bột gặp iodine tạo hợp chất màu xanh tím đặc trưng.'},
+    {d:2,cat:'bt',q:'Lên men hoàn toàn 0,5 mol glucose theo phản ứng C₆H₁₂O₆ —(men)→ 2C₂H₅OH + 2CO₂↑. Số mol CO₂ thu được là bao nhiêu mol?',n:1,t:0,u:'mol',w:'Theo tỉ lệ 1 : 2 ⇒ n(CO₂) = 2 × 0,5 = 1 mol.'},
+    {d:3,cat:'bt',q:'Đun nóng chất béo với dung dịch kiềm NaOH thu được glycerol và muối sodium của acid béo dùng làm xà phòng. Phản ứng này gọi là gì?',o:['Phản ứng xà phòng hóa','Phản ứng trùng hợp','Phản ứng tráng bạc','Phản ứng nhiệt phân đá vôi'],w:'Thủy phân chất béo trong môi trường kiềm là phản ứng xà phòng hóa.'}
+  ],
+  'l9-di-truyen': [
+    {d:1,cat:'lt',q:'Theo nguyên tắc bổ sung trên phân tử DNA mạch kép, nucleotide loại Adenine (A) trên mạch này luôn liên kết với loại nào trên mạch kia?',o:['Thymine (T)','Cytosine (C)','Guanine (G)','Uracil (U)'],w:'Nguyên tắc bổ sung trong DNA: A liên kết với T (2 liên kết H), G liên kết với C (3 liên kết H).'},
+    {d:2,cat:'bt',q:'Một đoạn phân tử DNA có tổng cộng 2400 nucleotide, trong đó số nucleotide loại A = 700. Số nucleotide loại T bằng bao nhiêu?',n:700,t:0,u:'nucleotide',w:'Theo nguyên tắc bổ sung: T = A = 700 nucleotide.'},
+    {d:3,cat:'bt',q:'Ở đậu Hà Lan, hạt vàng (A) trội hoàn toàn so với hạt xanh (a). Phép lai phân tích Aa × aa cho tỉ lệ kiểu hình đời con là bao nhiêu % cây hạt xanh?',n:50,t:0,u:'%',w:'Aa × aa → 1Aa (vàng) : 1aa (xanh) ⇒ hạt xanh chiếm 50%.'}
+  ],
+  'l9-tien-hoa': [
+    {d:2,cat:'bt',q:'Sâu ăn lá rau thường có màu xanh lục giống hệt màu lá rau nên chim ăn sâu khó phát hiện. Theo học thuyết tiến hóa hiện đại, đặc điểm thích nghi này hình thành như thế nào?',o:['Trong quần thể sâu xuất hiện các biến dị màu sắc khác nhau; chim ăn thịt đào thải các cá thể màu nổi bật, giữ lại sâu màu xanh sống sót và sinh sản qua nhiều thế hệ','Do sâu tự sơn màu xanh lên da trong 1 ngày','Do lá rau biến thành con sâu','Do không có bất kì biến dị nào xảy ra'],w:'Biến dị di truyền phát sinh ngẫu nhiên, chọn lọc tự nhiên sàng lọc giữ lại kiểu hình thích nghi.'},
+    {d:3,cat:'bt',q:'Vì sao khi sử dụng thuốc kháng sinh điều trị vi khuẩn gây bệnh, người bệnh KHÔNG được tự ý ngưng thuốc sớm hoặc dùng liều quá thấp?',o:['Vì làm các vi khuẩn mang gene đột biến kháng thuốc sống sót và nhân lên nhanh thành chủng kháng kháng sinh nguy hiểm','Vì kháng sinh làm tăng chiều cao ngay lập tức','Vì vi khuẩn biến thành virus','Vì thuốc kháng sinh là đường glucose'],w:'Chọn lọc tự nhiên giữ lại các cá thể vi khuẩn kháng thuốc nếu không tiêu diệt triệt để.'}
+  ],
+  'l9-tai-nguyen': [
+    {d:2,cat:'bt',q:'Hành động nào sau đây thực hiện đúng nguyên tắc phát triển bền vững "Tiết giảm – Tái sử dụng – Tái chế (3R)"?',o:['Mang túi vải dùng nhiều lần khi đi chợ và phân loại chai nhựa, giấy phế liệu để tái chế','Đốt toàn bộ túi nilon và vỏ nhựa ngoài sân','Xả thẳng pin hỏng vào nguồn nước sinh hoạt','Khai thác cạn kiệt rừng đầu nguồn'],w:'Giảm rác thải nhựa dùng một lần và phân loại tái chế bảo vệ tài nguyên môi trường.'},
+    {d:3,cat:'bt',q:'Một hệ thống điện mặt trời áp mái mỗi ngày tạo ra trung bình 12 kW·h điện sạch. Trong 1 năm (365 ngày) hệ thống cung cấp bao nhiêu kW·h điện?',n:4380,t:0,u:'kW·h',w:'12 × 365 = 4380 kW·h.'}
+  ],
   'l7-phuong-phap': [
     {d:1,q:'Dụng cụ nào dùng để quan sát cấu tạo tế bào biểu bì vảy hành trong phòng thí nghiệm?',o:['Kính hiển vi quang học','Kính thiên văn','Ống nhòm','Nhiệt kế thủy ngân'],w:'Tế bào có kích thước hiển vi nên cần quan sát bằng kính hiển vi quang học.'},
     {d:1,q:'Khi đọc mực chất lỏng trong ống đong, ta cần đặt mắt như thế nào?',o:['Ngang bằng với đáy vạch cong của mặt chất lỏng','Nhìn xiên từ trên cao xuống','Nhìn xiên từ dưới thấp lên','Nhắm một mắt nhìn từ xa 2 m'],w:'Đặt mắt vuông góc ngang tầm vạch chia đáy mặt khum để tránh sai số thị sai.'},
@@ -99,6 +260,159 @@ var EXTRA_STATIC = {
     {d:2,q:'Mối quan hệ giữa cây tầm gửi sống bám trên thân cây nhãn, hút nước và chất dinh dưỡng của cây nhãn làm cây nhãn suy yếu là quan hệ gì?',o:['Kí sinh – vật chủ','Cộng sinh đôi bên cùng lợi','Hội sinh','Hợp tác'],w:'Một loài có lợi còn loài chủ bị hại là quan hệ kí sinh.'},
     {d:3,q:'Trong một lưới thức ăn tự nhiên ở rừng, vì sao hệ sinh thái rừng mưa nhiệt đới lại có tính ổn định cân bằng sinh học cao hơn hệ sinh thái đồng ruộng độc canh?',o:['Vì rừng có độ đa dạng loài rất cao, lưới thức ăn phức tạp nên nếu 1 loài biến động thì loài khác thay thế mắt xích dễ dàng','Vì rừng không có sinh vật phân giải','Vì đồng ruộng có nhiều loài hổ báo hơn','Vì rừng không chịu tác động của ánh sáng'],w:'Độ đa dạng sinh học càng cao, lưới thức ăn càng nhiều mắt xích chung thì hệ sinh thái càng bền vững.'},
     {d:4,q:'Cho chuỗi thức ăn: Tảo lục → Giáp xác nhỏ → Cá mương → Cá quả (cá lóc). Nếu nguồn nước bị nhiễm kim loại nặng khó phân hủy sinh học (như thủy ngân) ở nồng độ thấp, loài nào trong chuỗi sẽ tích lũy độc chất ở nồng độ CAO NHẤT?',o:['Cá quả (bậc dinh dưỡng cao nhất cuối chuỗi)','Tảo lục','Giáp xác nhỏ','Cả 4 loài có nồng độ bằng hệt nhau'],w:'Hiện tượng khuếch đại sinh học: chất độc khó phân hủy tích lũy tăng dần lên bậc dinh dưỡng cao nhất.'}
+  ],
+
+  // Bổ sung Trắc nghiệm Lí thuyết trọng tâm cho các bài tính toán Lớp 7 & Lớp 8 (để mỗi bài đều có đủ Phần A Lí thuyết + Phần B Bài tập)
+  'l7-nguyen-tu': [
+    {d:1,sec:'lt',q:'Trong nguyên tử, loại hạt nào mang điện tích âm (−1) và chuyển động quanh hạt nhân?',o:['Electron','Proton','Neutron','Hạt nhân'],w:'Vỏ nguyên tử gồm các electron mang điện tích −1.'},
+    {d:1,sec:'lt',q:'Vì sao nguyên tử luôn trung hòa về điện?',o:['Vì số proton (+1) luôn bằng số electron (−1)','Vì số proton luôn bằng số neutron','Vì trong nguyên tử không có hạt mang điện','Vì neutron trung hòa hết điện tích proton'],w:'Tổng điện tích dương của các proton triệt tiêu vừa đủ với tổng điện tích âm của các electron.'},
+    {d:2,sec:'lt',q:'Lớp electron thứ hai (kể từ hạt nhân ra ngoài) chứa tối đa bao nhiêu electron?',o:['8 electron','2 electron','18 electron','4 electron'],w:'Lớp thứ nhất chứa tối đa 2e, lớp thứ hai chứa tối đa 8e.'},
+    {d:2,sec:'lt',q:'Đơn vị khối lượng nguyên tử chuẩn được kí hiệu là gì?',o:['amu','mol/L','Pa','Hz'],w:'Khối lượng nguyên tử và phân tử rất nhỏ nên đo bằng đơn vị amu.'}
+  ],
+  'l7-bang-tuan-hoan': [
+    {d:1,sec:'lt',q:'Các nguyên tố trong bảng tuần hoàn được sắp xếp theo chiều tăng dần của đại lượng nào?',o:['Điện tích hạt nhân nguyên tử','Số neutron trong hạt nhân','Độ cứng của đơn chất','Nhiệt độ nóng chảy'],w:'Nguyên tắc đầu tiên: sắp xếp theo chiều tăng dần điện tích hạt nhân Z.'},
+    {d:2,sec:'lt',q:'Các nguyên tố xếp trong cùng một hàng ngang (chu kì) có đặc điểm chung nào về cấu tạo nguyên tử?',o:['Có cùng số lớp electron','Có cùng số electron lớp ngoài cùng','Có cùng số neutron','Đều là khí hiếm'],w:'Số thứ tự chu kì bằng số lớp electron trong nguyên tử.'}
+  ],
+  'l7-phan-tu': [
+    {d:1,sec:'lt',q:'Hợp chất được cấu tạo bởi bao nhiêu nguyên tố hóa học?',o:['Từ hai nguyên tố hóa học trở lên','Chỉ duy nhất một nguyên tố hóa học','Chỉ gồm các nguyên tử khí hiếm','Không chứa nguyên tử nào'],w:'Đơn chất từ 1 nguyên tố; hợp chất từ 2 nguyên tố trở lên.'},
+    {d:2,sec:'lt',q:'Ở điều kiện thường, các hợp chất ion (như muối ăn NaCl) thường có đặc điểm nào?',o:['Là chất rắn kết tinh, nhiệt độ nóng chảy và nhiệt độ sôi cao, tan trong nước tạo dung dịch dẫn điện','Luôn ở thể khí và rất dễ bay hơi','Không bao giờ tan trong nước','Nóng chảy ngay ở 0 °C'],w:'Lực hút tĩnh điện giữa các ion trái dấu rất bền nên hợp chất ion khó nóng chảy, khó bay hơi.'},
+    {d:2,sec:'lt',q:'Liên kết cộng hóa trị được hình thành bằng cách nào?',o:['Bằng một hay nhiều cặp electron dùng chung giữa hai nguyên tử','Do kim loại nhường hẳn electron cho khí hiếm','Do hai hạt nhân gộp làm một','Do lực hấp dẫn trọng trường'],w:'Hai nguyên tử (thường là phi kim) góp chung electron tạo cặp e dùng chung.'}
+  ],
+  'l7-hoa-tri': [
+    {d:1,sec:'lt',q:'Trong các hợp chất hóa học, nguyên tố Hydrogen (H) và Oxygen (O) được quy ước lần lượt có hóa trị mấy?',o:['H hóa trị I, O hóa trị II','H hóa trị II, O hóa trị I','Cả H và O đều hóa trị II','H hóa trị I, O hóa trị III'],w:'Quy ước H làm đơn vị (hóa trị I), O có hóa trị II.'},
+    {d:2,sec:'lt',q:'Khi viết công thức hóa học có chứa nhiều hơn 1 nhóm nguyên tử (như nhóm OH, SO₄, NO₃), ta phải trình bày như thế nào?',o:['Đặt nhóm nguyên tử trong dấu ngoặc đơn rồi ghi chỉ số ở chân bên phải ngoặc','Không cần dấu ngoặc đơn','Ghi chỉ số đằng trước công thức','Cộng dồn tất cả nguyên tử vào nhau'],w:'Ví dụ Ca(OH)₂, Al₂(SO₄)₃.'}
+  ],
+  'l7-toc-do': [
+    {d:1,sec:'lt',q:'Đơn vị đo tốc độ hợp pháp trong hệ đo lường quốc tế SI là gì?',o:['Mét trên giây (m/s)','Kilômét nhân giờ (km·h)','Giây trên mét (s/m)','Niutơn trên mét (N/m)'],w:'Quãng đường chuẩn đo bằng m, thời gian bằng s ⇒ tốc độ chuẩn là m/s.'},
+    {d:2,sec:'lt',q:'Trên đồ thị quãng đường – thời gian của hai xe chuyển động thẳng đều cùng xuất phát từ gốc tọa độ, đường biểu diễn nào dốc hơn cho biết điều gì?',o:['Xe đó có tốc độ chuyển động lớn hơn','Xe đó có tốc độ nhỏ hơn','Xe đó đang đứng yên','Xe đó đi ngược lại'],w:'Trong cùng thời gian t, đường dốc hơn đi được quãng đường s lớn hơn nên tốc độ v lớn hơn.'},
+    {d:2,sec:'lt',q:'Vì sao khi trời mưa đường trơn ướt, người lái xe phải giảm tốc độ và giữ khoảng cách xa hơn so với khi đường khô ráo?',o:['Vì lực ma sát giảm làm quãng đường phanh tăng dài hơn, dễ xảy ra va chạm','Vì trời mưa làm xe nhẹ đi một nửa','Vì đồng hồ tốc độ ngừng chạy khi mưa','Vì mưa làm tăng ma sát gấp mười lần'],w:'Đường trơn giảm ma sát bám đường khiến quãng đường hãm phanh kéo dài.'}
+  ],
+  'l7-am-thanh': [
+    {d:1,sec:'lt',q:'Tai người bình thường có thể nghe được âm thanh có tần số nằm trong khoảng nào?',o:['Từ 20 Hz đến 20 000 Hz','Dưới 20 Hz (hạ âm)','Trên 20 000 Hz (siêu âm)','Chỉ đúng 100 Hz'],w:'Ngưỡng nghe của tai người từ 20 Hz đến 20 000 Hz.'},
+    {d:2,sec:'lt',q:'Biện pháp trồng nhiều dải cây xanh xung quanh bệnh viện và trường học giúp giảm tiếng ồn theo hướng nào?',o:['Phân tán sóng âm trên đường truyền trước khi tới tai','Làm nguồn âm ngừng dao động','Bịt kín tai người nghe','Tăng biên độ dao động của còi xe'],w:'Tán lá cây phản xạ âm theo nhiều hướng khác nhau, phân tán năng lượng âm trên đường truyền.'}
+  ],
+  'l7-anh-sang': [
+    {d:1,sec:'lt',q:'Trong môi trường trong suốt và đồng tính, ánh sáng truyền đi theo đường nào?',o:['Theo đường thẳng','Theo đường gấp khúc bất kì','Theo đường xoắn ốc','Theo đường tròn khép kín'],w:'Định luật truyền thẳng của ánh sáng.'},
+    {d:1,sec:'lt',q:'Hiện tượng nguyệt thực xảy ra khi vị trí tương đối giữa Mặt Trời, Trái Đất và Mặt Trăng như thế nào?',o:['Trái Đất nằm giữa Mặt Trời và Mặt Trăng, che khuất ánh sáng chiếu tới Mặt Trăng','Mặt Trăng nằm giữa Mặt Trời và Trái Đất','Mặt Trời nằm giữa Trái Đất và Mặt Trăng','Ba thiên thể tạo thành tam giác đều'],w:'Mặt Trăng đi vào vùng bóng tối phía sau Trái Đất gây nguyệt thực.'},
+    {d:2,sec:'lt',q:'Theo định luật phản xạ ánh sáng, tia phản xạ nằm trong mặt phẳng nào?',o:['Mặt phẳng chứa tia tới và đường pháp tuyến của gương tại điểm tới','Mặt phẳng trùng với mặt gương','Mặt phẳng vuông góc với pháp tuyến','Bất kì mặt phẳng nào trong không gian'],w:'Tia phản xạ đồng phẳng với tia tới và pháp tuyến, ở bên kia pháp tuyến so với tia tới.'}
+  ],
+  'l8-phan-ung': [
+    {d:1,sec:'lt',q:'Dấu hiệu nào sau đây chứng tỏ chắc chắn đã có PHẢN ỨNG HÓA HỌC xảy ra?',o:['Xuất hiện chất kết tủa mới, sủi bọt khí hoặc đổi màu sắc đặc trưng','Chất rắn bị nghiền nhỏ thành bột mịn','Nước lỏng bay hơi thành hơi nước','Hòa tan đường cát vào nước ấm'],w:'Tạo thành chất mới thể hiện qua kết tủa, khí thoát ra, đổi màu hoặc tỏa/thu nhiệt rõ rệt.'},
+    {d:2,sec:'lt',q:'Quá trình nung đá vôi CaCO₃ cần phải cung cấp nhiệt liên tục, nếu ngừng đun thì phản ứng dừng lại. Đó là loại phản ứng gì?',o:['Phản ứng thu nhiệt','Phản ứng tỏa nhiệt','Sự nóng chảy vật lí','Sự ngưng tụ'],w:'Phản ứng cần hấp thụ năng lượng nhiệt trong suốt quá trình diễn ra là phản ứng thu nhiệt.'},
+    {d:2,sec:'lt',q:'Khi cân bằng phương trình hóa học, thao tác nào sau đây bị NGHIÊM CẤM?',o:['Tự ý thay đổi các chỉ số nguyên tử ở chân công thức hóa học của chất','Đặt hệ số nguyên trước công thức hóa học','Kiểm tra lại số nguyên tử mỗi nguyên tố ở hai vế','Viết điều kiện phản ứng trên mũi tên'],w:'Sửa chỉ số chân sẽ làm biến đổi chất này thành chất khác sai bản chất hóa học.'}
+  ],
+  'l8-mol': [
+    {d:1,sec:'lt',q:'1 mol của bất kì chất nào cũng chứa bao nhiêu hạt vi mô (nguyên tử hoặc phân tử) của chất đó?',o:['6,022 × 10²³ hạt (số Avogadro)','24,79 hạt','1000 hạt','29 hạt'],w:'Theo định nghĩa mol, 1 mol chứa N_A = 6,022 × 10²³ hạt vi mô.'},
+    {d:1,sec:'lt',q:'Đơn vị của khối lượng mol (kí hiệu M) là gì?',o:['Gam trên mol (g/mol)','Gam (g)','Đơn vị amu','Lít trên mol (L/mol)'],w:'Khối lượng mol M có cùng trị số với KLNT/KLPT nhưng đơn vị là g/mol.'},
+    {d:2,sec:'lt',q:'Công thức tính thể tích V = 24,79 · n (L) ở 25 °C và 1 bar chỉ được áp dụng cho chất ở thể nào?',o:['Chỉ áp dụng cho chất khí','Áp dụng cho cả chất rắn, chất lỏng và chất khí','Chỉ áp dụng cho kim loại rắn','Chỉ áp dụng cho nước lỏng'],w:'24,79 L/mol là thể tích mol của chất khí ở điều kiện chuẩn (25 °C, 1 bar).'},
+    {d:2,sec:'lt',q:'Để thu một chất khí NẶNG HƠN không khí (có M > 29 g/mol) bằng phương pháp đẩy không khí, ta phải đặt miệng bình thu như thế nào?',o:['Đặt ĐỨNG bình thu khí (miệng bình hướng lên trên)','Đặt ÚP NGƯỢC bình thu khí','Bắt buộc đặt chìm dưới đáy chậu dầu','Đặt nằm ngang rồi đậy kín trước khi dẫn khí'],w:'Khí nặng hơn không khí chìm xuống đáy bình và đẩy không khí nhẹ hơn ra ở miệng trên.'}
+  ],
+  'l8-dung-dich': [
+    {d:1,sec:'lt',q:'Trong dung dịch nước đường (hòa tan đường kính trắng vào nước cất), chất nào đóng vai trò là DUNG MÔI?',o:['Nước cất','Đường kính','Cả đường và nước đều là chất tan','Không khí trên mặt cốc'],w:'Nước hòa tan đường tạo dung dịch đồng nhất nên nước là dung môi, đường là chất tan.'},
+    {d:2,sec:'lt',q:'Khi tăng nhiệt độ của nước thì độ tan của phần lớn các chất rắn (như đường, muối KNO₃) thay đổi như thế nào?',o:['Độ tan tăng lên (tan được nhiều hơn)','Độ tan giảm về 0','Độ tan không bao giờ thay đổi','Chất rắn biến thành chất khí'],w:'Hầu hết chất rắn tan nhiều hơn trong nước nóng (ngược lại chất khí tan ít hơn khi đun nóng).'},
+    {d:2,sec:'lt',q:'Khi rót thêm nước cất vào một dung dịch muối ăn để pha loãng, đại lượng nào sau đây KHÔNG THAY ĐỔI?',o:['Khối lượng và số mol chất tan có trong dung dịch','Khối lượng của cả dung dịch','Nồng độ phần trăm C% của dung dịch','Nồng độ mol C_M của dung dịch'],w:'Thêm nước chỉ tăng lượng dung môi làm giảm nồng độ, còn lượng chất tan ban đầu giữ nguyên.'}
+  ],
+  'l8-tinh-pthh': [
+    {d:1,sec:'lt',q:'Trong phương trình hóa học 2H₂ + O₂ —(t°)→ 2H₂O, tỉ lệ số mol giữa khí H₂ : khí O₂ : hơi nước H₂O là bao nhiêu?',o:['2 : 1 : 2','1 : 1 : 1','2 : 2 : 1','1 : 2 : 2'],w:'Tỉ lệ số mol các chất phản ứng và tạo thành đúng bằng tỉ lệ các hệ số cân bằng trên PTHH.'},
+    {d:2,sec:'lt',q:'Khi đề bài cho biết số mol ban đầu của cả 2 chất tham gia phản ứng mà có 1 chất còn dư, lượng sản phẩm tạo thành phải tính theo chất nào?',o:['Tính theo chất phản ứng HẾT','Tính theo chất còn DƯ','Lấy trung bình cộng số mol hai chất','Tính theo chất có khối lượng mol lớn hơn'],w:'Khi chất thiếu phản ứng hết thì phản ứng dừng lại nên sản phẩm phụ thuộc hoàn toàn vào chất hết.'}
+  ],
+  'l8-khoi-luong-rieng': [
+    {d:1,sec:'lt',q:'Áp lực là lực ép có phương như thế nào đối với mặt bị ép?',o:['Có phương vuông góc với mặt bị ép','Có phương song song với mặt bị ép','Có phương bất kì không cần tiếp xúc','Luôn hướng thẳng đứng từ dưới lên'],w:'Định nghĩa áp lực: lực ép có phương vuông góc với diện tích mặt bị ép.'},
+    {d:2,sec:'lt',q:'Vì sao lưỡi dao, lưỡi kéo thường được mài thật mỏng và sắc bén?',o:['Để giảm diện tích mặt bị ép, từ đó làm tăng áp suất giúp cắt gọt vật dễ dàng','Để làm giảm áp suất tác dụng lên vật','Để tăng khối lượng riêng của thép','Để không có lực ma sát'],w:'Theo p = F / S, giữ nguyên lực F mà giảm nhỏ diện tích S thì áp suất p tăng lên rất lớn.'},
+    {d:2,sec:'lt',q:'Khi càng lên cao (như leo lên đỉnh núi cao Phan-xi-păng), áp suất khí quyển thay đổi như thế nào?',o:['Áp suất khí quyển càng giảm do lớp không khí loãng dần và mỏng đi','Áp suất khí quyển tăng lên gấp đôi','Áp suất khí quyển giữ nguyên không đổi','Áp suất khí quyển biến mất hoàn toàn ở độ cao 500 m'],w:'Càng lên cao mật độ phân tử khí và bề dày cột khí quyển phía trên càng giảm nên áp suất giảm.'}
+  ],
+  'l8-archimedes': [
+    {d:2,sec:'lt',q:'Độ lớn của lực đẩy Archimedes tác dụng lên vật nhúng trong chất lỏng phụ thuộc vào những yếu tố nào?',o:['Trọng lượng riêng của chất lỏng và thể tích của phần chất lỏng bị vật chiếm chỗ','Khối lượng riêng của vật và độ sâu nhúng vật (khi đã chìm hẳn)','Hình dạng của bình chứa chất lỏng','Màu sắc và nhiệt độ nóng chảy của vật'],w:'Theo F_A = d_lỏng · V_chìm, F_A chỉ phụ thuộc bản chất chất lỏng và phần thể tích chìm.'}
+  ],
+  'l8-don-bay': [
+    {d:2,sec:'lt',q:'Cánh tay đòn của lực đối với trục quay O là khoảng cách nào?',o:['Khoảng cách vuông góc từ trục quay O đến giá của lực','Chiều dài toàn bộ thanh đòn bẩy','Khoảng cách từ điểm đặt lực đến mặt đất','Độ lớn của lực nhân với khối lượng thanh'],w:'Cánh tay đòn d luôn là đoạn hạ vuông góc từ tâm quay O tới đường thẳng chứa lực (giá của lực).'}
+  ],
+
+  // Bổ sung Bài tập định lượng / vận dụng cho các bài Sinh học Lớp 7 & Lớp 8 (để Phần B Bài tập củng cố thật phong phú)
+  'l7-trao-doi-chat_bt': [],
+
+  // Bổ sung đầy đủ Phần A (Trắc nghiệm lí thuyết) + Phần B (Bài tập củng cố) cho Lớp 6 & Lớp 9
+  'l6-mo-dau': [
+    {d:1,sec:'lt',q:'Đơn vị đo khối lượng chuẩn trong hệ đo lường quốc tế SI là gì?',o:['Kilôgam (kg)','Gam (g)','Lít (L)','Mét (m)'],w:'Đơn vị khối lượng chuẩn SI là kilôgam (kg).'},
+    {d:2,sec:'bt',q:'Đổi khối lượng 2,5 kg sang đơn vị gam (g).',n:2500,t:0,u:'g',w:'2,5 × 1000 = 2500 g.'},
+    {d:3,sec:'bt',q:'Nhiệt kế chỉ 25 °C thì tương ứng bao nhiêu độ °F? (biết °F = °C × 1,8 + 32)',n:77,t:0.1,u:'°F',w:'25 × 1,8 + 32 = 45 + 32 = 77 °F.'}
+  ],
+  'l6-the-chat': [
+    {d:1,sec:'lt',q:'Sự chuyển từ thể hơi (khí) sang thể lỏng được gọi là gì?',o:['Sự ngưng tụ','Sự bay hơi','Sự nóng chảy','Sự đông đặc'],w:'Hơi nước gặp lạnh đọng thành giọt nước là sự ngưng tụ.'},
+    {d:2,sec:'bt',q:'Ở áp suất thường, nước tinh khiết sôi ở nhiệt độ bao nhiêu °C?',n:100,t:0,u:'°C',w:'Nhiệt độ sôi chuẩn của nước tinh khiết là 100 °C.'},
+    {d:3,sec:'bt',q:'Đun nóng một cục nước đá đang tan ở 0 °C. Khi đá chưa tan hết thành nước lỏng thì nhiệt độ của hỗn hợp bằng bao nhiêu °C?',n:0,t:0,u:'°C',w:'Trong suốt thời gian nóng chảy, nhiệt độ của chất rắn kết tinh giữ không đổi ở 0 °C.'}
+  ],
+  'l6-oxy-kk': [
+    {d:2,sec:'bt',q:'Khí oxygen chiếm khoảng bao nhiêu phần trăm thể tích không khí khô?',n:21,t:0,u:'%',w:'Không khí có khoảng 78% N₂, 21% O₂ và 1% các khí khác.'},
+    {d:3,sec:'bt',q:'Một căn phòng kín có thể tích 60 m³ không khí. Thể tích khí oxygen trong phòng khoảng bao nhiêu m³? (lấy O₂ chiếm 21% thể tích)',n:12.6,t:0.1,u:'m³',w:'V_O₂ = 60 × 21% = 12,6 m³.'}
+  ],
+  'l6-hon-hop': [
+    {d:2,sec:'bt',q:'Hòa tan 15 g muối ăn vào 85 g nước sạch được bao nhiêu gam dung dịch nước muối?',n:100,t:0,u:'g',w:'m_dung dịch = m_chất tan + m_dung môi = 15 + 85 = 100 g.'},
+    {d:3,sec:'bt',q:'Hỗn hợp dầu ăn bị lẫn vào nước thuộc loại hỗn hợp gì và tách bằng dụng cụ nào?',o:['Nhũ tương (không đồng nhất); tách bằng phễu chiết','Dung dịch đồng nhất; tách bằng giấy lọc','Chất tinh khiết; tách bằng nam châm','Huyền phù; không thể tách'],w:'Dầu ăn không tan và nhẹ hơn nước, dùng phễu chiết tách hai lớp chất lỏng.'}
+  ],
+  'l6-te-bao': [
+    {d:1,sec:'lt',q:'Thành phần nào chỉ có ở tế bào thực vật mà KHÔNG có ở tế bào động vật?',o:['Thành tế bào cellulose và lục lạp','Màng tế bào','Tế bào chất','Nhân tế bào'],w:'Tế bào thực vật có thành tế bào cứng cáp và lục lạp quang hợp.'},
+    {d:3,sec:'bt',q:'Từ 1 tế bào vi khuẩn sau 5 lần phân chia liên tiếp tạo ra bao nhiêu tế bào con?',n:32,t:0,u:'tế bào',w:'N = 2⁵ = 32 tế bào.'}
+  ],
+  'l6-phan-loai': [
+    {d:2,sec:'bt',q:'Sắp xếp nào sau đây đúng thứ tự từ bậc phân loại lớn đến nhỏ?',o:['Giới → Ngành → Lớp → Bộ → Họ → Chi → Loài','Loài → Chi → Họ → Bộ → Lớp → Ngành → Giới','Giới → Lớp → Ngành → Họ → Bộ → Chi → Loài','Ngành → Giới → Bộ → Lớp → Chi → Họ → Loài'],w:'Thứ tự chuẩn: Giới – Ngành – Lớp – Bộ – Họ – Chi – Loài.'},
+    {d:3,sec:'bt',q:'Cá voi và cá heo sống dưới biển nhưng được xếp vào lớp Thú (không phải lớp Cá) vì đặc điểm nào?',o:['Hô hấp bằng phổi, đẻ con và nuôi con bằng sữa mẹ','Bơi bằng vây và thở bằng mang','Đẻ trứng dưới cát biển','Có lớp vảy sừng như thằn lằn'],w:'Đẻ con và nuôi con bằng sữa mẹ là đặc điểm quyết định của lớp Thú.'}
+  ],
+  'l6-luc': [
+    {d:1,sec:'lt',q:'Dụng cụ dùng để đo độ lớn của lực trong phòng thí nghiệm là gì?',o:['Lực kế lò xo','Cân Rô-béc-van','Ống đong','Thước kẹp'],w:'Lực kế dùng độ dãn của lò xo để đo lực (N).'},
+    {d:3,sec:'bt',q:'Một lực kế treo quả nặng chỉ 35 N. Khối lượng của quả nặng đó khoảng bao nhiêu kg?',n:3.5,t:0.05,u:'kg',w:'m ≈ P / 10 = 35 / 10 = 3,5 kg.'}
+  ],
+  'l6-nang-luong': [
+    {d:2,sec:'bt',q:'Một hộp sữa cung cấp 650 kJ năng lượng, tương ứng bao nhiêu Jun (J)?',n:650000,t:0,u:'J',w:'650 × 1000 = 650 000 J.'},
+    {d:3,sec:'bt',q:'Khi quả bóng cao su rơi từ trên cao xuống đất, dạng năng lượng nào giảm dần và chuyển hóa thành động năng?',o:['Thế năng hấp dẫn giảm dần, chuyển thành động năng','Điện năng giảm dần','Quang năng tăng dần','Hóa năng nhiên liệu tăng'],w:'Độ cao giảm nên thế năng hấp dẫn chuyển hóa thành động năng.'}
+  ],
+  'l6-trai-dat': [
+    {d:2,sec:'bt',q:'Trái Đất tự quay hết 1 vòng quanh trục của nó mất khoảng bao nhiêu giờ?',n:24,t:0,u:'giờ',w:'Một chu kì tự quay của Trái Đất ứng với 1 ngày đêm ≈ 24 giờ.'},
+    {d:3,sec:'bt',q:'Vì sao đứng trên Trái Đất ta thấy Mặt Trời mọc ở hướng Đông và lặn ở hướng Tây?',o:['Vì Trái Đất tự quay quanh trục theo chiều từ Tây sang Đông','Vì Mặt Trời quay quanh Trái Đất mỗi ngày 1 vòng','Vì Mặt Trăng đẩy Mặt Trời đi','Vì Trái Đất đứng yên trong vũ trụ'],w:'Trái Đất tự quay từ Tây sang Đông tạo chuyển động biểu kiến của Mặt Trời từ Đông sang Tây.'}
+  ],
+  'l9-nang-luong-co': [
+    {d:1,sec:'lt',q:'Động năng của một vật phụ thuộc vào những đại lượng nào?',o:['Khối lượng và tốc độ chuyển động của vật','Khối lượng và độ cao của vật','Thể tích và màu sắc của vật','Thời gian vật đứng yên'],w:'Theo W_đ = ½mv², động năng phụ thuộc vào m và v.'},
+    {d:1,sec:'lt',q:'Đơn vị đo công suất cơ học trong hệ SI là gì?',o:['Oát (W)','Jun (J)','Niutơn (N)','Ampe (A)'],w:'Công suất P = A / t có đơn vị J/s hay Oát (W).'}
+  ],
+  'l9-anh-sang': [
+    {d:2,sec:'bt',q:'Chiếu một tia sáng vuông góc với mặt phân cách từ không khí vào mặt nước phẳng lặng (i = 0°). Góc khúc xạ r bằng bao nhiêu độ?',n:0,t:0,u:'°',w:'Tia sáng vuông góc mặt phân cách truyền thẳng không bị gãy khúc nên r = 0°.'},
+    {d:3,sec:'bt',q:'Chiếu chùm ánh sáng trắng hẹp đi qua lăng kính thủy tinh thì chùm sáng tách thành dải màu biến thiên liên tục từ đỏ đến tím. Đó là hiện tượng gì?',o:['Tán sắc ánh sáng','Phản xạ toàn phần','Giao thoa sóng âm','Nhiễm từ'],w:'Lăng kính phân tách ánh sáng trắng thành phổ từ đỏ đến tím (tán sắc).'}
+  ],
+  'l9-dien-ohm': [
+    {d:1,sec:'lt',q:'Theo định luật Ohm, cường độ dòng điện chạy qua một dây dẫn có mối quan hệ thế nào với hiệu điện thế và điện trở?',o:['Tỉ lệ thuận với hiệu điện thế U và tỉ lệ nghịch với điện trở R','Tỉ lệ thuận với cả U và R','Tỉ lệ nghịch với U, tỉ lệ thuận với R','Không phụ thuộc vào U'],w:'Hệ thức định luật Ohm: I = U / R.'},
+    {d:3,sec:'bt',q:'Mắc nối tiếp hai điện trở R₁ = 8 Ω và R₂ = 12 Ω vào hiệu điện thế U = 10 V. Cường độ dòng điện chạy trong mạch là bao nhiêu A?',n:0.5,t:0.01,u:'A',w:'R_nt = 8 + 12 = 20 Ω ⇒ I = 10 / 20 = 0,5 A.'}
+  ],
+  'l9-nang-luong-dien': [
+    {d:1,sec:'lt',q:'Số đếm trên công tơ điện ở mỗi hộ gia đình cho biết đại lượng nào?',o:['Điện năng tiêu thụ tính theo đơn vị kW·h','Cường độ dòng điện tức thời (A)','Hiệu điện thế lưới điện (V)','Điện trở của dây dẫn (Ω)'],w:'Mỗi "số điện" trên công tơ bằng 1 kW·h điện năng đã sử dụng.'},
+    {d:1,sec:'lt',q:'Trên bóng đèn LED có ghi "220 V – 12 W". Con số 12 W cho biết ý nghĩa gì?',o:['Công suất điện định mức của đèn khi hoạt động bình thường ở hiệu điện thế 220 V','Điện trở của đèn là 12 Ω','Cường độ dòng điện qua đèn là 12 A','Đèn dùng được tối đa 12 giờ'],w:'12 W là công suất tiêu thụ định mức của bóng đèn.'}
+  ],
+  'l9-cam-ung': [
+    {d:3,sec:'bt',q:'Máy biến áp có cuộn sơ cấp N₁ = 500 vòng, cuộn thứ cấp N₂ = 2500 vòng. Đặt vào hai đầu cuộn sơ cấp hiệu điện thế xoay chiều U₁ = 110 V thì U₂ thu được là bao nhiêu V?',n:550,t:0.5,u:'V',w:'U₂ = U₁ · (N₂ / N₁) = 110 × (2500 / 500) = 550 V (máy tăng áp).'}
+  ],
+  'l9-kim-loai': [
+    {d:2,sec:'bt',q:'Ngâm một lá kẽm (Zn) dư vào dung dịch chứa 0,1 mol CuSO₄ (Zn + CuSO₄ → ZnSO₄ + Cu↓). Khối lượng đồng kim loại (Cu = 64) bám ra là bao nhiêu gam?',n:6.4,t:0.05,u:'g',w:'n_Cu = n_(CuSO₄) = 0,1 mol ⇒ m_Cu = 0,1 × 64 = 6,4 g.'}
+  ],
+  'l9-phi-kim': [
+    {d:2,sec:'bt',q:'Sục 0,15 mol khí CO₂ vào dung dịch nước vôi trong Ca(OH)₂ dư (CO₂ + Ca(OH)₂ → CaCO₃↓ + H₂O). Khối lượng kết tủa CaCO₃ (M = 100) thu được là bao nhiêu gam?',n:15,t:0.1,u:'g',w:'n_(CaCO₃) = n_(CO₂) = 0,15 mol ⇒ m = 0,15 × 100 = 15 g.'},
+    {d:3,sec:'bt',q:'Đốt cháy hoàn toàn 0,2 mol bột sắt trong khí chlorine dư (2Fe + 3Cl₂ → 2FeCl₃). Số mol khí Cl₂ đã tham gia phản ứng là bao nhiêu mol?',n:0.3,t:0.01,u:'mol',w:'Theo PTHH: n_(Cl₂) = (3 / 2) × n_Fe = 1,5 × 0,2 = 0,3 mol.'}
+  ],
+  'l9-huu-co': [
+    {d:3,sec:'bt',q:'Cho 6 g acetic acid CH₃COOH (M = 60) tác dụng hết với dung dịch NaHCO₃ dư (CH₃COOH + NaHCO₃ → CH₃COONa + CO₂↑ + H₂O). Thể tích khí CO₂ ở 25 °C, 1 bar là bao nhiêu lít? (làm tròn 2 chữ số thập phân)',n:2.48,t:0.03,u:'L',w:'n_acid = 6/60 = 0,1 mol ⇒ n_CO₂ = 0,1 mol ⇒ V = 0,1 × 24,79 ≈ 2,48 L.'}
+  ],
+  'l9-lipid-carb': [
+    {d:2,sec:'bt',q:'Nhỏ vài giọt dung dịch iodine (i-ốt) loãng lên mặt cắt củ khoai lang tươi (chứa nhiều tinh bột) thì xuất hiện màu gì?',o:['Màu xanh tím đặc trưng','Màu đỏ gạch','Màu hồng nhạt','Không có màu gì'],w:'Hồ tinh bột kết hợp với iodine tạo hợp chất màu xanh tím.'},
+    {d:3,sec:'bt',q:'Lên men 90 g glucose C₆H₁₂O₆ (M = 180) với hiệu suất 100% theo sơ đồ C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂. Số mol rượu C₂H₅OH thu được là bao nhiêu mol?',n:1,t:0.01,u:'mol',w:'n_glucose = 90/180 = 0,5 mol ⇒ n_(C₂H₅OH) = 2 × 0,5 = 1 mol.'}
+  ],
+  'l9-di-truyen': [
+    {d:3,sec:'bt',q:'Một đoạn phân tử DNA có tổng cộng 2400 nucleotide, trong đó số nucleotide loại Adenine (A) là 500. Theo nguyên tắc bổ sung (A = T, G = C), số nucleotide loại Thymine (T) bằng bao nhiêu?',n:500,t:0,u:'nucleotide',w:'Theo nguyên tắc bổ sung trên DNA mạch kép: T = A = 500 nucleotide.'}
+  ],
+  'l9-tien-hoa': [
+    {d:2,sec:'bt',q:'Chi trước của mèo, cánh của dơi và tay của người có cấu tạo xương giống nhau nhưng đảm nhận chức năng khác nhau. Đó là loại bằng chứng tiến hóa nào?',o:['Cơ quan tương đồng (phản ánh nguồn gốc chung)','Cơ quan tương tự (nguồn gốc khác nhau)','Hóa thạch cổ sinh vật','Bằng chứng địa lí sinh vật học'],w:'Cùng nguồn gốc phôi thai nhưng phân hóa chức năng khác nhau là cơ quan tương đồng.'},
+    {d:3,sec:'bt',q:'Quần thể sâu ăn lá ban đầu có 98% cá thể mẫn cảm thuốc trừ sâu và 2% cá thể mang đột biến kháng thuốc. Sau nhiều đợt phun cùng một loại thuốc trừ sâu, tỉ lệ sâu kháng thuốc tăng lên 85%. Nhân tố nào đã định hướng sự thay đổi này?',o:['Chọn lọc tự nhiên (thông qua tác nhân thuốc trừ sâu giữ lại kiểu hình kháng thuốc)','Các con sâu tự ý biến đổi DNA ngay khi thấy bình thuốc','Ánh sáng mặt trời làm thuốc biến thành thức ăn','Sự giao phối làm mất hết sâu kháng thuốc'],w:'Thuốc trừ sâu đóng vai trò nhân tố chọn lọc đào thải cá thể mẫn cảm, giữ lại cá thể có sẵn gene kháng thuốc.'}
+  ],
+  'l9-tai-nguyen': [
+    {d:2,sec:'bt',q:'Nguyên tố hóa học nào chiếm tỉ lệ khối lượng lớn thứ hai trong vỏ Trái Đất (chỉ sau Oxygen, có nhiều trong cát thạch anh SiO₂)?',o:['Silicon (Si)','Gold (Au)','Mercury (Hg)','Helium (He)'],w:'Vỏ Trái Đất chứa khoảng 46% Oxygen và 28% Silicon.'},
+    {d:3,sec:'bt',q:'Một hộ gia đình lắp hệ thống điện mặt trời mái nhà giảm được 1,5 tấn khí thải CO₂ mỗi năm. Trong 6 năm hoạt động, hệ thống giúp giảm phát thải bao nhiêu tấn CO₂?',n:9,t:0.1,u:'tấn',w:'1,5 × 6 = 9 tấn CO₂.'}
   ]
 };
 
@@ -650,6 +964,21 @@ var GENERATORS = {
   }
 };
 
+// Phân loại câu hỏi rõ ràng thành 2 phần trong mỗi bài học:
+//   - 'lt': Phần A – Trắc nghiệm lí thuyết trọng tâm (khái niệm, định luật, tính chất, hiện tượng, quy tắc)
+//   - 'bt': Phần B – Bài tập bổ sung củng cố bài học (tính toán định lượng, giải quyết tình huống vận dụng, thực nghiệm)
+function classifySection(q, d){
+  if (!q) return 'bt';
+  if (q.sec === 'lt' || q.sec === 'bt') return q.sec;
+  if (q.n != null) return 'bt';
+  if (d >= 3) return 'bt';
+  // Check if an MC question at d=2 is actually a quantitative / formula-solving exercise
+  if (/\b(tính|bao nhiêu|hóa trị của .* trong|công thức hóa học đúng của hợp chất tạo bởi|cân bằng)\b/i.test(q.q || '')) {
+    return 'bt';
+  }
+  return 'lt';
+}
+
 // ============================================================================
 // 3. API LẤY BỘ CÂU HỎI ĐẦY ĐỦ & LẤY MẪU NGẪU NHIÊN MỖI LẦN MỞ
 // ============================================================================
@@ -661,17 +990,19 @@ function getExpandedTopicPool(topic, variantRounds){
   function addQ(q, staticIdx){
     if (!q || !q.q || seen[q.q]) return;
     seen[q.q] = true;
+    var dVal = (q.d === 1 || q.d === 2 || q.d === 3 || q.d === 4) ? q.d : (q.n != null ? 2 : 1);
     pool.push({
       q: q,
       staticIdx: typeof staticIdx === 'number' ? staticIdx : null,
-      d: (q.d === 1 || q.d === 2 || q.d === 3 || q.d === 4) ? q.d : (q.n != null ? 2 : 1)
+      d: dVal,
+      sec: classifySection(q, dVal)
     });
   }
 
-  // 1. Original static questions injs/data/lop*.js
+  // 1. Original static questions in js/data/lop*.js
   (topic.questions || []).forEach(function(q, i){ addQ(q, i); });
 
-  // 2. Extra static conceptual bank
+  // 2. Extra static conceptual & consolidation bank
   if (EXTRA_STATIC[topic.id]) {
     EXTRA_STATIC[topic.id].forEach(function(q){ addQ(q, null); });
   }
@@ -690,31 +1021,44 @@ function getExpandedTopicPool(topic, variantRounds){
 }
 
 window.KHTNBank = {
+  classifySection: classifySection,
+
   // Total rich pool for a single lesson (static + extra + fresh parametric variants)
   getPoolForTopic: function(topic, variantRounds){
     return getExpandedTopicPool(topic, variantRounds || 5);
   },
 
-  // Draw a fresh randomized workout for a Lesson (ordered Easy -> Hard, ~3-4 per level, max diversity)
+  // Draw a balanced, fresh randomized workout for a Lesson:
+  // Always includes BOTH:
+  //   - Phần A: Trắc nghiệm lí thuyết trọng tâm (5–8 câu)
+  //   - Phần B: Bài tập bổ sung củng cố bài học (6–10 câu, sắp xếp từ Dễ -> Khó)
   sampleLessonSet: function(topic, perLevel){
-    var takePerLv = perLevel || 4;
-    var pool = getExpandedTopicPool(topic, 2);
-    var out = [];
+    var pool = getExpandedTopicPool(topic, 3);
+    var ltPool = shuffle(pool.filter(function(it){ return it.sec === 'lt'; }));
+    var btPool = pool.filter(function(it){ return it.sec === 'bt'; });
+
+    var pickedLt = ltPool.slice(0, Math.min(6, ltPool.length)).sort(function(a, b){ return a.d - b.d; });
+
+    var pickedBt = [];
+    var btPerLv = perLevel ? Math.max(2, Math.ceil(perLevel * 0.75)) : 3;
     [1, 2, 3, 4].forEach(function(lv){
-      var bucket = shuffle(pool.filter(function(item){ return item.d === lv; }));
-      bucket.slice(0, takePerLv).forEach(function(item){ out.push(item); });
+      var bucket = shuffle(btPool.filter(function(it){ return it.d === lv; }));
+      bucket.slice(0, btPerLv).forEach(function(it){ pickedBt.push(it); });
     });
-    // Fallback for Grade 6/9 lessons that only have levels 1-2
-    if (out.length < Math.min(6, pool.length)) {
-      var used = {};
-      out.forEach(function(x){ used[x.q.q] = true; });
-      shuffle(pool).forEach(function(x){
-        if (!used[x.q.q] && out.length < 8) { used[x.q.q] = true; out.push(x); }
+    if (pickedBt.length < Math.min(6, btPool.length)) {
+      var usedBt = {};
+      pickedBt.forEach(function(x){ usedBt[x.q.q] = true; });
+      shuffle(btPool).forEach(function(x){
+        if (!usedBt[x.q.q] && pickedBt.length < 8) { usedBt[x.q.q] = true; pickedBt.push(x); }
       });
-      out.sort(function(a, b){ return a.d - b.d; });
+      pickedBt.sort(function(a, b){ return a.d - b.d; });
     }
+
+    var out = pickedLt.concat(pickedBt);
     return {
       totalAvailable: pool.length,
+      ltCount: pickedLt.length,
+      btCount: pickedBt.length,
       items: out
     };
   },

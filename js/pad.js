@@ -2,6 +2,7 @@
 'use strict';
 
 // Vector-stroke scratchpad: supports Apple Pencil, touch, mouse; undo; crisp redraw on resize; JSON persistence.
+// On narrow phones (<960px), starts neatly collapsed so fingers never get stuck drawing when scrolling the page!
 window.KHTNPad = {
   create: function(opts){
     opts = opts || {};
@@ -9,29 +10,39 @@ window.KHTNPad = {
     var onChange = typeof opts.onChange === 'function' ? opts.onChange : function(){};
     var mode = 'pen'; // 'pen' | 'eraser'
     var color = '#111827';
-    var penSize = 2.2;
+    var penSize = 2.3;
     var eraserSize = 18;
     var drawing = false;
     var current = null;
+
+    var isMobile = window.matchMedia && window.matchMedia('(max-width: 959px)').matches;
+    var expanded = !isMobile || strokes.length > 0;
 
     var box = document.createElement('section');
     box.className = 'pad-box';
     box.innerHTML =
       '<div class="pad-top">' +
-        '<h2>Trang Vở Nháp</h2>' +
-        '<span class="muted" style="font-size:.82rem" id="pad-hint">Viết bút, ngón tay hoặc chuột</span>' +
+        '<div>' +
+          '<h2>✏️ Giấy Nháp Viết Tay</h2>' +
+          '<span class="muted" style="font-size:.82rem">Dùng ngón tay, bút cảm ứng hoặc chuột để tính nháp</span>' +
+        '</div>' +
+        '<button type="button" class="btn sm alt pad-toggle-btn" data-act="toggle-pad"></button>' +
       '</div>' +
-      '<div class="pad-wrap"><canvas class="pad" aria-label="Bảng nháp vẽ tay"></canvas></div>' +
-      '<div class="pad-tools">' +
-        '<button type="button" class="btn sm on" data-tool="pen">Bút</button>' +
-        '<button type="button" class="btn sm subtle" data-tool="eraser">Tẩy</button>' +
-        '<button type="button" class="swatch on" data-color="#111827" style="background:#111827" title="Mực đen" aria-label="Mực đen"></button>' +
-        '<button type="button" class="swatch" data-color="#1b66c9" style="background:#1b66c9" title="Mực xanh" aria-label="Mực xanh"></button>' +
-        '<button type="button" class="swatch" data-color="#c43434" style="background:#c43434" title="Mực đỏ" aria-label="Mực đỏ"></button>' +
-        '<button type="button" class="btn sm subtle" data-act="undo" disabled>Hoàn tác</button>' +
-        '<button type="button" class="btn sm subtle" data-act="clear" disabled>Xóa hết</button>' +
+      '<div class="pad-body">' +
+        '<div class="pad-wrap"><canvas class="pad" aria-label="Bảng nháp vẽ tay"></canvas></div>' +
+        '<div class="pad-tools">' +
+          '<button type="button" class="btn sm on" data-tool="pen">✏️ Bút viết</button>' +
+          '<button type="button" class="btn sm subtle" data-tool="eraser">🧽 Cục tẩy</button>' +
+          '<button type="button" class="swatch on" data-color="#111827" style="background:#111827" title="Mực đen" aria-label="Mực đen"></button>' +
+          '<button type="button" class="swatch" data-color="#1b66c9" style="background:#1b66c9" title="Mực xanh" aria-label="Mực xanh"></button>' +
+          '<button type="button" class="swatch" data-color="#c43434" style="background:#c43434" title="Mực đỏ" aria-label="Mực đỏ"></button>' +
+          '<button type="button" class="btn sm subtle" data-act="undo" disabled>↩ Quay lại</button>' +
+          '<button type="button" class="btn sm subtle" data-act="clear" disabled>🗑 Xóa trang nháp</button>' +
+        '</div>' +
       '</div>';
 
+    var bodyEl = box.querySelector('.pad-body');
+    var toggleBtn = box.querySelector('[data-act="toggle-pad"]');
     var canvas = box.querySelector('canvas');
     var ctx = canvas.getContext('2d');
     var btnPen = box.querySelector('[data-tool="pen"]');
@@ -39,6 +50,24 @@ window.KHTNPad = {
     var btnUndo = box.querySelector('[data-act="undo"]');
     var btnClear = box.querySelector('[data-act="clear"]');
     var swatches = box.querySelectorAll('.swatch');
+
+    function applyExpandedState(){
+      var narrow = window.matchMedia && window.matchMedia('(max-width: 959px)').matches;
+      if (!narrow) {
+        bodyEl.hidden = false;
+      } else {
+        bodyEl.hidden = !expanded;
+      }
+      toggleBtn.textContent = bodyEl.hidden ? '✏️ Mở giấy nháp' : '▲ Thu gọn nháp';
+      if (!bodyEl.hidden) {
+        requestAnimationFrame(function(){ redraw(); });
+      }
+    }
+
+    toggleBtn.onclick = function(){
+      expanded = !expanded;
+      applyExpandedState();
+    };
 
     function cssSize(){
       var r = canvas.getBoundingClientRect();
@@ -61,7 +90,7 @@ window.KHTNPad = {
       ctx.save();
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = st.mode === 'eraser' ? '#ffffff' : (st.color || '#111827');
+      ctx.strokeStyle = st.mode === 'eraser' ? '#fffdf9' : (st.color || '#111827');
       ctx.lineWidth = st.size || penSize;
       ctx.beginPath();
       var p0 = st.pts[0];
@@ -78,6 +107,7 @@ window.KHTNPad = {
     }
 
     function redraw(){
+      if (bodyEl.hidden) return;
       var sz = cssSize();
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       var pw = Math.round(sz.w * dpr);
@@ -87,7 +117,7 @@ window.KHTNPad = {
         canvas.height = ph;
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#fffdf9';
       ctx.fillRect(0, 0, sz.w, sz.h);
       for (var i = 0; i < strokes.length; i++) {
         drawStroke(strokes[i], sz.w, sz.h);
@@ -129,7 +159,7 @@ window.KHTNPad = {
       ctx.save();
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = current.mode === 'eraser' ? '#ffffff' : current.color;
+      ctx.strokeStyle = current.mode === 'eraser' ? '#fffdf9' : current.color;
       ctx.lineWidth = current.size;
       ctx.beginPath();
       ctx.moveTo(last[0] * sz.w, last[1] * sz.h);
@@ -166,24 +196,30 @@ window.KHTNPad = {
     };
     btnClear.onclick = function(){
       if (!strokes.length) return;
+      if (strokes.length > 3 && !confirm('Xóa toàn bộ nét viết trên trang nháp này?')) return;
       strokes = [];
       redraw();
       updateButtons();
       onChange(strokes);
     };
 
+    function onWinResize(){
+      applyExpandedState();
+      redraw();
+    }
+
     var ro = null;
     if (typeof ResizeObserver === 'function') {
       ro = new ResizeObserver(function(){ redraw(); });
       ro.observe(canvas);
-    } else {
-      window.addEventListener('resize', redraw);
     }
+    window.addEventListener('resize', onWinResize);
+    applyExpandedState();
     requestAnimationFrame(function(){ redraw(); updateButtons(); });
 
     box._destroy = function(){
       if (ro) ro.disconnect();
-      else window.removeEventListener('resize', redraw);
+      window.removeEventListener('resize', onWinResize);
     };
     box.getStrokes = function(){ return strokes; };
     return box;

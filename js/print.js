@@ -1,11 +1,10 @@
 (function(){
 'use strict';
 
-// Hệ thống Xuất / Tải / In Khổ A4 ĐỘC LẬP 2 PHẦN:
-//   - PHẦN 1: ĐỀ BÀI (KHÔNG CÓ ĐÁP ÁN)
+// Hệ thống Xuất / Tải / In Khổ A4 ĐỘC LẬP 2 PHẦN + GHI CHÚ CÁC DẠNG BÀI TẬP & VÍ DỤ MẪU:
+//   - PHẦN 1: ĐỀ BÀI (KHÔNG CÓ ĐÁP ÁN) — chia rõ Phần A (Trắc nghiệm lí thuyết) & Phần B (Bài tập củng cố)
 //   - PHẦN 2: ĐÁP ÁN & LỜI GIẢI CHI TIẾT
-// Mỗi bộ đề khi tạo đều được đóng băng (immutable snapshot) theo Mã đề riêng và lưu vào lịch sử tạm,
-// đảm bảo khi random bộ đề mới hoàn toàn KHÔNG ảnh hưởng hay trộn lẫn với đề/đáp án đã tạo trước đó.
+//   - GHI CHÚ CÁC DẠNG BÀI TẬP & VÍ DỤ MẪU: Luôn có trong tài liệu Bài học / Sổ tay PDF; ở Đề kiểm tra có nút BẬT / TẮT tùy chọn!
 
 var KEY_SNAPS = 'khtn-snapshots-v1';
 var DIFF_NAME = {
@@ -63,7 +62,6 @@ function loadHistory(){
 function saveSnapshotToHistory(spec){
   try {
     var list = loadHistory().filter(function(x){ return x && x.code !== spec.code; });
-    // Store compact immutable copy (without heavy lesson object if not needed, or keep lightweight fields)
     var copy = JSON.parse(JSON.stringify(spec));
     list.unshift(copy);
     if (list.length > 15) list = list.slice(0, 15);
@@ -92,60 +90,128 @@ function renderQuickKeyTable(items){
   return html;
 }
 
-function renderQuestionListHtml(items, isKey){
-  var html = '';
-  items.forEach(function(item, idx){
-    var q = item.q;
-    var dLabel = q.d && DIFF_NAME[q.d] ? DIFF_NAME[q.d] : '';
-    html += '<div class="sheet-q">';
-    html += '<div><b>Câu ' + (idx + 1) + '.</b> ' + fmtMath(q.q) +
-      (dLabel || item.topicTitle ? ' <span style="color:#555;font-size:.85rem">[' + esc([dLabel, item.topicTitle].filter(Boolean).join(' · ')) + ']</span>' : '') + '</div>';
-
-    if (!isKey) {
-      if (item.choices) {
-        var letters = ['A', 'B', 'C', 'D'];
-        html += '<div class="sheet-opts">';
-        item.choices.forEach(function(opt, oi){
-          html += '<div><b>' + letters[oi] + '.</b> ' + fmtMath(opt) + '</div>';
-        });
-        html += '</div>';
-      } else {
-        html += '<div style="margin:6px 0 0 18px">Đáp số: .................................... ' + esc(q.u || '') + '</div>';
-      }
-      html += '<div class="sheet-lines"><div></div><div></div>' + (item.choices ? '' : '<div></div>') + '</div>';
-    } else {
-      var ansText = '';
-      if (item.choices) {
-        var lettersKey = ['A', 'B', 'C', 'D'];
-        var correctIdx = item.choices.indexOf(q.o[0]);
-        ansText = (correctIdx > -1 ? '<b>' + lettersKey[correctIdx] + '.</b> ' : '') + fmtMath(q.o[0]);
-      } else {
-        ansText = esc(formatNum(q.n) + (q.u ? ' ' + q.u : ''));
-      }
-      html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + ansText + '<br><b>Lời giải chi tiết:</b> ' + fmtMath(q.w || '') + '</div>';
+// Render block of "Các dạng bài tập có thể xuất hiện & Ví dụ minh họa" for PDF
+function renderProblemTypesHtml(typeGroups, headingText){
+  if (!typeGroups || !typeGroups.length) return '';
+  var html = '<div class="sheet-types-box">' +
+    '<div style="font-weight:700;font-size:1.02rem;margin-bottom:6px;text-transform:uppercase">' +
+      esc(headingText || 'CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN & VÍ DỤ MINH HỌA') +
+    '</div>';
+  typeGroups.forEach(function(grp){
+    if (!grp.types || !grp.types.length) return;
+    if (typeGroups.length > 1 && grp.title) {
+      html += '<div style="font-weight:700;margin:8px 0 4px;color:#1e1b4b">▸ ' + esc(grp.title) + '</div>';
     }
-    html += '</div>';
+    grp.types.forEach(function(tp){
+      html +=
+        '<div class="sheet-ptype">' +
+          '<div><b>• ' + fmtMath(tp.name) + '</b></div>' +
+          '<div style="margin-left:12px;font-size:.93rem">– <i>Phương pháp:</i> ' + fmtMath(tp.method) + '</div>' +
+          (tp.ex ? '<div style="margin-left:12px;font-size:.93rem">– <i>Ví dụ mẫu:</i> ' + fmtMath(tp.ex) +
+            (tp.sol ? '<br><span style="margin-left:10px">⇒ <i>Hướng dẫn giải:</i> ' + fmtMath(tp.sol) + '</span>' : '') +
+          '</div>' : '') +
+        '</div>';
+    });
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderSingleQuestionHtml(item, qNumber, isKey){
+  var q = item.q;
+  var dLabel = q.d && DIFF_NAME[q.d] ? DIFF_NAME[q.d] : '';
+  var html = '<div class="sheet-q">';
+  html += '<div><b>Câu ' + qNumber + '.</b> ' + fmtMath(q.q) +
+    (dLabel || item.topicTitle ? ' <span style="color:#555;font-size:.85rem">[' + esc([dLabel, item.topicTitle].filter(Boolean).join(' · ')) + ']</span>' : '') + '</div>';
+
+  if (!isKey) {
+    if (item.choices) {
+      var letters = ['A', 'B', 'C', 'D'];
+      html += '<div class="sheet-opts">';
+      item.choices.forEach(function(opt, oi){
+        html += '<div><b>' + letters[oi] + '.</b> ' + fmtMath(opt) + '</div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div style="margin:6px 0 0 18px">Đáp số: .................................... ' + esc(q.u || '') + '</div>';
+    }
+    html += '<div class="sheet-lines"><div></div><div></div>' + (item.choices ? '' : '<div></div>') + '</div>';
+  } else {
+    var ansText = '';
+    if (item.choices) {
+      var lettersKey = ['A', 'B', 'C', 'D'];
+      var correctIdx = item.choices.indexOf(q.o[0]);
+      ansText = (correctIdx > -1 ? '<b>' + lettersKey[correctIdx] + '.</b> ' : '') + fmtMath(q.o[0]);
+    } else {
+      ansText = esc(formatNum(q.n) + (q.u ? ' ' + q.u : ''));
+    }
+    html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + ansText + '<br><b>Lời giải chi tiết:</b> ' + fmtMath(q.w || '') + '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderQuestionListHtml(items, isKey, splitBySection){
+  var ltItems = [];
+  var btItems = [];
+  items.forEach(function(it, idx){
+    if (it.sec === 'lt') ltItems.push({ it: it, num: idx + 1 });
+    else btItems.push({ it: it, num: idx + 1 });
+  });
+
+  // Split into Phần A (Trắc nghiệm lí thuyết) & Phần B (Bài tập củng cố) when both exist and items are ordered lt -> bt
+  var canSplit = splitBySection && ltItems.length > 0 && btItems.length > 0;
+  if (!canSplit) {
+    var flatHtml = '';
+    items.forEach(function(it, idx){
+      flatHtml += renderSingleQuestionHtml(it, idx + 1, isKey);
+    });
+    return flatHtml;
+  }
+
+  var html =
+    '<div class="sheet-sec-head">PHẦN A. TRẮC NGHIỆM LÍ THUYẾT TRỌNG TÂM (' + ltItems.length + ' CÂU)</div>';
+  ltItems.forEach(function(x){
+    html += renderSingleQuestionHtml(x.it, x.num, isKey);
+  });
+  html +=
+    '<div class="sheet-sec-head" style="margin-top:14px">PHẦN B. BÀI TẬP BỔ SUNG CỦNG CỐ BÀI HỌC (' + btItems.length + ' CÂU – TỪ DỄ ĐẾN KHÓ)</div>';
+  btItems.forEach(function(x){
+    html += renderSingleQuestionHtml(x.it, x.num, isKey);
   });
   return html;
 }
 
-function buildSheetHtml(spec, mode){
+function buildSheetHtml(spec, mode, includeTypes){
   if (mode === 'formulas' && spec.formulaGroups) {
     var fHtml =
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · SỔ TAY TÓM TẮT CÔNG THỨC & GHI NHỚ KHTN</div>' +
+            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · SỔ TAY CÔNG THỨC' + (includeTypes ? ' & CÁC DẠNG BÀI TẬP KHTN' : ' & GHI NHỚ KHTN') + '</div>' +
             '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.formulaGroups.length + ' chủ đề</div>' +
           '</div>' +
           '<div class="sheet-code">' + esc(spec.code) + '</div>' +
         '</div>';
     spec.formulaGroups.forEach(function(g, gi){
-      fHtml += '<div class="sheet-q"><b>' + (gi + 1) + '. Lớp ' + g.grade + ' – ' + esc(g.title) + '</b><ul style="margin:6px 0 10px 18px;padding:0">';
+      fHtml += '<div class="sheet-q"><b>' + (gi + 1) + '. Lớp ' + g.grade + ' – ' + esc(g.title) + '</b><ul style="margin:6px 0 8px 18px;padding:0">';
       g.formulas.forEach(function(f){
         fHtml += '<li style="margin:8px 0;line-height:1.8">' + fmtFormula(f) + '</li>';
       });
-      fHtml += '</ul></div>';
+      fHtml += '</ul>';
+      if (includeTypes && g.types && g.types.length) {
+        fHtml += '<div style="margin:4px 0 10px 10px;padding:8px 12px;border-left:3px solid #6d5dfc;background:#faf8ff">' +
+          '<div style="font-weight:700;font-size:.94rem;margin-bottom:4px">Các dạng bài tập có thể xuất hiện & Ví dụ:</div>';
+        g.types.forEach(function(tp){
+          fHtml += '<div style="margin:5px 0;font-size:.92rem;line-height:1.65">' +
+            '<b>• ' + fmtMath(tp.name) + '</b><br>' +
+            '<span style="margin-left:10px">– <i>Phương pháp:</i> ' + fmtMath(tp.method) + '</span>' +
+            (tp.ex ? '<br><span style="margin-left:10px">– <i>Ví dụ:</i> ' + fmtMath(tp.ex) + (tp.sol ? ' ⇒ <i>Giải:</i> ' + fmtMath(tp.sol) : '') + '</span>' : '') +
+          '</div>';
+        });
+        fHtml += '</div>';
+      }
+      fHtml += '</div>';
     });
     fHtml += '</div>';
     return fHtml;
@@ -153,23 +219,28 @@ function buildSheetHtml(spec, mode){
 
   if (mode === 'study' && spec.lesson) {
     var t = spec.lesson;
+    var lessonTypes = (spec.problemTypes && spec.problemTypes.length) ? spec.problemTypes : (t.types ? [{ title: t.title, types: t.types }] : []);
     var sHtml =
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · TÀI LIỆU LÝ THUYẾT & ĐỀ LUYỆN (KHÔNG KÈM ĐÁP ÁN)</div>' +
-            '<div class="sheet-meta">Lớp ' + t.grade + ' – ' + esc(t.title) + ' · Sắp xếp từ Dễ đến Khó</div>' +
+            '<div style="font-size:1.16rem;font-weight:700">SCIBOOK · TÀI LIỆU LÝ THUYẾT, CÁC DẠNG BÀI TẬP & ĐỀ CỦNG CỐ</div>' +
+            '<div class="sheet-meta">Lớp ' + t.grade + ' – ' + esc(t.title) + ' · Có Trắc nghiệm lí thuyết & Bài tập từ Dễ đến Khó</div>' +
           '</div>' +
           '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
         '</div>' +
         '<div style="margin-bottom:12px"><b>I. KIẾN THỨC TRỌNG TÂM CẦN NHỚ</b><ul style="margin:5px 0 0 18px;padding:0">' +
           (t.theory || []).map(function(line){ return '<li style="margin:5px 0">' + fmtMath(line) + '</li>'; }).join('') +
         '</ul></div>' +
-        '<div style="margin-bottom:12px"><b>II. CÔNG THỨC & QUY TẮC CHUẨN</b><ul style="margin:5px 0 0 18px;padding:0">' +
+        '<div style="margin-bottom:12px"><b>II. CÔNG THỨC & Ý NGHĨA TỪNG ĐẠI LƯỢNG</b><ul style="margin:5px 0 0 18px;padding:0">' +
           (t.formulas || []).map(function(f){ return '<li style="margin:8px 0;line-height:1.85">' + fmtFormula(f) + '</li>'; }).join('') +
         '</ul></div>';
 
-    if (t.examples && t.examples.length) {
+    if (lessonTypes.length) {
+      sHtml += '<div style="margin-bottom:14px">' +
+        renderProblemTypesHtml(lessonTypes, 'III. CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG BÀI & VÍ DỤ MẪU') +
+      '</div>';
+    } else if (t.examples && t.examples.length) {
       sHtml += '<div style="margin-bottom:14px"><b>III. VÍ DỤ MINH HỌA TỪNG BƯỚC</b>';
       t.examples.forEach(function(ex, ei){
         sHtml += '<div style="margin:6px 0 8px 10px"><div><i>Ví dụ ' + (ei + 1) + ':</i> ' + fmtMath(ex.q) + '</div>' +
@@ -178,8 +249,8 @@ function buildSheetHtml(spec, mode){
       sHtml += '</div>';
     }
 
-    sHtml += '<div><b>IV. BÀI TẬP TỰ LUYỆN – PHẦN ĐỀ KHÔNG CÓ ĐÁP ÁN (' + spec.items.length + ' CÂU)</b>' +
-      renderQuestionListHtml(spec.items, false) +
+    sHtml += '<div><b>IV. LUYỆN TẬP CỦNG CỐ BÀI HỌC – PHẦN ĐỀ KHÔNG CÓ ĐÁP ÁN (' + spec.items.length + ' CÂU)</b>' +
+      renderQuestionListHtml(spec.items, false, true) +
       '</div>' +
       '<div class="sheet-meta" style="margin-top:14px;border-top:1px solid #bbb;padding-top:8px">' +
         'Phần đáp án được tách riêng ở <b>Phần 2 (Mã đề: ' + esc(spec.code) + ')</b> — hoàn toàn độc lập với các lần random sau.' +
@@ -206,10 +277,19 @@ function buildSheetHtml(spec, mode){
         '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
       '</div>';
 
+  if (!isKey && includeTypes && spec.problemTypes && spec.problemTypes.length) {
+    html += renderProblemTypesHtml(
+      spec.problemTypes,
+      spec.isExam
+        ? 'GHI CHÚ ÔN TẬP: CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG ĐỀ & VÍ DỤ MẪU'
+        : 'GHI CHÚ BÀI HỌC: CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG BÀI & VÍ DỤ MẪU'
+    );
+  }
+
   if (isKey) {
     html += renderQuickKeyTable(spec.items);
   }
-  html += renderQuestionListHtml(spec.items, isKey);
+  html += renderQuestionListHtml(spec.items, isKey, !spec.isExam);
 
   html += '<div class="sheet-meta" style="margin-top:16px;border-top:1px solid #bbb;padding-top:8px">' +
     (isKey
@@ -221,10 +301,10 @@ function buildSheetHtml(spec, mode){
 }
 
 // Wrap a sheet into a standalone self-contained A4 printable HTML file for direct download
-function buildStandaloneDownloadFile(spec, mode){
+function buildStandaloneDownloadFile(spec, mode, includeTypes){
   var partTag = mode === 'key' ? 'PHAN-2-DAP-AN' : 'PHAN-1-DE-KHONG-DAP-AN';
   var pageTitle = partTag + '_' + spec.code;
-  var bodySheet = buildSheetHtml(spec, mode);
+  var bodySheet = buildSheetHtml(spec, mode, includeTypes);
   var mathCss = (window.KHTNMath && typeof window.KHTNMath.cssString === 'function') ? window.KHTNMath.cssString() : '';
   return '<!doctype html>\n<html lang="vi">\n<head>\n<meta charset="utf-8">\n<title>' + esc(pageTitle) + '</title>\n' +
     '<style>\n' +
@@ -236,6 +316,9 @@ function buildStandaloneDownloadFile(spec, mode){
     '.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:14px}\n' +
     '.sheet-meta{font-size:.9rem;color:#333}\n' +
     '.sheet-code{font-family:Consolas,monospace;font-weight:700;border:1.5px solid #111;padding:3px 8px;border-radius:4px;font-size:.92rem;white-space:nowrap}\n' +
+    '.sheet-sec-head{font-weight:700;font-size:1rem;padding:5px 10px;margin:10px 0 8px;background:#f3f0ff;border-left:4px solid #6d5dfc}\n' +
+    '.sheet-types-box{margin:10px 0 14px;padding:10px 14px;border:1px solid #a5b4fc;border-radius:6px;background:#faf8ff}\n' +
+    '.sheet-ptype{margin:6px 0;line-height:1.68;page-break-inside:avoid}\n' +
     '.sheet-q{margin:12px 0;page-break-inside:avoid}\n' +
     '.sheet-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:5px 0 0 18px}\n' +
     '.sheet-lines{margin-top:8px}.sheet-lines div{border-bottom:1px dotted #888;height:24px}\n' +
@@ -263,21 +346,38 @@ function triggerDownload(filename, htmlContent){
 window.KHTNPrint = {
   // Deep-clone & freeze snapshot so future randomizations NEVER mutate this exam/worksheet!
   prepare: function(opts){
+    var classify = (window.KHTNBank && typeof window.KHTNBank.classifySection === 'function')
+      ? window.KHTNBank.classifySection
+      : function(q){ return (q && q.n == null && (!q.d || q.d <= 2)) ? 'lt' : 'bt'; };
+
     var items = (opts.items || []).map(function(it){
       var qCopy = JSON.parse(JSON.stringify(it.q));
       return {
         topicTitle: it.topicTitle || '',
+        sec: it.sec || classify(qCopy, qCopy.d),
         q: qCopy,
         choices: qCopy.o ? shuffleCopy(qCopy.o) : null
       };
     });
-    var lessonCopy = opts.lesson ? {
-      grade: opts.lesson.grade,
-      title: opts.lesson.title,
-      theory: (opts.lesson.theory || []).slice(),
-      formulas: (opts.lesson.formulas || []).slice(),
-      examples: opts.lesson.examples ? JSON.parse(JSON.stringify(opts.lesson.examples)) : null
-    } : null;
+
+    var lessonCopy = null;
+    if (opts.lesson) {
+      var lTypes = (window.KHTN_TYPES && window.KHTN_TYPES[opts.lesson.id]) ? window.KHTN_TYPES[opts.lesson.id] : null;
+      lessonCopy = {
+        id: opts.lesson.id,
+        grade: opts.lesson.grade,
+        title: opts.lesson.title,
+        theory: (opts.lesson.theory || []).slice(),
+        formulas: (opts.lesson.formulas || []).slice(),
+        examples: opts.lesson.examples ? JSON.parse(JSON.stringify(opts.lesson.examples)) : null,
+        types: lTypes ? JSON.parse(JSON.stringify(lTypes)) : null
+      };
+    }
+
+    var pTypes = opts.problemTypes ? JSON.parse(JSON.stringify(opts.problemTypes)) : null;
+    if (!pTypes && lessonCopy && lessonCopy.types) {
+      pTypes = [{ title: lessonCopy.title, types: lessonCopy.types }];
+    }
 
     var spec = {
       code: opts.code || makeCode(opts.prefix),
@@ -285,7 +385,9 @@ window.KHTNPrint = {
       docTitle: opts.docTitle || '',
       subtitle: opts.subtitle || 'Khoa học tự nhiên THCS (GDPT 2018)',
       minutes: opts.minutes || null,
+      isExam: !!opts.isExam,
       lesson: lessonCopy,
+      problemTypes: pTypes,
       formulaGroups: opts.formulaGroups ? JSON.parse(JSON.stringify(opts.formulaGroups)) : null,
       items: items
     };
@@ -300,26 +402,44 @@ window.KHTNPrint = {
     opts = opts || {};
     var spec = initialSpec;
     var mode = initialMode || (spec.formulaGroups ? 'formulas' : 'quiz');
+    // For Lesson & Handbook PDFs: include problem types & examples by default (true).
+    // For Exam ("Đề kiểm tra") PDFs: optional ("có thể có có thể không") -> default false, toggleable with 1 click!
+    var includeTypes = !spec.isExam;
+
     var modal = document.getElementById('print-modal');
     var printRoot = document.getElementById('print-root');
     if (!modal || !printRoot) return;
 
     function render(){
-      var sheetHtml = buildSheetHtml(spec, mode);
+      var sheetHtml = buildSheetHtml(spec, mode, includeTypes);
       printRoot.innerHTML = sheetHtml;
       var history = loadHistory();
 
       var modeBtns = '';
       if (spec.formulaGroups) {
-        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">Sổ tay công thức</button>';
+        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">Sổ tay công thức & dạng bài</button>';
       } else {
         modeBtns +=
           '<button type="button" class="btn sm ' + (mode === 'quiz' ? 'on' : 'subtle') + '" data-mode="quiz">Phần 1: Đề (Không đáp án)</button>' +
           '<button type="button" class="btn sm ' + (mode === 'key' ? 'on' : 'subtle') + '" data-mode="key">Phần 2: Đáp án riêng</button>';
         if (spec.lesson) {
-          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">Lý thuyết + Đề</button>';
+          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">Lý thuyết + Dạng bài + Đề</button>';
         }
       }
+
+      var canToggleTypes = false;
+      if (mode === 'formulas' && spec.formulaGroups && spec.formulaGroups.some(function(g){ return g.types && g.types.length; })) {
+        canToggleTypes = true;
+      } else if (mode === 'quiz' && spec.problemTypes && spec.problemTypes.length) {
+        canToggleTypes = true;
+      }
+
+      var typesToggleHtml = canToggleTypes
+        ? '<label class="row" style="font-size:.86rem;font-weight:600;cursor:pointer;padding:4px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line)">' +
+            '<input type="checkbox" id="toggle-pdf-types"' + (includeTypes ? ' checked' : '') + '> ' +
+            (spec.isExam ? 'Kèm Các dạng bài & Ví dụ mẫu (tùy chọn)' : 'Kèm Các dạng bài tập & Ví dụ mẫu') +
+          '</label>'
+        : '';
 
       var historySelect = '';
       if (!spec.formulaGroups && history.length > 1) {
@@ -336,7 +456,7 @@ window.KHTNPrint = {
         '<div class="modal-card">' +
           '<div class="modal-head">' +
             '<div class="row">' +
-              '<b id="print-modal-title">Tải / In Bộ Đề Độc Lập</b>' +
+              '<b id="print-modal-title">Tải / In Tài Liệu & Bộ Đề (Khổ A4)</b>' +
               '<span class="badge pri">Mã đề: ' + esc(spec.code) + '</span>' +
               historySelect +
               (typeof opts.onRegenerate === 'function' ? '<button type="button" class="btn sm subtle" data-act="regen">Random mã đề khác</button>' : '') +
@@ -346,7 +466,7 @@ window.KHTNPrint = {
             '</div>' +
           '</div>' +
           '<div style="padding:10px 18px;border-bottom:1px solid var(--line);background:var(--card);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center">' +
-            '<div class="row">' + modeBtns + '</div>' +
+            '<div class="row">' + modeBtns + typesToggleHtml + '</div>' +
             '<div class="row">' +
               (!spec.formulaGroups
                 ? '<button type="button" class="btn sm" data-act="dl-both">Tải cả 2 file (Đề không đáp án + Đáp án)</button>' +
@@ -360,14 +480,21 @@ window.KHTNPrint = {
       modal.querySelectorAll('[data-mode]').forEach(function(b){
         b.onclick = function(){ mode = b.dataset.mode; render(); };
       });
+      var chkTypes = modal.querySelector('#toggle-pdf-types');
+      if (chkTypes) {
+        chkTypes.onchange = function(){
+          includeTypes = chkTypes.checked;
+          render();
+        };
+      }
       modal.querySelector('[data-act="print"]').onclick = function(){ window.print(); };
       modal.querySelector('[data-act="close"]').onclick = close;
 
       var btnBoth = modal.querySelector('[data-act="dl-both"]');
       if (btnBoth) {
         btnBoth.onclick = function(){
-          var fileQuiz = buildStandaloneDownloadFile(spec, 'quiz');
-          var fileKey = buildStandaloneDownloadFile(spec, 'key');
+          var fileQuiz = buildStandaloneDownloadFile(spec, 'quiz', includeTypes);
+          var fileKey = buildStandaloneDownloadFile(spec, 'key', false);
           triggerDownload('1-DE-KHONG-DAP-AN_' + spec.code + '.html', fileQuiz);
           setTimeout(function(){
             triggerDownload('2-DAP-AN-CHI-TIET_' + spec.code + '.html', fileKey);
@@ -379,6 +506,7 @@ window.KHTNPrint = {
       if (btnRegen && typeof opts.onRegenerate === 'function') {
         btnRegen.onclick = function(){
           spec = opts.onRegenerate();
+          includeTypes = !spec.isExam;
           render();
         };
       }
@@ -387,7 +515,7 @@ window.KHTNPrint = {
       if (histEl) {
         histEl.onchange = function(){
           var found = loadHistory().find(function(x){ return x.code === histEl.value; });
-          if (found) { spec = found; render(); }
+          if (found) { spec = found; includeTypes = !spec.isExam; render(); }
         };
       }
     }
