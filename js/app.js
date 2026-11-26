@@ -991,7 +991,7 @@ function home(){
           '<button type="button" class="btn sm alt" id="home-share-btn">📤 Gửi link qua Zalo</button>' +
         '</div>' +
       '</div>' +
-      '<h1 style="margin:0 0 4px">SciBook</h1>' + +
+      '<h1 style="margin:0 0 4px">SciBook</h1>' +
       '<p class="muted" style="margin:0 0 12px">Dành cho học sinh tự học ở nhà, phụ huynh kèm con và thầy cô lấy đề in giấy — chỉ cần <b>2 bước đơn giản</b>:</p>' +
 
       '<div class="step-label"><span class="step-num">1</span><span>Chọn lớp đang học:</span></div>' +
