@@ -135,7 +135,8 @@ window.KHTNMath = {
     }
 
     if (descRaw) {
-      return '<div class="f-main">' + mainHtml + '</div><div class="f-desc">↳ ' + coreFormat(descRaw) + '</div>';
+      var formattedDesc = coreFormat(descRaw).replace(/^(Trong đó:|Ý nghĩa:|Lưu ý:|Cách tính:|Cách đổi:|Bản chất:|Hiện tượng:|Điều kiện xảy ra:|Ví dụ:)/, '<i>$1</i>');
+      return '<div class="f-main">' + mainHtml + '</div><div class="f-desc">– ' + formattedDesc + '</div>';
     }
     return '<div class="f-main">' + mainHtml + '</div>';
   },
