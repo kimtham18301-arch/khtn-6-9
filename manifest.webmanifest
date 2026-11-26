@@ -1,7 +1,7 @@
 {
-  "name": "Học Tốt KHTN 6–9 (SciBook)",
-  "short_name": "KHTN 6–9",
-  "description": "Tự học, tra cứu công thức và luyện đề Khoa học tự nhiên lớp 6, 7, 8, 9 miễn phí, dễ dùng cho mọi người.",
+  "name": "SciBook – Pastel Science Book",
+  "short_name": "SciBook",
+  "description": "SciBook: quyển sách pastel tự học, tra cứu công thức và luyện đề Khoa học tự nhiên THCS miễn phí.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

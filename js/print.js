@@ -1,10 +1,10 @@
 (function(){
 'use strict';
 
-// Hệ thống Xuất / Tải / In Khổ A4 ĐỘC LẬP 2 PHẦN + GHI CHÚ CÁC DẠNG BÀI TẬP & VÍ DỤ MẪU:
-//   - PHẦN 1: ĐỀ BÀI (KHÔNG CÓ ĐÁP ÁN) — chia rõ Phần A (Trắc nghiệm lí thuyết) & Phần B (Bài tập củng cố)
-//   - PHẦN 2: ĐÁP ÁN & LỜI GIẢI CHI TIẾT
-//   - GHI CHÚ CÁC DẠNG BÀI TẬP & VÍ DỤ MẪU: Luôn có trong tài liệu Bài học / Sổ tay PDF; ở Đề kiểm tra có nút BẬT / TẮT tùy chọn!
+// Hệ thống Xuất / Tải / In Khổ A4 Thân Thiện Cho Mọi Lứa Tuổi:
+//   - Chế độ GỘP 1 CHẠM ('both'): In Tờ 1: Đề bài (Không có đáp án) + tự động sang trang mới in Tờ 2: Đáp án & lời giải!
+//   - Tờ 1 riêng ('quiz') & Tờ 2 riêng ('key'), chia rõ Phần A (Trắc nghiệm lí thuyết) & Phần B (Bài tập củng cố)
+//   - Ghi chú Các dạng bài tập & Ví dụ mẫu: luôn có trong tài liệu Bài học / Sổ tay PDF; ở Đề kiểm tra có nút BẬT / TẮT tùy chọn!
 
 var KEY_SNAPS = 'khtn-snapshots-v1';
 var DIFF_NAME = {
@@ -81,7 +81,7 @@ function shortAnsText(item){
 
 function renderQuickKeyTable(items){
   var html = '<div style="margin:8px 0 14px;padding:10px 12px;border:1px solid #888;border-radius:6px;background:#f8fafc">' +
-    '<div style="font-weight:700;margin-bottom:6px">BẢNG TRA NHANH ĐÁP ÁN (' + items.length + ' CÂU):</div>' +
+    '<div style="font-weight:700;margin-bottom:6px">BẢNG DÒ NHANH ĐÁP ÁN (' + items.length + ' CÂU):</div>' +
     '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:4px 10px;font-size:.92rem">';
   items.forEach(function(it, idx){
     html += '<div><b>Câu ' + (idx + 1) + ':</b> ' + esc(shortAnsText(it)) + '</div>';
@@ -90,7 +90,6 @@ function renderQuickKeyTable(items){
   return html;
 }
 
-// Render block of "Các dạng bài tập có thể xuất hiện & Ví dụ minh họa" for PDF
 function renderProblemTypesHtml(typeGroups, headingText){
   if (!typeGroups || !typeGroups.length) return '';
   var html = '<div class="sheet-types-box">' +
@@ -106,7 +105,7 @@ function renderProblemTypesHtml(typeGroups, headingText){
       html +=
         '<div class="sheet-ptype">' +
           '<div><b>• ' + fmtMath(tp.name) + '</b></div>' +
-          '<div style="margin-left:12px;font-size:.93rem">– <i>Phương pháp:</i> ' + fmtMath(tp.method) + '</div>' +
+          '<div style="margin-left:12px;font-size:.93rem">– <i>Cách làm:</i> ' + fmtMath(tp.method) + '</div>' +
           (tp.ex ? '<div style="margin-left:12px;font-size:.93rem">– <i>Ví dụ mẫu:</i> ' + fmtMath(tp.ex) +
             (tp.sol ? '<br><span style="margin-left:10px">⇒ <i>Hướng dẫn giải:</i> ' + fmtMath(tp.sol) + '</span>' : '') +
           '</div>' : '') +
@@ -133,7 +132,7 @@ function renderSingleQuestionHtml(item, qNumber, isKey){
       });
       html += '</div>';
     } else {
-      html += '<div style="margin:6px 0 0 18px">Đáp số: .................................... ' + esc(q.u || '') + '</div>';
+      html += '<div style="margin:6px 0 0 18px">Điền đáp số: .................................... ' + esc(q.u || '') + '</div>';
     }
     html += '<div class="sheet-lines"><div></div><div></div>' + (item.choices ? '' : '<div></div>') + '</div>';
   } else {
@@ -145,7 +144,7 @@ function renderSingleQuestionHtml(item, qNumber, isKey){
     } else {
       ansText = esc(formatNum(q.n) + (q.u ? ' ' + q.u : ''));
     }
-    html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + ansText + '<br><b>Lời giải chi tiết:</b> ' + fmtMath(q.w || '') + '</div>';
+    html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + ansText + '<br><b>Cách giải dễ hiểu:</b> ' + fmtMath(q.w || '') + '</div>';
   }
   html += '</div>';
   return html;
@@ -159,7 +158,6 @@ function renderQuestionListHtml(items, isKey, splitBySection){
     else btItems.push({ it: it, num: idx + 1 });
   });
 
-  // Split into Phần A (Trắc nghiệm lí thuyết) & Phần B (Bài tập củng cố) when both exist and items are ordered lt -> bt
   var canSplit = splitBySection && ltItems.length > 0 && btItems.length > 0;
   if (!canSplit) {
     var flatHtml = '';
@@ -175,10 +173,51 @@ function renderQuestionListHtml(items, isKey, splitBySection){
     html += renderSingleQuestionHtml(x.it, x.num, isKey);
   });
   html +=
-    '<div class="sheet-sec-head" style="margin-top:14px">PHẦN B. BÀI TẬP BỔ SUNG CỦNG CỐ BÀI HỌC (' + btItems.length + ' CÂU – TỪ DỄ ĐẾN KHÓ)</div>';
+    '<div class="sheet-sec-head" style="margin-top:14px">PHẦN B. BÀI TẬP CỦNG CỐ TỪ DỄ ĐẾN KHÓ (' + btItems.length + ' CÂU)</div>';
   btItems.forEach(function(x){
     html += renderSingleQuestionHtml(x.it, x.num, isKey);
   });
+  return html;
+}
+
+function buildSinglePartInner(spec, isKey, includeTypes){
+  var docTitle = isKey
+    ? 'TỜ 2: ĐÁP ÁN & CÁCH GIẢI CHI TIẾT (DÀNH ĐỂ DÒ KẾT QUẢ)'
+    : ('TỜ 1: ' + (spec.docTitle || 'ĐỀ BÀI TẬP / KIỂM TRA') + ' (KHÔNG CÓ ĐÁP ÁN)');
+  var estMin = spec.minutes || Math.max(5, Math.ceil(spec.items.length * 1.5));
+
+  var html =
+    '<div class="sheet-head">' +
+      '<div>' +
+        '<div style="font-size:1.12rem;font-weight:700">' + esc(docTitle) + '</div>' +
+        '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.items.length + ' câu · Thời gian: ' + estMin + ' phút</div>' +
+        (isKey
+          ? '<div class="sheet-meta" style="margin-top:4px;font-weight:600">Bản chấm điểm đối chiếu đúng theo Mã đề ' + esc(spec.code) + '</div>'
+          : '<div class="sheet-meta" style="margin-top:6px">Họ và tên học sinh: .................................................. Lớp: ............ Điểm: ......../10</div>') +
+      '</div>' +
+      '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
+    '</div>';
+
+  if (!isKey && includeTypes && spec.problemTypes && spec.problemTypes.length) {
+    html += renderProblemTypesHtml(
+      spec.problemTypes,
+      spec.isExam
+        ? 'GHI CHÚ ÔN TẬP: CÁC DẠNG BÀI TẬP TRONG ĐỀ & VÍ DỤ MẪU'
+        : 'GHI CHÚ BÀI HỌC: CÁC DẠNG BÀI TẬP TRONG BÀI & VÍ DỤ MẪU'
+    );
+  }
+
+  if (isKey) {
+    html += renderQuickKeyTable(spec.items);
+  }
+  html += renderQuestionListHtml(spec.items, isKey, !spec.isExam);
+
+  html += '<div class="sheet-meta" style="margin-top:16px;border-top:1px solid #bbb;padding-top:8px">' +
+    (isKey
+      ? 'Tờ đáp án này khớp cố định với <b>Mã đề: ' + esc(spec.code) + '</b>.'
+      : 'Tờ đề bài (không kèm đáp án) – Đối chiếu kết quả bằng <b>Tờ 2: Đáp án</b> có cùng <b>Mã đề: ' + esc(spec.code) + '</b>.') +
+    ' Thang điểm 10 (mỗi câu ' + formatNum(Math.round((10 / Math.max(1, spec.items.length)) * 100) / 100) + ' điểm).' +
+    '</div>';
   return html;
 }
 
@@ -188,8 +227,8 @@ function buildSheetHtml(spec, mode, includeTypes){
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · SỔ TAY CÔNG THỨC' + (includeTypes ? ' & CÁC DẠNG BÀI TẬP KHTN' : ' & GHI NHỚ KHTN') + '</div>' +
-            '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.formulaGroups.length + ' chủ đề</div>' +
+            '<div style="font-size:1.16rem;font-weight:700">SỔ TAY CÔNG THỨC' + (includeTypes ? ' & CÁC DẠNG BÀI TẬP KHTN' : ' & GHI NHỚ KHTN') + '</div>' +
+            '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.formulaGroups.length + ' bài học</div>' +
           '</div>' +
           '<div class="sheet-code">' + esc(spec.code) + '</div>' +
         '</div>';
@@ -201,11 +240,11 @@ function buildSheetHtml(spec, mode, includeTypes){
       fHtml += '</ul>';
       if (includeTypes && g.types && g.types.length) {
         fHtml += '<div style="margin:4px 0 10px 10px;padding:8px 12px;border-left:3px solid #6d5dfc;background:#faf8ff">' +
-          '<div style="font-weight:700;font-size:.94rem;margin-bottom:4px">Các dạng bài tập có thể xuất hiện & Ví dụ:</div>';
+          '<div style="font-weight:700;font-size:.94rem;margin-bottom:4px">Các dạng bài tập thường gặp & Ví dụ:</div>';
         g.types.forEach(function(tp){
           fHtml += '<div style="margin:5px 0;font-size:.92rem;line-height:1.65">' +
             '<b>• ' + fmtMath(tp.name) + '</b><br>' +
-            '<span style="margin-left:10px">– <i>Phương pháp:</i> ' + fmtMath(tp.method) + '</span>' +
+            '<span style="margin-left:10px">– <i>Cách làm:</i> ' + fmtMath(tp.method) + '</span>' +
             (tp.ex ? '<br><span style="margin-left:10px">– <i>Ví dụ:</i> ' + fmtMath(tp.ex) + (tp.sol ? ' ⇒ <i>Giải:</i> ' + fmtMath(tp.sol) : '') + '</span>' : '') +
           '</div>';
         });
@@ -224,24 +263,24 @@ function buildSheetHtml(spec, mode, includeTypes){
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.16rem;font-weight:700">SCIBOOK · TÀI LIỆU LÝ THUYẾT, CÁC DẠNG BÀI TẬP & ĐỀ CỦNG CỐ</div>' +
-            '<div class="sheet-meta">Lớp ' + t.grade + ' – ' + esc(t.title) + ' · Có Trắc nghiệm lí thuyết & Bài tập từ Dễ đến Khó</div>' +
+            '<div style="font-size:1.15rem;font-weight:700">TÀI LIỆU LÝ THUYẾT, CÁC DẠNG BÀI &amp; ĐỀ TỰ LUYỆN</div>' +
+            '<div class="sheet-meta">Lớp ' + t.grade + ' – ' + esc(t.title) + ' · Có Trắc nghiệm lí thuyết &amp; Bài tập từ Dễ đến Khó</div>' +
           '</div>' +
           '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
         '</div>' +
         '<div style="margin-bottom:12px"><b>I. KIẾN THỨC TRỌNG TÂM CẦN NHỚ</b><ul style="margin:5px 0 0 18px;padding:0">' +
           (t.theory || []).map(function(line){ return '<li style="margin:5px 0">' + fmtMath(line) + '</li>'; }).join('') +
         '</ul></div>' +
-        '<div style="margin-bottom:12px"><b>II. CÔNG THỨC & Ý NGHĨA TỪNG ĐẠI LƯỢNG</b><ul style="margin:5px 0 0 18px;padding:0">' +
+        '<div style="margin-bottom:12px"><b>II. CÔNG THỨC &amp; Ý NGHĨA ĐẠI LƯỢNG</b><ul style="margin:5px 0 0 18px;padding:0">' +
           (t.formulas || []).map(function(f){ return '<li style="margin:8px 0;line-height:1.85">' + fmtFormula(f) + '</li>'; }).join('') +
         '</ul></div>';
 
     if (lessonTypes.length) {
       sHtml += '<div style="margin-bottom:14px">' +
-        renderProblemTypesHtml(lessonTypes, 'III. CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG BÀI & VÍ DỤ MẪU') +
+        renderProblemTypesHtml(lessonTypes, 'III. CÁC DẠNG BÀI TẬP TRONG BÀI & VÍ DỤ GIẢI MẪU') +
       '</div>';
     } else if (t.examples && t.examples.length) {
-      sHtml += '<div style="margin-bottom:14px"><b>III. VÍ DỤ MINH HỌA TỪNG BƯỚC</b>';
+      sHtml += '<div style="margin-bottom:14px"><b>III. VÍ DỤ GIẢI MẪU TỪNG BƯỚC</b>';
       t.examples.forEach(function(ex, ei){
         sHtml += '<div style="margin:6px 0 8px 10px"><div><i>Ví dụ ' + (ei + 1) + ':</i> ' + fmtMath(ex.q) + '</div>' +
           '<div style="margin-left:12px;color:#222;line-height:1.8">• ' + ex.steps.map(fmtMath).join('<br>• ') + '<br>⇒ <b>Đáp số:</b> ' + fmtMath(ex.ans) + '</div></div>';
@@ -249,68 +288,37 @@ function buildSheetHtml(spec, mode, includeTypes){
       sHtml += '</div>';
     }
 
-    sHtml += '<div><b>IV. LUYỆN TẬP CỦNG CỐ BÀI HỌC – PHẦN ĐỀ KHÔNG CÓ ĐÁP ÁN (' + spec.items.length + ' CÂU)</b>' +
+    sHtml += '<div><b>IV. BÀI TẬP TỰ LUYỆN (' + spec.items.length + ' CÂU – KHÔNG CÓ ĐÁP ÁN)</b>' +
       renderQuestionListHtml(spec.items, false, true) +
       '</div>' +
-      '<div class="sheet-meta" style="margin-top:14px;border-top:1px solid #bbb;padding-top:8px">' +
-        'Phần đáp án được tách riêng ở <b>Phần 2 (Mã đề: ' + esc(spec.code) + ')</b> — hoàn toàn độc lập với các lần random sau.' +
-      '</div></div>';
+      '<div class="sheet-page-break"></div>' +
+      buildSinglePartInner(spec, true, false) +
+      '</div>';
     return sHtml;
   }
 
+  if (mode === 'both') {
+    return '<div class="sheet-preview">' +
+      buildSinglePartInner(spec, false, includeTypes) +
+      '<div class="sheet-page-break"></div>' +
+      buildSinglePartInner(spec, true, false) +
+    '</div>';
+  }
+
   var isKey = mode === 'key';
-  var docTitle = isKey
-    ? 'PHẦN 2: ĐÁP ÁN & LỜI GIẢI CHI TIẾT'
-    : ('PHẦN 1: ' + (spec.docTitle || 'ĐỀ BÀI TẬP / KIỂM TRA') + ' (KHÔNG CÓ ĐÁP ÁN)');
-  var estMin = spec.minutes || Math.max(5, Math.ceil(spec.items.length * 1.5));
-
-  var html =
-    '<div class="sheet-preview">' +
-      '<div class="sheet-head">' +
-        '<div>' +
-          '<div style="font-size:1.14rem;font-weight:700">' + esc(docTitle) + '</div>' +
-          '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.items.length + ' câu · Thời gian: ' + estMin + ' phút</div>' +
-          (isKey
-            ? '<div class="sheet-meta" style="margin-top:4px;font-weight:600">Bản chấm điểm đối chiếu đúng theo Mã đề ' + esc(spec.code) + ' (độc lập với các mã đề random khác)</div>'
-            : '<div class="sheet-meta" style="margin-top:6px">Họ và tên: .................................................. Lớp: ............ Điểm: ......../10</div>') +
-        '</div>' +
-        '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
-      '</div>';
-
-  if (!isKey && includeTypes && spec.problemTypes && spec.problemTypes.length) {
-    html += renderProblemTypesHtml(
-      spec.problemTypes,
-      spec.isExam
-        ? 'GHI CHÚ ÔN TẬP: CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG ĐỀ & VÍ DỤ MẪU'
-        : 'GHI CHÚ BÀI HỌC: CÁC DẠNG BÀI TẬP CÓ THỂ XUẤT HIỆN TRONG BÀI & VÍ DỤ MẪU'
-    );
-  }
-
-  if (isKey) {
-    html += renderQuickKeyTable(spec.items);
-  }
-  html += renderQuestionListHtml(spec.items, isKey, !spec.isExam);
-
-  html += '<div class="sheet-meta" style="margin-top:16px;border-top:1px solid #bbb;padding-top:8px">' +
-    (isKey
-      ? 'Phiếu đáp án này khóa cố định theo <b>Mã đề: ' + esc(spec.code) + '</b>.'
-      : 'Phiếu đề bài (không kèm đáp án) – Đối chiếu kết quả bằng <b>Phần 2: Đáp án</b> có cùng <b>Mã đề: ' + esc(spec.code) + '</b>.') +
-    ' Thang điểm 10 (mỗi câu ' + formatNum(Math.round((10 / Math.max(1, spec.items.length)) * 100) / 100) + ' điểm).' +
-    '</div></div>';
-  return html;
+  return '<div class="sheet-preview">' + buildSinglePartInner(spec, isKey, includeTypes) + '</div>';
 }
 
-// Wrap a sheet into a standalone self-contained A4 printable HTML file for direct download
 function buildStandaloneDownloadFile(spec, mode, includeTypes){
-  var partTag = mode === 'key' ? 'PHAN-2-DAP-AN' : 'PHAN-1-DE-KHONG-DAP-AN';
+  var partTag = mode === 'key' ? 'TO-2-DAP-AN' : (mode === 'both' ? 'TRON-BO-DE-VA-DAP-AN' : 'TO-1-DE-BAI');
   var pageTitle = partTag + '_' + spec.code;
   var bodySheet = buildSheetHtml(spec, mode, includeTypes);
   var mathCss = (window.KHTNMath && typeof window.KHTNMath.cssString === 'function') ? window.KHTNMath.cssString() : '';
   return '<!doctype html>\n<html lang="vi">\n<head>\n<meta charset="utf-8">\n<title>' + esc(pageTitle) + '</title>\n' +
     '<style>\n' +
     'body{margin:0;padding:20px;background:#f7f4ff;font:15px/1.7 "Times New Roman",Cambria,Georgia,serif;color:#111}\n' +
-    '.top-bar{max-width:210mm;margin:0 auto 14px;padding:10px 14px;background:#fff;border:1px solid #d8ccf8;border-radius:10px;display:flex;justify-content:space-between;align-items:center;font-family:system-ui,sans-serif}\n' +
-    '.pbtn{background:#6d5dfc;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}\n' +
+    '.top-bar{max-width:210mm;margin:0 auto 14px;padding:12px 16px;background:#fff;border:1.5px solid #c4b5fd;border-radius:12px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font-family:system-ui,sans-serif}\n' +
+    '.pbtn{background:#6d5dfc;color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:700;font-size:15px;cursor:pointer}\n' +
     '.sheet-preview{background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:22px 26px;max-width:210mm;margin:0 auto}\n' +
     '.sheet-preview li{margin:7px 0;line-height:1.8}\n' +
     '.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:14px}\n' +
@@ -323,11 +331,12 @@ function buildStandaloneDownloadFile(spec, mode, includeTypes){
     '.sheet-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:5px 0 0 18px}\n' +
     '.sheet-lines{margin-top:8px}.sheet-lines div{border-bottom:1px dotted #888;height:24px}\n' +
     '.sheet-ans{margin:4px 0 0 18px;color:#111;line-height:1.8}\n' +
+    '.sheet-page-break{margin:28px 0;padding-top:20px;border-top:2px dashed #94a3b8;page-break-before:always;break-before:page}\n' +
     mathCss + '\n' +
-    '@media print{@page{size:A4;margin:14mm}body{background:#fff;padding:0}.top-bar{display:none!important}.sheet-preview{border:0;padding:0;max-width:none}}\n' +
+    '@media print{@page{size:A4;margin:14mm}body{background:#fff;padding:0}.top-bar{display:none!important}.sheet-preview{border:0;padding:0;max-width:none}.sheet-page-break{border-top:0;margin:0;padding:0;page-break-before:always;break-before:page}}\n' +
     '</style>\n</head>\n<body>\n' +
-    '<div class="top-bar"><div><b>SciBook · ' + esc(mode === 'key' ? 'Phần 2: Đáp án & lời giải' : 'Phần 1: Đề bài (Không có đáp án)') + '</b> · Mã đề: <b>' + esc(spec.code) + '</b></div>' +
-    '<button class="pbtn" onclick="window.print()">In ra giấy / Lưu thành PDF (A4)</button></div>\n' +
+    '<div class="top-bar"><div><b>Học Tốt KHTN 6–9</b> · Mã đề: <b>' + esc(spec.code) + '</b><div style="font-size:13px;color:#555;margin-top:2px">Bấm nút màu tím bên cạnh để in ra máy in hoặc chọn Save as PDF (Lưu dưới dạng PDF).</div></div>' +
+    '<button class="pbtn" onclick="window.print()">🖨️ In ra giấy / Lưu thành PDF</button></div>\n' +
     bodySheet + '\n</body>\n</html>';
 }
 
@@ -344,7 +353,6 @@ function triggerDownload(filename, htmlContent){
 }
 
 window.KHTNPrint = {
-  // Deep-clone & freeze snapshot so future randomizations NEVER mutate this exam/worksheet!
   prepare: function(opts){
     var classify = (window.KHTNBank && typeof window.KHTNBank.classifySection === 'function')
       ? window.KHTNBank.classifySection
@@ -397,13 +405,10 @@ window.KHTNPrint = {
     return spec;
   },
 
-  // opts: { onRegenerate: function() -> newSpec }
   open: function(initialSpec, initialMode, opts){
     opts = opts || {};
     var spec = initialSpec;
-    var mode = initialMode || (spec.formulaGroups ? 'formulas' : 'quiz');
-    // For Lesson & Handbook PDFs: include problem types & examples by default (true).
-    // For Exam ("Đề kiểm tra") PDFs: optional ("có thể có có thể không") -> default false, toggleable with 1 click!
+    var mode = initialMode || (spec.formulaGroups ? 'formulas' : 'both');
     var includeTypes = !spec.isExam;
 
     var modal = document.getElementById('print-modal');
@@ -417,36 +422,37 @@ window.KHTNPrint = {
 
       var modeBtns = '';
       if (spec.formulaGroups) {
-        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">Sổ tay công thức & dạng bài</button>';
+        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">📖 Sổ tay công thức &amp; dạng bài</button>';
       } else {
         modeBtns +=
-          '<button type="button" class="btn sm ' + (mode === 'quiz' ? 'on' : 'subtle') + '" data-mode="quiz">Phần 1: Đề (Không đáp án)</button>' +
-          '<button type="button" class="btn sm ' + (mode === 'key' ? 'on' : 'subtle') + '" data-mode="key">Phần 2: Đáp án riêng</button>';
+          '<button type="button" class="btn sm ' + (mode === 'both' ? 'on' : 'subtle') + '" data-mode="both">1+2. Gộp Đề + Đáp án (Khác trang)</button>' +
+          '<button type="button" class="btn sm ' + (mode === 'quiz' ? 'on' : 'subtle') + '" data-mode="quiz">1. Chỉ tờ Đề bài</button>' +
+          '<button type="button" class="btn sm ' + (mode === 'key' ? 'on' : 'subtle') + '" data-mode="key">2. Chỉ tờ Đáp án</button>';
         if (spec.lesson) {
-          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">Lý thuyết + Dạng bài + Đề</button>';
+          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">📖 Lý thuyết + Dạng bài + Đề + Đáp án</button>';
         }
       }
 
       var canToggleTypes = false;
       if (mode === 'formulas' && spec.formulaGroups && spec.formulaGroups.some(function(g){ return g.types && g.types.length; })) {
         canToggleTypes = true;
-      } else if (mode === 'quiz' && spec.problemTypes && spec.problemTypes.length) {
+      } else if ((mode === 'quiz' || mode === 'both') && spec.problemTypes && spec.problemTypes.length) {
         canToggleTypes = true;
       }
 
       var typesToggleHtml = canToggleTypes
-        ? '<label class="row" style="font-size:.86rem;font-weight:600;cursor:pointer;padding:4px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line)">' +
+        ? '<label class="row" style="font-size:.85rem;font-weight:650;cursor:pointer;padding:5px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line)">' +
             '<input type="checkbox" id="toggle-pdf-types"' + (includeTypes ? ' checked' : '') + '> ' +
-            (spec.isExam ? 'Kèm Các dạng bài & Ví dụ mẫu (tùy chọn)' : 'Kèm Các dạng bài tập & Ví dụ mẫu') +
+            (spec.isExam ? 'Kèm Các dạng bài &amp; Ví dụ mẫu (tùy chọn)' : 'Kèm Các dạng bài &amp; Ví dụ mẫu') +
           '</label>'
         : '';
 
       var historySelect = '';
       if (!spec.formulaGroups && history.length > 1) {
-        historySelect = '<select id="snap-hist" style="padding:5px 8px;font-size:.84rem;border-radius:8px" title="Chọn lại mã đề đã tạo trước đó">' +
+        historySelect = '<select id="snap-hist" style="padding:6px 9px;font-size:.84rem;border-radius:8px" title="Mở lại mã đề đã tạo trước đó">' +
           history.map(function(h){
             return '<option value="' + esc(h.code) + '"' + (h.code === spec.code ? ' selected' : '') + '>' +
-              esc(h.code) + ' (' + h.items.length + ' câu · ' + esc(h.createdAt || '') + ')' +
+              'Đề cũ: ' + esc(h.code) + ' (' + h.items.length + ' câu · ' + esc(h.createdAt || '') + ')' +
             '</option>';
           }).join('') +
         '</select>';
@@ -456,22 +462,26 @@ window.KHTNPrint = {
         '<div class="modal-card">' +
           '<div class="modal-head">' +
             '<div class="row">' +
-              '<b id="print-modal-title">Tải / In Tài Liệu & Bộ Đề (Khổ A4)</b>' +
+              '<b id="print-modal-title">🖨️ Xem trước &amp; In ra giấy A4 / Lưu PDF</b>' +
               '<span class="badge pri">Mã đề: ' + esc(spec.code) + '</span>' +
               historySelect +
-              (typeof opts.onRegenerate === 'function' ? '<button type="button" class="btn sm subtle" data-act="regen">Random mã đề khác</button>' : '') +
+              (typeof opts.onRegenerate === 'function' ? '<button type="button" class="btn sm subtle" data-act="regen">🔄 Đổi mã đề mới</button>' : '') +
             '</div>' +
             '<div class="row">' +
-              '<button type="button" class="btn sm subtle" data-act="close">Đóng</button>' +
+              '<button type="button" class="btn sm subtle" data-act="close">✕ Đóng lại</button>' +
             '</div>' +
+          '</div>' +
+          '<div class="print-guide">' +
+            '💡 <b>Cách dùng rất dễ:</b> Bấm nút màu tím <b>🖨️ In ra giấy / Lưu thành PDF</b> bên dưới. ' +
+            'Nếu muốn lưu thành file gửi qua Zalo, ở ô <b>Máy in (Destination)</b> bạn chọn <b>Lưu dưới dạng PDF (Save as PDF)</b> rồi bấm <b>Lưu</b>.' +
           '</div>' +
           '<div style="padding:10px 18px;border-bottom:1px solid var(--line);background:var(--card);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center">' +
             '<div class="row">' + modeBtns + typesToggleHtml + '</div>' +
             '<div class="row">' +
+              '<button type="button" class="btn" data-act="print">🖨️ In ra giấy / Lưu thành PDF</button>' +
               (!spec.formulaGroups
-                ? '<button type="button" class="btn sm" data-act="dl-both">Tải cả 2 file (Đề không đáp án + Đáp án)</button>' +
-                  '<button type="button" class="btn sm alt" data-act="print">In / Lưu PDF phần đang mở</button>'
-                : '<button type="button" class="btn sm" data-act="print">In / Lưu PDF Sổ tay</button>') +
+                ? '<button type="button" class="btn sm alt" data-act="dl-both" title="Tải riêng 2 tệp về máy để mở khi không có mạng">📥 Tải 2 tệp về máy</button>'
+                : '') +
             '</div>' +
           '</div>' +
           '<div class="modal-body">' + sheetHtml + '</div>' +
@@ -495,9 +505,9 @@ window.KHTNPrint = {
         btnBoth.onclick = function(){
           var fileQuiz = buildStandaloneDownloadFile(spec, 'quiz', includeTypes);
           var fileKey = buildStandaloneDownloadFile(spec, 'key', false);
-          triggerDownload('1-DE-KHONG-DAP-AN_' + spec.code + '.html', fileQuiz);
+          triggerDownload('1-TO-DE-BAI_' + spec.code + '.html', fileQuiz);
           setTimeout(function(){
-            triggerDownload('2-DAP-AN-CHI-TIET_' + spec.code + '.html', fileKey);
+            triggerDownload('2-TO-DAP-AN_' + spec.code + '.html', fileKey);
           }, 250);
         };
       }

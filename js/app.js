@@ -897,6 +897,18 @@ function buildExamItems(exam, levelMode){
   return picked;
 }
 
+function collectExamProblemTypes(topicsList){
+  var TYPES = window.KHTN_TYPES || {};
+  var out = [];
+  (topicsList || []).forEach(function(tid){
+    var t = byId[tid];
+    if (t && TYPES[tid] && TYPES[tid].length) {
+      out.push({ title: t.title, types: TYPES[tid] });
+    }
+  });
+  return out;
+}
+
 function createFreshExamSnapshot(ex, levelMode){
   var m = levelMode || ex.presetLevel || 'standard';
   var mTxt = m === 'basic' ? 'Mức Dễ – Lấy gốc' : (m === 'advanced' ? 'Mức Nâng cao' : 'Vừa sức trên lớp');
@@ -906,6 +918,8 @@ function createFreshExamSnapshot(ex, levelMode){
     docTitle: ex.title.toUpperCase(),
     subtitle: 'KHTN Lớp ' + ex.grade + ' · ' + ex.term + (ex.weeks ? ' (' + ex.weeks + ')' : '') + ' · ' + mTxt + ' · ' + ex.scope,
     minutes: ex.minutes,
+    isExam: true,
+    problemTypes: collectExamProblemTypes(ex.topics),
     items: picks.map(function(p){ return { topicTitle: p.t.title.replace(/^Bài \d+:\s*/, ''), q: p.q }; })
   });
   quickExamSpecs[ex.id + '::' + m] = snap;
@@ -982,14 +996,12 @@ function home(){
 
       '<div class="step-label"><span class="step-num">1</span><span>Chọn lớp đang học:</span></div>' +
       '<div class="grade-pills" id="home-grade-pills">' +
-        [
-          {g:6, sub:'11 bài · Nền tảng'},
-          {g:7, sub:'13 bài · 18 đề KT ★'},
-          {g:8, sub:'16 bài · 19 đề KT ★'},
-          {g:9, sub:'10 bài · Ôn cuối cấp'}
-        ].map(function(it){
-          return '<button type="button" class="grade-pill ' + (chosenGrade === it.g ? 'on' : '') + '" data-g="' + it.g + '">' +
-            '<b>Lớp ' + it.g + '</b><small>' + it.sub + '</small></button>';
+        [6,7,8,9].map(function(gr){
+          var lc = D.filter(function(t){ return t.grade === gr; }).length;
+          var ec = EXAMS.filter(function(e){ return e.grade === gr; }).length;
+          var sub = lc + ' bài · ' + ec + ' đề KT' + ((gr === 7 || gr === 8) ? ' ★' : '');
+          return '<button type="button" class="grade-pill ' + (chosenGrade === gr ? 'on' : '') + '" data-g="' + gr + '">' +
+            '<b>Lớp ' + gr + '</b><small>' + sub + '</small></button>';
         }).join('') +
       '</div>' +
 
@@ -1373,10 +1385,11 @@ function grade(g, activeTab){
     mountGradebookWidget(document.getElementById('gb-slot'), g);
 
     document.getElementById('g-print-formulas').onclick = function(){
+      var TYPES = window.KHTN_TYPES || {};
       var spec = window.KHTNPrint.prepare({
         prefix: 'ST' + g,
-        subtitle: 'Toàn bộ công thức & ghi nhớ trọng tâm KHTN Lớp ' + g + ' (GDPT 2018)',
-        formulaGroups: list.map(function(t){ return { grade: t.grade, title: t.title, formulas: t.formulas }; })
+        subtitle: 'Toàn bộ công thức & các dạng bài trọng tâm KHTN Lớp ' + g + ' (GDPT 2018)',
+        formulaGroups: list.map(function(t){ return { grade: t.grade, title: t.title, formulas: t.formulas, types: TYPES[t.id] || null }; })
       });
       window.KHTNPrint.open(spec, 'formulas');
     };
@@ -1523,7 +1536,25 @@ function lesson(id){
       '<h2>2. Công thức &amp; giải thích từng kí hiệu</h2>' +
       t.formulas.map(function(f){ return '<div class="formula">' + fmtFormula(f) + '</div>'; }).join('');
 
-  if (t.examples && t.examples.length) {
+  var topicTypes = (window.KHTN_TYPES && window.KHTN_TYPES[t.id]) ? window.KHTN_TYPES[t.id] : null;
+  if (topicTypes && topicTypes.length) {
+    h += '<h2>3. Các dạng bài tập thường gặp &amp; Ví dụ giải mẫu</h2>';
+    topicTypes.forEach(function(tp, ti){
+      h +=
+        '<div class="type-card">' +
+          '<div><b>' + fmtMath(tp.name) + '</b></div>' +
+          '<div class="type-method">💡 <b>Cách làm:</b> ' + fmtMath(tp.method) + '</div>' +
+          (tp.ex
+            ? '<details' + (ti === 0 ? ' open' : '') + '>' +
+                '<summary>👉 Xem ví dụ mẫu &amp; lời giải</summary>' +
+                '<div class="type-ex"><b>Ví dụ:</b> ' + fmtMath(tp.ex) +
+                  (tp.sol ? '<br><b>Lời giải:</b> ' + fmtMath(tp.sol) : '') +
+                '</div>' +
+              '</details>'
+            : '') +
+        '</div>';
+    });
+  } else if (t.examples && t.examples.length) {
     h += '<h2>3. Ví dụ giải mẫu từng bước</h2>';
     t.examples.forEach(function(ex, ei){
       h +=
@@ -1875,10 +1906,11 @@ function quickPrintPage(g){
     app.innerHTML = h;
 
     document.getElementById('qp-all-formulas').onclick = function(){
+      var TYPES = window.KHTN_TYPES || {};
       var spec = window.KHTNPrint.prepare({
         prefix: 'ST' + g,
-        subtitle: 'Toàn bộ công thức & ghi nhớ trọng tâm KHTN Lớp ' + g + ' (GDPT 2018)',
-        formulaGroups: gLessons.map(function(t){ return { grade: t.grade, title: t.title, formulas: t.formulas }; })
+        subtitle: 'Toàn bộ công thức & các dạng bài trọng tâm KHTN Lớp ' + g + ' (GDPT 2018)',
+        formulaGroups: gLessons.map(function(t){ return { grade: t.grade, title: t.title, formulas: t.formulas, types: TYPES[t.id] || null }; })
       });
       window.KHTNPrint.open(spec, 'formulas');
     };
@@ -2050,6 +2082,8 @@ function examRunner(examId){
       docTitle: ex.title.toUpperCase(),
       subtitle: 'KHTN Lớp ' + ex.grade + ' · ' + ex.term + ' · ' + levelTxt,
       minutes: ex.minutes,
+      isExam: true,
+      problemTypes: collectExamProblemTypes(ex.topics),
       items: picks.map(function(p){ return { topicTitle: p.t.title.replace(/^Bài \d+:\s*/, ''), q: p.q }; })
     });
 
@@ -2862,6 +2896,7 @@ function notebook(initialTab){
     if (tab === 'formulas') {
       function matchingFormulaGroups(){
         var q = normVi(query);
+        var TYPES = window.KHTN_TYPES || {};
         var groups = [];
         D.slice().sort(function(a,b){ return a.grade - b.grade || (a.order||99) - (b.order||99); }).forEach(function(t){
           if (gradeFilter !== 'all' && String(t.grade) !== gradeFilter) return;
@@ -2869,7 +2904,7 @@ function notebook(initialTab){
           var hit = t.formulas.filter(function(f){
             return !q || normVi(f + ' ' + t.title).indexOf(q) > -1;
           });
-          if (hit.length) groups.push({ topic: t, grade: t.grade, title: t.title, formulas: hit });
+          if (hit.length) groups.push({ topic: t, grade: t.grade, title: t.title, formulas: hit, types: TYPES[t.id] || null });
         });
         return groups;
       }
