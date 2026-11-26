@@ -1,20 +1,20 @@
 // Network-first Service Worker: luôn lấy bản mới nhất khi có mạng, tự động dùng bản lưu sẵn khi rớt Wi-Fi/4G
-var CACHE_NAME = 'scibook-v20261126x';
+var CACHE_NAME = 'scibook-v20261126y';
 var CORE_ASSETS = [
   './',
   './index.html',
-  './css/style.css?v=20261126x',
-  './js/data/lop6.js?v=20261126x',
-  './js/data/lop7.js?v=20261126x',
-  './js/data/lop8.js?v=20261126x',
-  './js/data/lop9.js?v=20261126x',
-  './js/data/types.js?v=20261126x',
-  './js/data/exams.js?v=20261126x',
-  './js/mathfmt.js?v=20261126x',
-  './js/qbank.js?v=20261126x',
-  './js/pad.js?v=20261126x',
-  './js/print.js?v=20261126x',
-  './js/app.js?v=20261126x'
+  './css/style.css?v=20261126y',
+  './js/data/lop6.js?v=20261126y',
+  './js/data/lop7.js?v=20261126y',
+  './js/data/lop8.js?v=20261126y',
+  './js/data/lop9.js?v=20261126y',
+  './js/data/types.js?v=20261126y',
+  './js/data/exams.js?v=20261126y',
+  './js/mathfmt.js?v=20261126y',
+  './js/qbank.js?v=20261126y',
+  './js/pad.js?v=20261126y',
+  './js/print.js?v=20261126y',
+  './js/app.js?v=20261126y'
 ];
 
 self.addEventListener('install', function(e){

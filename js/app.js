@@ -543,14 +543,13 @@ function mountGradebookWidget(containerEl, g){
     var cls = isMilestone ? ' class="gb-milestone"' : '';
     if (!info) return '<td' + cls + '>—</td>';
     var v = info.val;
-    var sub = info.exam.shortLabel ? '<span class="gb-sub">' + esc(info.exam.shortLabel) + '</span>' : '';
     if (simMode) {
-      return '<td' + cls + '><input type="text" class="gb-inp" data-col="' + colKey + '" value="' + (v != null ? fmtNum(v) : '8,0') + '">' + sub + '</td>';
+      return '<td' + cls + '><input type="text" class="gb-inp" data-col="' + colKey + '" value="' + (v != null ? fmtNum(v) : '8,0') + '"></td>';
     }
     if (v != null) {
-      return '<td' + cls + '><a class="gb-cell-link ' + (v >= 6.5 ? 'done' : '') + '" href="#/lam-de/' + info.exam.id + '" title="Bấm để làm lại: ' + esc(info.exam.title) + '">' + fmtNum(v.toFixed(1)) + '</a>' + sub + '</td>';
+      return '<td' + cls + '><a class="gb-cell-link ' + (v >= 6.5 ? 'done' : '') + '" href="#/lam-de/' + info.exam.id + '" title="Bấm để làm lại: ' + esc(info.exam.title) + '">' + fmtNum(v.toFixed(1)) + '</a></td>';
     }
-    return '<td' + cls + '><a class="gb-cell-link" href="#/lam-de/' + info.exam.id + '" title="' + esc(info.exam.title) + '">Làm bài ›</a>' + sub + '</td>';
+    return '<td' + cls + '><a class="gb-cell-link" href="#/lam-de/' + info.exam.id + '" title="' + esc(info.exam.title) + '">Làm bài ›</a></td>';
   }
 
   function render(){
@@ -558,8 +557,8 @@ function mountGradebookWidget(containerEl, g){
       '<section class="card" style="margin:14px 0">' +
         '<div class="row between">' +
           '<div>' +
-            '<b>📅 Bảng Lộ Trình Đề Kiểm Tra Theo Tuần Học – Lớp ' + g + '</b>' +
-            '<div class="muted" style="font-size:.86rem;line-height:1.65">Trên lớp học tới tuần nào, bấm chữ <b>Làm bài ›</b> ở đúng ô đó để rèn đề &amp; tự tính điểm trung bình học kì.</div>' +
+            '<b>📅 Bảng Lộ Trình Đề Kiểm Tra – Lớp ' + g + '</b>' +
+            '<div class="muted" style="font-size:.86rem;line-height:1.65">Bấm chữ <b>Làm bài ›</b> theo đúng thứ tự kiểm tra trên lớp để rèn đề &amp; tự tính điểm trung bình học kì.</div>' +
           '</div>' +
           '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? '✕ Đóng tính thử' : '🧮 Nhập thử điểm trường') + '</button>' +
         '</div>' +
@@ -583,13 +582,13 @@ function mountGradebookWidget(containerEl, g){
             '</thead>' +
             '<tbody>' +
               '<tr>' +
-                '<td><b>Học kì I</b><br><small class="muted">Tuần 1–18</small></td>' +
+                '<td style="white-space:nowrap"><b>Học kì I</b></td>' +
                 cellHtml('hk1-tx1', false) + cellHtml('hk1-tx2', false) + cellHtml('hk1-gk', true) +
                 cellHtml('hk1-tx3', false) + cellHtml('hk1-tx4', false) + cellHtml('hk1-ck', true) +
                 '<td id="gb-avg-hk1"><b>' + (gb.hk1 != null ? fmtNum(gb.hk1.toFixed(1)) : '—') + '</b></td>' +
               '</tr>' +
               '<tr>' +
-                '<td><b>Học kì II</b><br><small class="muted">Tuần 19–35</small></td>' +
+                '<td style="white-space:nowrap"><b>Học kì II</b></td>' +
                 cellHtml('hk2-tx1', false) + cellHtml('hk2-tx2', false) + cellHtml('hk2-gk', true) +
                 cellHtml('hk2-tx3', false) + cellHtml('hk2-tx4', false) + cellHtml('hk2-ck', true) +
                 '<td id="gb-avg-hk2"><b>' + (gb.hk2 != null ? fmtNum(gb.hk2.toFixed(1)) : '—') + '</b></td>' +

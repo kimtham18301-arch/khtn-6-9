@@ -788,20 +788,14 @@ a.card:hover{
 :root[data-theme="dark"] .gb-table th.gb-stage-h2{background:rgba(56,189,248,.18);color:#bae6fd}
 :root[data-theme="dark"] .gb-table .gb-milestone{background:rgba(244,114,182,.09)}
 :root[data-theme="dark"] .gb-table th.gb-milestone{background:rgba(244,114,182,.2);color:#fbcfe8}
-.gb-sub{
-  display:block;
-  font-size:.73rem;
-  color:var(--mut);
-  margin-top:3px;
-  line-height:1.25;
-}
 .gb-cell-link{
   display:inline-block;
+  white-space:nowrap;
   text-decoration:none;
   font-weight:700;
   font-size:.88rem;
-  padding:3px 9px;
-  border-radius:7px;
+  padding:4px 10px;
+  border-radius:8px;
   background:var(--pri-soft);
 }
 .gb-cell-link:hover{background:var(--pri);color:#fff}
