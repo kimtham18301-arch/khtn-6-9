@@ -185,44 +185,44 @@ function openShareModal(customLabel){
   if (hasSpecificPage) {
     html +=
       '<div class="card highlight" style="margin-bottom:12px">' +
-        '<b>📌 Gửi đúng bài / đề đang mở' + (customLabel ? ' (' + esc(customLabel) + ')' : '') + ':</b>' +
+        '<b>Gửi đúng bài / đề đang mở' + (customLabel ? ' (' + esc(customLabel) + ')' : '') + ':</b>' +
         '<div style="margin:6px 0;padding:8px 10px;background:var(--bg);border:1px solid var(--line);border-radius:8px;word-break:break-all;font-size:.88rem">' + esc(curUrl) + '</div>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm" id="sh-copy-cur">📋 Sao chép link bài đang mở</button>' +
-          (canNativeShare ? '<button type="button" class="btn sm alt" id="sh-native-cur">📲 Gửi qua Zalo / Messenger</button>' : '') +
+          '<button type="button" class="btn sm" id="sh-copy-cur">Sao chép link bài đang mở</button>' +
+          (canNativeShare ? '<button type="button" class="btn sm alt" id="sh-native-cur">Gửi qua Zalo / Messenger</button>' : '') +
         '</div>' +
       '</div>';
   }
 
   html +=
     '<div class="card" style="margin-bottom:12px">' +
-      '<b>🏠 Link Trang chủ (Đầy đủ Lớp 6, 7, 8, 9):</b>' +
+      '<b>Link Trang chủ (Đầy đủ Lớp 6, 7, 8, 9):</b>' +
       '<div style="margin:6px 0;padding:8px 10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;word-break:break-all;font-size:.9rem;font-weight:600">' + esc(homeUrl) + '</div>' +
       '<div class="row">' +
-        '<button type="button" class="btn ' + (hasSpecificPage ? 'sm alt' : '') + '" id="sh-copy-home">📋 Sao chép link Trang chủ</button>' +
-        (canNativeShare && !hasSpecificPage ? '<button type="button" class="btn alt" id="sh-native-home">📲 Mở bảng gửi nhanh (Zalo / Tin nhắn)</button>' : '') +
+        '<button type="button" class="btn ' + (hasSpecificPage ? 'sm alt' : '') + '" id="sh-copy-home">Sao chép link Trang chủ</button>' +
+        (canNativeShare && !hasSpecificPage ? '<button type="button" class="btn alt" id="sh-native-home">Mở bảng gửi nhanh (Zalo / Tin nhắn)</button>' : '') +
       '</div>' +
     '</div>' +
     '<div class="card soft">' +
-      '<b>📱 Mẹo ghim ra màn hình điện thoại như ứng dụng:</b>' +
+      '<b>Mẹo ghim ra màn hình điện thoại:</b>' +
       '<ul class="tight" style="font-size:.9rem">' +
-        '<li><b>iPhone / iPad (Safari):</b> Bấm biểu tượng <b>Chia sẻ</b> (ô vuông có mũi tên lên) → Chọn <b>Thêm vào MH chính</b>.</li>' +
-        '<li><b>Điện thoại Android (Chrome):</b> Bấm dấu 3 chấm <b>⋮</b> góc phải trên → Chọn <b>Thêm vào màn hình chính</b>.</li>' +
+        '<li><b>iPhone / iPad (Safari):</b> Bấm nút <b>Chia sẻ</b> → Chọn <b>Thêm vào MH chính</b>.</li>' +
+        '<li><b>Android (Chrome):</b> Bấm dấu <b>⋮</b> góc phải trên → Chọn <b>Thêm vào màn hình chính</b>.</li>' +
       '</ul>' +
     '</div>';
 
-  openInfoModal('📤 Chia sẻ đường link học tập miễn phí', html, function(modal){
+  openInfoModal('Chia sẻ đường link học tập', html, function(modal){
     var bCur = modal.querySelector('#sh-copy-cur');
-    if (bCur) bCur.onclick = function(){ copyText(curUrl, '✓ Đã chép link bài đang mở! Bạn dán vào Zalo / Messenger nhé.'); };
+    if (bCur) bCur.onclick = function(){ copyText(curUrl, 'Đã sao chép link bài đang mở.'); };
     var bHome = modal.querySelector('#sh-copy-home');
-    if (bHome) bHome.onclick = function(){ copyText(homeUrl, '✓ Đã chép link Trang chủ! Bạn dán vào Zalo / Messenger nhé.'); };
+    if (bHome) bHome.onclick = function(){ copyText(homeUrl, 'Đã sao chép link Trang chủ.'); };
     var bNatCur = modal.querySelector('#sh-native-cur');
     if (bNatCur) bNatCur.onclick = function(){
       navigator.share({ title: customLabel || 'SciBook', url: curUrl }).catch(function(){});
     };
     var bNatHome = modal.querySelector('#sh-native-home');
     if (bNatHome) bNatHome.onclick = function(){
-      navigator.share({ title: 'SciBook – Pastel Science Book', url: homeUrl }).catch(function(){});
+      navigator.share({ title: 'SciBook – Sổ tay Khoa học tự nhiên', url: homeUrl }).catch(function(){});
     };
   });
 }
@@ -230,28 +230,28 @@ function openShareModal(customLabel){
 function openHelpModal(){
   var html =
     '<div class="card highlight" style="margin-bottom:12px">' +
-      '<b>✨ Trang web được thiết kế để ai cũng dùng được ngay:</b>' +
-      '<div class="muted" style="font-size:.92rem;margin-top:4px">Không cần đăng kí tài khoản, không thu phí, không quảng cáo. Học tới đâu máy tự động nhớ kết quả tới đó.</div>' +
+      '<b>Sử dụng trực tiếp, không cần tài khoản:</b>' +
+      '<div class="muted" style="font-size:.9rem;margin-top:4px">Miễn phí 100%, không quảng cáo. Kết quả học và sổ điểm tự lưu ngay trên trình duyệt.</div>' +
     '</div>' +
     '<div style="display:grid;gap:10px">' +
       '<div class="card">' +
-        '<b>1️⃣ Cách vào học một bài trên lớp</b>' +
-        '<div class="muted" style="font-size:.92rem;margin-top:3px">Ở Trang chủ, bấm chọn <b>Lớp 6, 7, 8 hoặc 9</b> → bấm <b>Học bài trên lớp</b> → chọn tên bài. Có nút <b>🔊 Nghe đọc tóm tắt</b> và câu hỏi sắp sẵn từ <b>Dễ → Khó</b>.</div>' +
+        '<b>1. Học theo bài trên lớp</b>' +
+        '<div class="muted" style="font-size:.9rem;margin-top:3px">Chọn <b>Lớp 6, 7, 8 hoặc 9</b> → chọn bài học để xem tóm tắt lý thuyết, giải thích công thức, các dạng bài tập mẫu và câu hỏi từ <b>Dễ → Khó</b>.</div>' +
       '</div>' +
       '<div class="card">' +
-        '<b>2️⃣ Cách làm đề kiểm tra 15 phút · Giữa kì · Cuối kì</b>' +
-        '<div class="muted" style="font-size:.92rem;margin-top:3px">Bấm mục <b>📝 Đề kiểm tra</b> → chọn đúng bài hoặc tuần đang học ở trường. Có thể chọn <b>Biết đúng/sai ngay từng câu</b> (dễ học) hoặc <b>Làm hết đề rồi nộp chấm điểm</b>.</div>' +
+        '<b>2. Làm đề kiểm tra 15 phút · Giữa kì · Cuối kì</b>' +
+        '<div class="muted" style="font-size:.9rem;margin-top:3px">Mở mục <b>Đề kiểm tra</b> → chọn đúng giai đoạn đang học ở trường. Có thể xem đáp án ngay từng câu hoặc nộp chấm điểm cuối giờ.</div>' +
       '</div>' +
       '<div class="card">' +
-        '<b>3️⃣ Cách In ra giấy A4 hoặc Lưu thành PDF gửi Zalo</b>' +
-        '<div class="muted" style="font-size:.92rem;margin-top:3px">Bấm mục <b>🖨️ In đề A4</b> → chọn đề cần in → bấm nút tím <b>In ra giấy / Lưu thành PDF</b>. Hệ thống tự tách <b>Tờ Đề bài (không đáp án)</b> ở trang trước và <b>Tờ Đáp án</b> sang trang mới!</div>' +
+        '<b>3. In ra giấy A4 hoặc lưu file PDF</b>' +
+        '<div class="muted" style="font-size:.9rem;margin-top:3px">Mở mục <b>In đề A4</b> → chọn đề cần in → bấm <b>In ra giấy / Lưu thành PDF</b>. Hệ thống tách riêng <b>Tờ Đề bài</b> ở trang trước và <b>Tờ Đáp án</b> sang trang mới.</div>' +
       '</div>' +
       '<div class="card">' +
-        '<b>4️⃣ Phóng to chữ &amp; Đọc ban đêm đỡ mỏi mắt</b>' +
-        '<div class="muted" style="font-size:.92rem;margin-top:3px">Bấm nút <b>A+ Chữ to</b> ở thanh trên cùng để phóng to toàn bộ chữ trên trang web (có 3 mức cỡ chữ).</div>' +
+        '<b>4. Đổi cỡ chữ &amp; chế độ nền tối</b>' +
+        '<div class="muted" style="font-size:.9rem;margin-top:3px">Dùng nút <b>A+ Cỡ chữ</b> và <b>Nền tối</b> ở góc phải thanh trên cùng để điều chỉnh phù hợp mắt nhìn.</div>' +
       '</div>' +
     '</div>';
-  openInfoModal('❓ Hướng dẫn sử dụng dễ hiểu (30 giây)', html);
+  openInfoModal('Hướng dẫn sử dụng nhanh', html);
 }
 
 // --- Top Bar Controls Init (Theme, Font Size, Share, Help) ---
@@ -266,7 +266,7 @@ function openHelpModal(){
   function applyTheme(t){
     theme = t;
     document.documentElement.dataset.theme = t;
-    if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️ Ban ngày' : '🌙 Ban đêm';
+    if (themeBtn) themeBtn.textContent = t === 'dark' ? 'Nền sáng' : 'Nền tối';
   }
   applyTheme(theme);
   if (themeBtn) {
@@ -274,7 +274,7 @@ function openHelpModal(){
       var next = theme === 'dark' ? 'light' : 'dark';
       try { localStorage.setItem(KEY_THEME, next); } catch (e) {}
       applyTheme(next);
-      showToast(next === 'dark' ? '🌙 Đã chuyển sang nền tối dịu mắt' : '☀️ Đã chuyển sang nền sáng');
+      showToast(next === 'dark' ? 'Đã chuyển sang giao diện tối' : 'Đã chuyển sang giao diện sáng');
     };
   }
 
@@ -290,7 +290,7 @@ function openHelpModal(){
     document.documentElement.dataset.fontsize = f;
     if (fontBtn) {
       fontBtn.classList.toggle('active', f !== 'normal');
-      fontBtn.textContent = f === 'xlarge' ? 'A++ Rất to' : (f === 'large' ? 'A+ Chữ to ✓' : 'A+ Chữ to');
+      fontBtn.textContent = f === 'xlarge' ? 'A++ Rất to' : (f === 'large' ? 'A+ Chữ to' : 'A+ Cỡ chữ');
     }
   }
   applyFont(savedFont);
@@ -300,7 +300,7 @@ function openHelpModal(){
       var nextF = fontModes[nextIdx];
       try { localStorage.setItem(KEY_FONTSIZE, nextF); } catch (e) {}
       applyFont(nextF);
-      showToast(nextF === 'large' ? '✓ Đã bật cỡ chữ TO dễ đọc' : (nextF === 'xlarge' ? '✓ Đã bật cỡ chữ RẤT TO' : '✓ Đã trở về cỡ chữ vừa'));
+      showToast(nextF === 'large' ? 'Đã bật cỡ chữ to' : (nextF === 'xlarge' ? 'Đã bật cỡ chữ rất to' : 'Đã trở về cỡ chữ chuẩn'));
     };
   }
 
@@ -557,10 +557,10 @@ function mountGradebookWidget(containerEl, g){
       '<section class="card" style="margin:14px 0">' +
         '<div class="row between">' +
           '<div>' +
-            '<b>📅 Bảng Lộ Trình Đề Kiểm Tra – Lớp ' + g + '</b>' +
-            '<div class="muted" style="font-size:.86rem;line-height:1.65">Bấm chữ <b>Làm bài ›</b> theo đúng thứ tự kiểm tra trên lớp để rèn đề &amp; tự tính điểm trung bình học kì.</div>' +
+            '<b>Bảng lộ trình đề kiểm tra – Lớp ' + g + '</b>' +
+            '<div class="muted" style="font-size:.85rem;line-height:1.6">Bấm <b>Làm bài ›</b> theo đúng thứ tự kiểm tra trên lớp để rèn đề và tự tính điểm trung bình học kì.</div>' +
           '</div>' +
-          '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? '✕ Đóng tính thử' : '🧮 Nhập thử điểm trường') + '</button>' +
+          '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? '✕ Đóng tính thử' : 'Nhập thử điểm trường') + '</button>' +
         '</div>' +
         '<div class="gb-wrap">' +
           '<table class="gb-table">' +
@@ -675,7 +675,7 @@ function renderQ(q, displayIdx, opts){
   }
 
   if (opts.hintText && !deferred) {
-    h += '<div class="row" style="margin-top:8px"><button type="button" class="btn sm subtle" data-act="hint">💡 Xem gợi ý cách làm</button></div>' +
+    h += '<div class="row" style="margin-top:8px"><button type="button" class="btn sm subtle" data-act="hint">Xem gợi ý cách làm</button></div>' +
          '<div class="q-hint" hidden><b>Gợi ý:</b> ' + fmtMath(opts.hintText) + '</div>';
   }
   h += '<div class="fb" hidden></div>';
@@ -691,7 +691,7 @@ function renderQ(q, displayIdx, opts){
   if (hintBtn && hintBox) {
     hintBtn.onclick = function(){
       hintBox.hidden = !hintBox.hidden;
-      hintBtn.textContent = hintBox.hidden ? '💡 Xem gợi ý cách làm' : 'Ẩn gợi ý';
+      hintBtn.textContent = hintBox.hidden ? 'Xem gợi ý cách làm' : 'Ẩn gợi ý';
     };
   }
 
@@ -704,13 +704,13 @@ function renderQ(q, displayIdx, opts){
 
     var ansLine = '';
     if (!ok) {
-      if (q.o) ansLine = '<br>👉 Đáp án đúng là: <b>' + fmtMath(q.o[0]) + '</b>';
-      else if (q.n != null) ansLine = '<br>👉 Đáp số đúng là: <b>' + fmtNum(q.n) + (q.u ? ' ' + esc(q.u) : '') + '</b>';
+      if (q.o) ansLine = '<br>→ Đáp án đúng: <b>' + fmtMath(q.o[0]) + '</b>';
+      else if (q.n != null) ansLine = '<br>→ Đáp số đúng: <b>' + fmtNum(q.n) + (q.u ? ' ' + esc(q.u) : '') + '</b>';
     }
-    var headText = ok ? '🎉 Chính xác! Giỏi lắm.' : (skipped ? '⚠️ Câu này chưa điền đáp án (0 điểm).' : '💡 Chưa đúng rồi — xem cách giải bên dưới nhé:');
+    var headText = ok ? '✓ Chính xác!' : (skipped ? 'Câu này chưa điền đáp án (0 điểm).' : '✕ Chưa đúng — xem hướng dẫn giải bên dưới:');
     fb.innerHTML =
       '<div><b>' + headText + '</b> ' + ansLine + '</div>' +
-      (q.w ? '<div style="margin-top:5px"><b>Cách giải dễ hiểu:</b> ' + fmtMath(q.w) + '</div>' : '');
+      (q.w ? '<div style="margin-top:5px"><b>Hướng dẫn giải:</b> ' + fmtMath(q.w) + '</div>' : '');
 
     box.querySelectorAll('.opt, input, [data-act="check"]').forEach(function(x){ x.disabled = true; });
     if (hintBtn) hintBtn.hidden = true;
@@ -930,7 +930,7 @@ function getOrCreateExamPrintSpec(ex, levelMode){
   return quickExamSpecs[key] || createFreshExamSnapshot(ex, levelMode);
 }
 
-// --- VIEW 1: Home (2-Step Quick Start for Non-Tech Users + Voice Search + Clear Navigation) ---
+// --- VIEW 1: Compact, Clean Home ---
 function home(){
   updateNavActive('home');
   var prog = loadProg();
@@ -950,109 +950,92 @@ function home(){
     var gLessons = D.filter(function(t){ return t.grade === g; }).length;
     var gExams = EXAMS.filter(function(e){ return e.grade === g; }).length;
     return (
-      '<a class="action-card primary-act" href="#/lop/' + g + '">' +
-        '<span class="act-ico" aria-hidden="true">📖</span>' +
-        '<span class="act-body">' +
-          '<b>1. Vào học bài trên lớp (Lớp ' + g + ')</b>' +
-          '<span>Có ' + gLessons + ' bài tóm tắt ngắn gọn, nghe đọc thành tiếng, ví dụ mẫu và câu hỏi từ Dễ → Khó.</span>' +
-        '</span>' +
+      '<a class="action-card act-learn" href="#/lop/' + g + '">' +
+        '<div class="act-head"><b>Học theo bài (Lớp ' + g + ')</b><span class="act-arrow">›</span></div>' +
+        '<span class="act-sub">' + gLessons + ' bài tóm tắt, dạng toán &amp; câu hỏi Dễ → Khó</span>' +
       '</a>' +
-      '<a class="action-card primary-act" href="#/de-kiem-tra/' + g + '">' +
-        '<span class="act-ico" aria-hidden="true">📝</span>' +
-        '<span class="act-body">' +
-          '<b>2. Làm đề 15 phút · Giữa kì · Cuối kì (Lớp ' + g + ')</b>' +
-          '<span>Có ' + gExams + ' đề sắp đúng thứ tự tuần học ở trường. Bấm chọn đáp án, biết điểm ngay.</span>' +
-        '</span>' +
+      '<a class="action-card act-exam" href="#/de-kiem-tra/' + g + '">' +
+        '<div class="act-head"><b>Đề kiểm tra 15p · GK · CK</b><span class="act-arrow">›</span></div>' +
+        '<span class="act-sub">' + gExams + ' đề theo đúng tuần học trên lớp</span>' +
       '</a>' +
-      '<a class="action-card" href="#/in-nhanh/' + g + '">' +
-        '<span class="act-ico" aria-hidden="true">🖨️</span>' +
-        '<span class="act-body">' +
-          '<b>3. In đề giấy A4 kèm Đáp án riêng (Lớp ' + g + ')</b>' +
-          '<span>Dành cho phụ huynh &amp; thầy cô: 1 bấm in ra tờ Đề cho con làm và tờ Đáp án ở trang sau.</span>' +
-        '</span>' +
+      '<a class="action-card act-print" href="#/in-nhanh/' + g + '">' +
+        '<div class="act-head"><b>In đề giấy A4 &amp; PDF</b><span class="act-arrow">›</span></div>' +
+        '<span class="act-sub">Tách riêng tờ Đề bài và tờ Đáp án</span>' +
       '</a>' +
-      '<a class="action-card" href="' + (mistakeCount ? '#/luyen-tap/cau-sai' : '#/so-tay') + '">' +
-        '<span class="act-ico" aria-hidden="true">' + (mistakeCount ? '🔁' : '📐') + '</span>' +
-        '<span class="act-body">' +
-          '<b>' + (mistakeCount ? ('4. Ôn lại ' + mistakeCount + ' câu từng làm sai') : '4. Xem Sổ tay Công thức dễ hiểu') + '</b>' +
-          '<span>' + (mistakeCount ? 'Hệ thống tự gom lại các câu chưa vững để em làm lại cho nhớ bài.' : 'Tra cứu nhanh toàn bộ công thức Hóa · Lý · Sinh có giải thích từng kí hiệu.') + '</span>' +
-        '</span>' +
+      '<a class="action-card act-ref" href="' + (mistakeCount ? '#/luyen-tap/cau-sai' : '#/so-tay') + '">' +
+        '<div class="act-head"><b>' + (mistakeCount ? ('Ôn lại ' + mistakeCount + ' câu sai') : 'Sổ tay công thức') + '</b><span class="act-arrow">›</span></div>' +
+        '<span class="act-sub">' + (mistakeCount ? 'Rèn lại các câu chưa vững để nhớ bài' : 'Giải thích rõ kí hiệu &amp; đơn vị đo') + '</span>' +
       '</a>'
     );
   }
 
   var h =
-    '<section class="quick-box" aria-label="Chọn nhanh trong 2 bước">' +
-      '<div class="quick-head">' +
-        '<span class="quick-badge">✨ Miễn phí 100% · Bấm vào dùng ngay, không cần đăng nhập</span>' +
-        '<div class="row">' +
-          '<button type="button" class="btn sm subtle" id="home-help-btn">❓ Cách dùng (30 giây)</button>' +
-          '<button type="button" class="btn sm alt" id="home-share-btn">📤 Gửi link qua Zalo</button>' +
+    '<section class="quick-box" aria-label="Bảng chọn nhanh SciBook">' +
+      '<div class="home-top-grid">' +
+        '<div class="home-title-wrap">' +
+          '<h1>SciBook</h1>' +
+          '<p>Sổ tay tự học, tra cứu công thức &amp; luyện đề Khoa học tự nhiên Lớp 6 – 9</p>' +
+        '</div>' +
+        '<div>' +
+          '<div class="search-bar-row">' +
+            '<input type="search" id="home-search" placeholder="Tìm bài học, công thức (VD: mol, tốc độ, áp suất...)" aria-label="Tìm bài học hoặc công thức">' +
+            (SpeechRec ? '<button type="button" class="mic-btn" id="home-mic-btn">Giọng nói</button>' : '') +
+          '</div>' +
+          '<div class="quick-chips">' +
+            '<span class="muted" style="font-size:.77rem">Gợi ý:</span>' +
+            '<button type="button" class="chip" data-q="mol">Mol 8</button>' +
+            '<button type="button" class="chip" data-q="áp suất">Áp suất 8</button>' +
+            '<button type="button" class="chip" data-q="tốc độ">Tốc độ 7</button>' +
+            '<button type="button" class="chip" data-q="hóa trị">Hóa trị 7</button>' +
+          '</div>' +
         '</div>' +
       '</div>' +
-      '<h1 style="margin:0 0 4px">SciBook</h1>' +
-      '<p class="muted" style="margin:0 0 12px">Dành cho học sinh tự học ở nhà, phụ huynh kèm con và thầy cô lấy đề in giấy — chỉ cần <b>2 bước đơn giản</b>:</p>' +
+      '<div id="home-search-out" class="search-results" hidden style="margin-bottom:12px"></div>' +
 
-      '<div class="step-label"><span class="step-num">1</span><span>Chọn lớp đang học:</span></div>' +
-      '<div class="grade-pills" id="home-grade-pills">' +
-        [6,7,8,9].map(function(gr){
-          var lc = D.filter(function(t){ return t.grade === gr; }).length;
-          var ec = EXAMS.filter(function(e){ return e.grade === gr; }).length;
-          var sub = lc + ' bài · ' + ec + ' đề KT' + ((gr === 7 || gr === 8) ? ' ★' : '');
-          return '<button type="button" class="grade-pill ' + (chosenGrade === gr ? 'on' : '') + '" data-g="' + gr + '">' +
-            '<b>Lớp ' + gr + '</b><small>' + sub + '</small></button>';
-        }).join('') +
+      '<div class="home-grade-row">' +
+        '<div class="grade-pills" id="home-grade-pills" role="tablist" aria-label="Chọn khối lớp">' +
+          [6,7,8,9].map(function(gr){
+            var lc = D.filter(function(t){ return t.grade === gr; }).length;
+            var ec = EXAMS.filter(function(e){ return e.grade === gr; }).length;
+            return '<button type="button" class="grade-pill ' + (chosenGrade === gr ? 'on' : '') + '" data-g="' + gr + '">' +
+              '<b>Lớp ' + gr + '</b><small>' + lc + ' bài · ' + ec + ' đề</small></button>';
+          }).join('') +
+        '</div>' +
+        '<span class="muted" id="step2-title" style="font-size:.82rem">Đang chọn: <b>Lớp ' + chosenGrade + '</b></span>' +
       '</div>' +
 
-      '<div class="step-label"><span class="step-num">2</span><span id="step2-title">Chọn việc muốn làm ngay (Đang chọn Lớp ' + chosenGrade + '):</span></div>' +
       '<div class="action-grid" id="home-actions">' +
         renderQuickActionsHtml(chosenGrade) +
       '</div>' +
     '</section>';
 
-  // Global Instant Search + Voice Search
-  h +=
-    '<section class="search-hero" aria-label="Tìm nhanh bài học hoặc đề kiểm tra">' +
-      '<label for="home-search" style="display:block;font-weight:750;margin-bottom:6px">🔍 Tìm nhanh bài học hoặc công thức (không cần gõ dấu tiếng Việt):</label>' +
-      '<div class="search-bar-row">' +
-        '<input type="search" id="home-search" placeholder="Ví dụ: mol, tốc độ, áp suất, hóa trị, quang hợp, điện…">' +
-        (SpeechRec ? '<button type="button" class="mic-btn" id="home-mic-btn">🎤 Bấm nói tên bài</button>' : '') +
-      '</div>' +
-      '<div class="row" style="margin-top:8px">' +
-        '<span class="muted" style="font-size:.84rem">Bấm thử:</span>' +
-        '<button type="button" class="chip" data-q="mol">Bài Mol (Lớp 8)</button>' +
-        '<button type="button" class="chip" data-q="áp suất">Áp suất (Lớp 8)</button>' +
-        '<button type="button" class="chip" data-q="tốc độ">Tốc độ (Lớp 7)</button>' +
-        '<button type="button" class="chip" data-q="hóa trị">Hóa trị (Lớp 7)</button>' +
-        '<button type="button" class="chip" data-q="quang hợp">Quang hợp (Lớp 7)</button>' +
-      '</div>' +
-      '<div id="home-search-out" class="search-results" hidden></div>' +
-    '</section>';
-
-  // Resume + Progress Strip
-  h += '<div class="grid two" style="margin-bottom:18px">';
+  // Compact 1-row Resume + Progress Strip
+  h += '<div class="status-strip">';
   if (resumeTopic) {
     h +=
-      '<a class="card highlight" href="#/bai/' + resumeTopic.id + '">' +
-        '<div class="row between"><span class="badge pri">▶ Học tiếp ngay</span>' + tag(resumeTopic.subj) + '</div>' +
-        '<h3 style="margin:.45em 0 .2em;font-size:1.1rem">' + esc(resumeTopic.title) + '</h3>' +
-        '<div class="muted" style="font-size:.9rem">Lớp ' + resumeTopic.grade + (resumeTopic.weeks ? ' · ' + resumeTopic.weeks : '') + ' · Bấm vào để mở tiếp bài học &amp; giấy nháp</div>' +
-      '</a>';
+      '<div class="status-resume">' +
+        '<span class="badge pri">Học tiếp</span>' +
+        tag(resumeTopic.subj) +
+        '<a href="#/bai/' + resumeTopic.id + '">Lớp ' + resumeTopic.grade + ' – ' + esc(resumeTopic.title) + ' ›</a>' +
+      '</div>';
+  } else {
+    h += '<div class="status-resume"><span class="muted">Chọn một bài học bất kỳ để bắt đầu.</span></div>';
   }
   h +=
-    '<div class="card">' +
-      '<div class="row between"><span class="badge">📊 Kết quả trên máy này</span><a href="#/tien-do" style="font-size:.9rem;font-weight:700">Mở Sổ điểm ›</a></div>' +
-      '<div class="row" style="gap:18px;margin-top:10px">' +
-        '<div><div class="stat-val">' + completed + '/' + D.length + '</div><div class="muted" style="font-size:.84rem">Bài đã vững</div></div>' +
-        '<div><div class="stat-val">' + avgScore + '</div><div class="muted" style="font-size:.84rem">Điểm TB bài</div></div>' +
-        '<div><div class="stat-val">' + examsDone + '</div><div class="muted" style="font-size:.84rem">Đề đã làm</div></div>' +
-        '<div><div class="stat-val">' + mistakeCount + '</div><div class="muted" style="font-size:.84rem">Câu cần ôn</div></div>' +
-      '</div>' +
-    '</div>';
-  h += '</div>';
+    '<div class="status-metrics">' +
+      '<span>Đã vững: <b>' + completed + '/' + D.length + '</b> bài</span>' +
+      '<span>·</span>' +
+      '<span>Đề đã làm: <b>' + examsDone + '</b></span>' +
+      '<span>·</span>' +
+      '<span>Điểm TB: <b>' + avgScore + '</b></span>' +
+      (mistakeCount ? '<span>·</span><a href="#/luyen-tap/cau-sai" style="font-weight:600">Câu sai (' + mistakeCount + ')</a>' : '') +
+      '<span>·</span>' +
+      '<a href="#/tien-do" style="font-weight:600">Sổ điểm ›</a>' +
+    '</div>' +
+  '</div>';
 
-  // Bookshelf 4 Volumes
-  h += '<h2>📚 Tủ Sách 4 Lớp (Chương trình GDPT 2018 của Bộ GD&amp;ĐT)</h2><div class="grid">';
+  // Compact Bookshelf 4 Volumes
+  h += '<h2 style="margin-top:.2em">Tủ sách theo khối lớp (GDPT 2018)</h2><div class="vol-grid">';
   [6,7,8,9].forEach(function(g){
     var l = D.filter(function(t){ return t.grade === g; });
     var exCount = EXAMS.filter(function(ex){ return ex.grade === g; }).length;
@@ -1060,21 +1043,18 @@ function home(){
     var totalQ = BANK ? BANK.estimateTotalQuestions(l) : l.reduce(function(s,t){ return s + t.questions.length; }, 0);
     h +=
       '<a class="vol-card v' + g + '" href="#/lop/' + g + '">' +
-        '<div class="row between"><span class="vol-label">Sách Lớp ' + g + '</span><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? 'Đầy đủ 4 giai đoạn' : p + '%') + '</span></div>' +
-        '<h2 style="margin:.2em 0 .15em">KHTN Lớp ' + g + '</h2>' +
-        '<div class="muted" style="margin-top:2px;font-size:.9rem">' + l.length + ' bài học · ' + totalQ + '+ câu hỏi · ' + exCount + ' đề KT</div>' +
-        '<div class="bar"><i style="width:' + p + '%"></i></div>' +
-        '<small class="muted">Đã nắm vững ' + l.filter(function(t){ return isMastered(t.id); }).length + '/' + l.length + ' bài (' + p + '%)</small>' +
+        '<div class="row between"><span class="vol-label">Khối ' + g + '</span><span class="badge ' + ((g === 7 || g === 8) ? 'pri' : (p === 100 ? 'ok' : '')) + '">' + ((g === 7 || g === 8) ? '4 giai đoạn' : p + '%') + '</span></div>' +
+        '<h3 style="margin:.25em 0 .15em;font-size:1.05rem">KHTN Lớp ' + g + '</h3>' +
+        '<div class="muted" style="font-size:.82rem">' + l.length + ' bài · ' + totalQ + '+ câu · ' + exCount + ' đề KT</div>' +
+        '<div class="bar" style="height:6px;margin:7px 0 5px"><i style="width:' + p + '%"></i></div>' +
+        '<small class="muted" style="font-size:.77rem">Đã vững ' + l.filter(function(t){ return isMastered(t.id); }).length + '/' + l.length + ' bài (' + p + '%)</small>' +
       '</a>';
   });
   h += '</div>';
 
   app.innerHTML = h;
 
-  document.getElementById('home-help-btn').onclick = openHelpModal;
-  document.getElementById('home-share-btn').onclick = function(){ openShareModal(); };
-
-  // Wire Step 1 Grade Pills
+  // Wire Grade Pills
   var pillsWrap = document.getElementById('home-grade-pills');
   var actionsWrap = document.getElementById('home-actions');
   var step2Title = document.getElementById('step2-title');
@@ -1083,7 +1063,7 @@ function home(){
       chosenGrade = Number(btn.dataset.g);
       setPrefGrade(chosenGrade);
       pillsWrap.querySelectorAll('.grade-pill').forEach(function(x){ x.classList.toggle('on', x === btn); });
-      step2Title.textContent = 'Chọn việc muốn làm ngay (Đang chọn Lớp ' + chosenGrade + '):';
+      step2Title.innerHTML = 'Đang chọn: <b>Lớp ' + chosenGrade + '</b>';
       actionsWrap.innerHTML = renderQuickActionsHtml(chosenGrade);
     };
   });
@@ -1109,7 +1089,7 @@ function home(){
 
     if (!matchedTopics.length && !matchedExams.length) {
       sOut.hidden = false;
-      sOut.innerHTML = '<div class="empty" style="padding:12px">Không tìm thấy bài nào có từ <b>"' + esc(raw) + '"</b>. Bạn thử gõ ngắn hơn (ví dụ: <b>mol</b>, <b>điện</b>, <b>tốc độ</b>) nhé!</div>';
+      sOut.innerHTML = '<div class="empty" style="padding:10px">Không tìm thấy nội dung khớp từ khóa <b>"' + esc(raw) + '"</b>. Thử gõ ngắn hơn như <b>mol</b>, <b>điện</b>, <b>tốc độ</b>.</div>';
       return;
     }
 
@@ -1122,8 +1102,8 @@ function home(){
             (t.weeks ? ' <small class="muted">(' + esc(t.weeks) + ')</small>' : '') +
           '</div>' +
           '<div class="row">' +
-            '<a class="btn sm" href="#/bai/' + t.id + '">📖 Học bài này</a>' +
-            (singleEx ? '<a class="btn sm alt" href="#/lam-de/' + singleEx.id + '">📝 Đề 15p</a>' : '') +
+            '<a class="btn sm" href="#/bai/' + t.id + '">Học bài</a>' +
+            (singleEx ? '<a class="btn sm alt" href="#/lam-de/' + singleEx.id + '">Đề 15p</a>' : '') +
           '</div>' +
         '</div>';
     });
@@ -1132,7 +1112,7 @@ function home(){
         '<div class="s-item">' +
           '<div><span class="badge pri">Đề KT Lớp ' + ex.grade + '</span> <b>' + esc(ex.title) + '</b> <small class="muted">(' + ex.minutes + ' phút)</small></div>' +
           '<div class="row">' +
-            '<a class="btn sm" href="#/lam-de/' + ex.id + '">📝 Làm đề</a>' +
+            '<a class="btn sm" href="#/lam-de/' + ex.id + '">Làm đề</a>' +
           '</div>' +
         '</div>';
     });
@@ -1162,21 +1142,21 @@ function home(){
         rec.interimResults = false;
         rec.maxAlternatives = 1;
         micBtn.classList.add('listening');
-        micBtn.textContent = '🔴 Đang nghe… Hãy nói tên bài';
+        micBtn.textContent = 'Đang nghe…';
         rec.onresult = function(ev){
           var txt = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : '';
           if (txt) {
             sInput.value = txt;
             runHomeSearch(txt);
-            showToast('🎤 Đã nghe: "' + txt + '"');
+            showToast('Đã nhận diện: "' + txt + '"');
           }
         };
         rec.onerror = function(){
-          showToast('Không nghe rõ hoặc trình duyệt chưa cấp quyền micro. Bạn có thể gõ chữ vào ô tìm kiếm nhé.');
+          showToast('Chưa nhận diện được giọng nói. Bạn có thể nhập từ khóa trực tiếp vào ô tìm kiếm.');
         };
         rec.onend = function(){
           micBtn.classList.remove('listening');
-          micBtn.textContent = '🎤 Bấm nói tên bài';
+          micBtn.textContent = 'Giọng nói';
           rec = null;
         };
         rec.start();
@@ -1233,8 +1213,8 @@ function renderExamCardHtml(ex, saved){
       '<div class="muted" style="font-size:.89rem;margin-bottom:10px">' + esc(ex.scope) + '</div>' +
       (st ? '<div class="' + (st.best >= 0.65 ? 'done' : 'muted') + '" style="font-size:.89rem;margin-bottom:10px">Điểm cao nhất: ' + score10(st.best) + '/10 · Gần nhất: ' + score10(st.last) + '/10 (' + st.attempts + ' lần làm)</div>' : '') +
       '<div class="row">' +
-        '<a class="btn sm" href="#/lam-de/' + ex.id + '">▶ Làm đề ngay</a>' +
-        '<button type="button" class="btn sm alt" data-print-both="' + ex.id + '">🖨️ In Đề + Đáp án</button>' +
+        '<a class="btn sm" href="#/lam-de/' + ex.id + '">Làm đề ngay ›</a>' +
+        '<button type="button" class="btn sm alt" data-print-both="' + ex.id + '">In Đề + Đáp án</button>' +
       '</div>' +
     '</div>'
   );
@@ -1355,17 +1335,17 @@ function grade(g, activeTab){
 
   function renderView(){
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Lớp ' + g + '</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › Lớp ' + g + '</div>' +
       '<div class="row between">' +
         '<h1>Bài học &amp; Đề kiểm tra KHTN Lớp ' + g + '</h1>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm alt" id="g-print-formulas">🖨️ In Sổ tay công thức lớp ' + g + '</button>' +
-          '<a class="btn sm subtle" href="#/in-nhanh/' + g + '">🖨️ Kho đề in giấy A4</a>' +
+          '<button type="button" class="btn sm alt" id="g-print-formulas">In Sổ tay công thức lớp ' + g + '</button>' +
+          '<a class="btn sm subtle" href="#/in-nhanh/' + g + '">Kho đề in giấy A4</a>' +
           '<a class="btn sm subtle" href="#/kiem-tra/' + g + '">Kiểm tra gốc</a>' +
         '</div>' +
       '</div>' +
       '<div class="helper-tip">' +
-        '<span>💡 <b>Cách học dễ nhất:</b> Bấm vào tên bài đang học trên lớp → đọc tóm tắt ngắn → làm câu hỏi từ Dễ đến Khó → làm đề 15 phút của bài đó.</span>' +
+        '<span><b>Gợi ý lộ trình:</b> Mở bài đang học trên lớp → xem tóm tắt &amp; dạng bài mẫu → làm câu hỏi từ Dễ đến Khó → làm đề 15 phút của bài đó.</span>' +
         '<div class="row">' +
           [6,7,8,9].map(function(gr){
             return '<a class="btn sm ' + (gr === g ? 'on' : 'subtle') + '" href="#/lop/' + gr + '">Lớp ' + gr + '</a>';
@@ -1374,9 +1354,9 @@ function grade(g, activeTab){
       '</div>' +
       '<div id="gb-slot"></div>' +
       '<div class="tabs">' +
-        (hasStages ? '<button type="button" data-gtab="roadmap" class="' + (tab === 'roadmap' ? 'on' : '') + '">📅 Học theo thứ tự tuần trên lớp</button>' : '') +
-        '<button type="button" data-gtab="lessons" class="' + (tab === 'lessons' ? 'on' : '') + '">📖 Tìm theo môn (' + list.length + ' bài)</button>' +
-        '<button type="button" data-gtab="exams" class="' + (tab === 'exams' ? 'on' : '') + '">📝 Đề kiểm tra (' + gExams.length + ' đề)</button>' +
+        (hasStages ? '<button type="button" data-gtab="roadmap" class="' + (tab === 'roadmap' ? 'on' : '') + '">Theo thứ tự tuần học</button>' : '') +
+        '<button type="button" data-gtab="lessons" class="' + (tab === 'lessons' ? 'on' : '') + '">Danh sách bài (' + list.length + ')</button>' +
+        '<button type="button" data-gtab="exams" class="' + (tab === 'exams' ? 'on' : '') + '">Đề kiểm tra (' + gExams.length + ')</button>' +
       '</div>' +
       '<div id="g-body"></div>';
 
@@ -1410,9 +1390,9 @@ function grade(g, activeTab){
           '<section class="stage-block ' + (sm.term === 'HK2' ? 'hk2' : '') + '">' +
             '<h2 style="margin-top:0">' + esc(sm.title) + '</h2>' +
             '<p class="muted" style="margin:.2em 0 .8em;font-size:.9rem">' + esc(sm.note) + '</p>' +
-            '<h3>📖 Bước 1: Chọn bài học trên lớp (' + stLessons.length + ' bài)</h3>' +
+            '<h3>1. Bài học trên lớp (' + stLessons.length + ' bài)</h3>' +
             '<div class="grid">' + stLessons.map(renderLessonCard).join('') + '</div>' +
-            '<h3 style="margin-top:14px">📝 Bước 2: Làm đề kiểm tra 15p &amp; Giữa kì / Cuối kì của giai đoạn này (' + stExams.length + ' đề)</h3>' +
+            '<h3 style="margin-top:14px">2. Đề kiểm tra 15 phút &amp; Giữa kì / Cuối kì (' + stExams.length + ' đề)</h3>' +
             '<div class="grid two">' + stExams.map(function(ex){ return renderExamCardHtml(ex, savedEx); }).join('') + '</div>' +
           '</section>';
       });
@@ -1420,7 +1400,7 @@ function grade(g, activeTab){
       wirePrintButtons(bodyEl);
     } else if (tab === 'lessons') {
       bodyEl.innerHTML =
-        '<input type="search" id="g-search" placeholder="🔍 Gõ tên bài hoặc công thức lớp ' + g + ' cần tìm…" value="' + esc(searchText) + '">' +
+        '<input type="search" id="g-search" placeholder="Nhập tên bài hoặc công thức lớp ' + g + ' cần tìm…" value="' + esc(searchText) + '">' +
         '<div class="filters" id="g-subj">' +
           '<button type="button" data-s="all" class="' + (filterSubj === 'all' ? 'on' : '') + '">Tất cả (' + list.length + ')</button>' +
           presentSubjs.map(function(s){
@@ -1501,22 +1481,22 @@ function lesson(id){
   var canSpeak = typeof window.speechSynthesis !== 'undefined' && typeof window.SpeechSynthesisUtterance === 'function';
 
   var h =
-    '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › <a href="#/lop/' + t.grade + '">Lớp ' + t.grade + '</a> › ' + esc(t.title) + '</div>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/lop/' + t.grade + '">Lớp ' + t.grade + '</a> › ' + esc(t.title) + '</div>' +
     '<div class="row between">' +
       '<div class="row">' +
         tag(t.subj) +
         '<span class="badge">Lớp ' + t.grade + (t.term ? ' · ' + t.term : '') + (t.weeks ? ' · ' + t.weeks : '') + '</span>' +
-        '<span class="badge pri" id="bank-info">Kho ' + totalBankCount + '+ câu chỉ riêng bài này</span>' +
+        '<span class="badge pri" id="bank-info">Kho ' + totalBankCount + '+ câu riêng bài này</span>' +
       '</div>' +
       '<div class="row">' +
-        '<button type="button" class="btn sm subtle" id="les-share-btn">📤 Gửi link bài này</button>' +
-        '<button type="button" class="btn sm alt" id="top-dl-2part">🖨️ In bài này (Đề + Đáp án)</button>' +
+        '<button type="button" class="btn sm subtle" id="les-share-btn">Chia sẻ bài</button>' +
+        '<button type="button" class="btn sm alt" id="top-dl-2part">In bài này (Đề + Đáp án)</button>' +
       '</div>' +
     '</div>' +
     '<h1>' + esc(t.title) + '</h1>';
 
   if (t.prereq && t.prereq.length) {
-    h += '<div class="card soft" style="margin-bottom:14px"><b>📌 Bài nền liên quan đã học trước:</b> ' +
+    h += '<div class="card soft" style="margin-bottom:14px"><b>Bài nền liên quan:</b> ' +
       t.prereq.map(function(pid){
         var b = byId[pid];
         if (!b) return '';
@@ -1528,11 +1508,11 @@ function lesson(id){
   h +=
     '<section class="card" style="margin-bottom:14px">' +
       '<div class="row between">' +
-        '<h2 style="margin:0">1. Tóm tắt ngắn gọn cần nhớ</h2>' +
-        (canSpeak ? '<button type="button" class="btn sm alt" id="btn-tts">🔊 Nghe đọc tóm tắt</button>' : '') +
+        '<h2 style="margin:0">1. Tóm tắt kiến thức trọng tâm</h2>' +
+        (canSpeak ? '<button type="button" class="btn sm alt" id="btn-tts">Nghe đọc tóm tắt</button>' : '') +
       '</div>' +
       '<ul class="tight" style="margin-top:8px">' + t.theory.map(function(s){ return '<li>' + fmtMath(s) + '</li>'; }).join('') + '</ul>' +
-      '<h2>2. Công thức &amp; giải thích từng kí hiệu</h2>' +
+      '<h2>2. Công thức &amp; giải thích kí hiệu</h2>' +
       t.formulas.map(function(f){ return '<div class="formula">' + fmtFormula(f) + '</div>'; }).join('');
 
   var topicTypes = (window.KHTN_TYPES && window.KHTN_TYPES[t.id]) ? window.KHTN_TYPES[t.id] : null;
@@ -1542,10 +1522,10 @@ function lesson(id){
       h +=
         '<div class="type-card">' +
           '<div><b>' + fmtMath(tp.name) + '</b></div>' +
-          '<div class="type-method">💡 <b>Cách làm:</b> ' + fmtMath(tp.method) + '</div>' +
+          '<div class="type-method"><b>Cách làm:</b> ' + fmtMath(tp.method) + '</div>' +
           (tp.ex
             ? '<details' + (ti === 0 ? ' open' : '') + '>' +
-                '<summary>👉 Xem ví dụ mẫu &amp; lời giải</summary>' +
+                '<summary>Xem ví dụ mẫu &amp; lời giải</summary>' +
                 '<div class="type-ex"><b>Ví dụ:</b> ' + fmtMath(tp.ex) +
                   (tp.sol ? '<br><b>Lời giải:</b> ' + fmtMath(tp.sol) : '') +
                 '</div>' +
@@ -1560,7 +1540,7 @@ function lesson(id){
         '<div class="example-card">' +
           '<div><b>Ví dụ ' + (ei + 1) + '.</b> ' + fmtMath(ex.q) + '</div>' +
           '<details' + (ei === 0 ? ' open' : '') + '>' +
-            '<summary>👉 Bấm xem lời giải từng bước</summary>' +
+            '<summary>Xem lời giải từng bước</summary>' +
             '<ol class="example-steps">' + ex.steps.map(function(st){ return '<li>' + fmtMath(st) + '</li>'; }).join('') + '</ol>' +
             '<div><b>Đáp số:</b> ' + fmtMath(ex.ans) + '</div>' +
           '</details>' +
@@ -1571,11 +1551,11 @@ function lesson(id){
 
   h +=
     '<div class="row between">' +
-      '<h2 style="margin:.4em 0">4. Làm bài tập từ Dễ đến Khó (Biết đúng/sai ngay)</h2>' +
-      '<button type="button" class="btn sm alt" id="btn-reroll">🔄 Đổi bộ câu hỏi khác (cùng bài)</button>' +
+      '<h2 style="margin:.4em 0">4. Trắc nghiệm lí thuyết &amp; Bài tập củng cố</h2>' +
+      '<button type="button" class="btn sm alt" id="btn-reroll">Đổi bộ câu hỏi khác</button>' +
     '</div>' +
     '<div class="helper-tip">' +
-      '<span>💡 <b>Cách làm:</b> Bấm thẳng vào đáp án <b>A, B, C, D</b> (hoặc gõ số rồi bấm Kiểm tra) để xem giải thích ngay. Làm xong Mức Dễ hãy bấm lên Mức tiếp theo nhé!</span>' +
+      '<span>Chọn đáp án <b>A, B, C, D</b> (hoặc điền kết quả số) để kiểm tra và xem hướng dẫn giải ngay tại chỗ.</span>' +
     '</div>' +
     (availDiffs.length > 1 ? '<div class="ladder" id="diff-ladder"></div>' : '') +
     '<div class="workspace has-pad">' +
@@ -1589,18 +1569,18 @@ function lesson(id){
   h +=
     '<div class="card soft" style="margin-top:16px">' +
       '<div class="row between">' +
-        '<div><b>🖨️ In phiếu bài tập ra giấy A4 hoặc Lưu PDF</b><div class="muted" style="font-size:.9rem">Gồm riêng câu hỏi của bài <b>' + esc(t.title) + '</b>, tách sẵn Tờ Đề bài và Tờ Đáp án ở trang sau.</div></div>' +
+        '<div><b>In phiếu bài tập A4 hoặc lưu PDF</b><div class="muted" style="font-size:.88rem">Chỉ gồm kiến thức của bài <b>' + esc(t.title) + '</b>, tách riêng Tờ Đề bài và Tờ Đáp án.</div></div>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm" id="pdf-both">🖨️ In gộp Đề + Đáp án</button>' +
-          '<button type="button" class="btn sm alt" id="pdf-study">📖 In Lý thuyết + Đề + Đáp án</button>' +
+          '<button type="button" class="btn sm" id="pdf-both">In Đề + Đáp án</button>' +
+          '<button type="button" class="btn sm alt" id="pdf-study">In Lý thuyết + Đề + Đáp án</button>' +
         '</div>' +
       '</div>' +
     '</div>';
 
   if (relatedExams.length) {
-    h += '<div class="card soft" style="margin-top:12px"><b>📝 Luyện đề kiểm tra 15 phút / Giữa kì có bài này:</b><div class="row" style="margin-top:8px">' +
+    h += '<div class="card soft" style="margin-top:12px"><b>Đề kiểm tra 15 phút / Giữa kì có bài này:</b><div class="row" style="margin-top:8px">' +
       relatedExams.map(function(ex){
-        return '<a class="btn sm subtle" href="#/lam-de/' + ex.id + '">▶ ' + esc(ex.title) + '</a>';
+        return '<a class="btn sm subtle" href="#/lam-de/' + ex.id + '">' + esc(ex.title) + ' ›</a>';
       }).join('') + '</div></div>';
   }
 
@@ -1622,7 +1602,7 @@ function lesson(id){
       if (speakingThis || window.speechSynthesis.speaking) {
         stopSpeech();
         speakingThis = false;
-        ttsBtn.textContent = '🔊 Nghe đọc tóm tắt';
+        ttsBtn.textContent = 'Nghe đọc tóm tắt';
         return;
       }
       var fullTxt = t.title + '. Tóm tắt kiến thức cần nhớ: ' + t.theory.map(plainSpeechText).join('. ');
@@ -1630,11 +1610,11 @@ function lesson(id){
       utt.lang = 'vi-VN';
       utt.rate = 0.96;
       speakingThis = true;
-      ttsBtn.textContent = '⏹ Dừng đọc';
-      utt.onend = function(){ speakingThis = false; ttsBtn.textContent = '🔊 Nghe đọc tóm tắt'; };
+      ttsBtn.textContent = 'Dừng đọc';
+      utt.onend = function(){ speakingThis = false; ttsBtn.textContent = 'Nghe đọc tóm tắt'; };
       utt.onerror = function(){
         speakingThis = false;
-        ttsBtn.textContent = '🔊 Nghe đọc tóm tắt';
+        ttsBtn.textContent = 'Nghe đọc tóm tắt';
         showToast('Thiết bị này chưa cài giọng đọc tiếng Việt.');
       };
       window.speechSynthesis.speak(utt);
@@ -1662,7 +1642,7 @@ function lesson(id){
     if (bankInfoEl) {
       bankInfoEl.textContent = 'Đã đổi bộ ' + sessionItems.length + ' câu hỏi mới (kho ' + totalBankCount + '+ câu)';
     }
-    showToast('🔄 Đã đổi bộ câu hỏi mới với số liệu khác!');
+    showToast('Đã đổi bộ câu hỏi mới với số liệu khác.');
     renderQuestionsForSelectedDiff();
   }
 
@@ -1756,8 +1736,8 @@ function lesson(id){
         : 'Đừng lo nhé! Em xem lại cách giải ở từng câu phía trên rồi bấm Đổi bộ câu hỏi khác để làm lại cho quen tay.') + '</p>' +
       '<div class="row">' +
         (nextDiff ? '<button type="button" class="btn" id="next-diff">Làm tiếp ' + DIFF[Number(nextDiff)] + ' →</button>' : '') +
-        (!nextDiff && singleTopicExam ? '<a class="btn" href="#/lam-de/' + singleTopicExam.id + '">📝 Làm Đề 15 phút bài này →</a>' : '') +
-        '<button type="button" class="btn alt" id="again-rand">🔄 Đổi bộ câu hỏi khác</button>' +
+        (!nextDiff && singleTopicExam ? '<a class="btn" href="#/lam-de/' + singleTopicExam.id + '">Làm Đề 15 phút bài này →</a>' : '') +
+        '<button type="button" class="btn alt" id="again-rand">Đổi bộ câu hỏi khác</button>' +
       '</div>';
 
     var btnNextDiff = document.getElementById('next-diff');
@@ -1775,7 +1755,32 @@ function lesson(id){
     renderLadder();
     qsEl.innerHTML = '';
     var idxs = indicesForDiff(selectedDiff);
-    idxs.forEach(function(sIdx, displayIdx){
+    var classify = (BANK && typeof BANK.classifySection === 'function')
+      ? BANK.classifySection
+      : function(q, d){ return (q && q.n == null && (!d || d <= 2)) ? 'lt' : 'bt'; };
+    var ltIdxs = idxs.filter(function(i){
+      var it = sessionItems[i];
+      return (it.sec || classify(it.q, it.d)) === 'lt';
+    });
+    var btIdxs = idxs.filter(function(i){
+      var it = sessionItems[i];
+      return (it.sec || classify(it.q, it.d)) !== 'lt';
+    });
+    var showSplit = ltIdxs.length > 0 && btIdxs.length > 0;
+    var orderedIdxs = showSplit ? ltIdxs.concat(btIdxs) : idxs;
+
+    orderedIdxs.forEach(function(sIdx, displayIdx){
+      if (showSplit && displayIdx === 0) {
+        var bA = document.createElement('div');
+        bA.className = 'sec-banner';
+        bA.innerHTML = '<b>Phần A. Trắc nghiệm lí thuyết</b><span class="badge pri">' + ltIdxs.length + ' câu</span>';
+        qsEl.appendChild(bA);
+      } else if (showSplit && displayIdx === ltIdxs.length) {
+        var bB = document.createElement('div');
+        bB.className = 'sec-banner bt';
+        bB.innerHTML = '<b>Phần B. Bài tập bổ sung củng cố</b><span class="badge">' + btIdxs.length + ' câu</span>';
+        qsEl.appendChild(bB);
+      }
       var item = sessionItems[sIdx];
       var q = item.q;
       var qNode = renderQ(q, displayIdx, {
@@ -1788,8 +1793,8 @@ function lesson(id){
           sessionAnswers[sIdx] = ansState;
           recordMistake(t.id, item.staticIdx, ok, q);
           renderLadder();
-          var allDone = idxs.every(function(i){ return !!sessionAnswers[i]; });
-          if (allDone) renderSummary(idxs, true);
+          var allDone = orderedIdxs.every(function(i){ return !!sessionAnswers[i]; });
+          if (allDone) renderSummary(orderedIdxs, true);
         }
       });
       if (qNode._choices) {
@@ -1797,7 +1802,7 @@ function lesson(id){
       }
       qsEl.appendChild(qNode);
     });
-    renderSummary(idxs, false);
+    renderSummary(orderedIdxs, false);
   }
 
   renderQuestionsForSelectedDiff();
@@ -1842,20 +1847,19 @@ function examCatalog(g, initialCat){
   updateNavActive('de-kiem-tra');
 
   var h =
-    '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Đề kiểm tra Lớp ' + g + '</div>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › Đề kiểm tra Lớp ' + g + '</div>' +
     '<div class="row between">' +
-      '<h1>📝 Kho Đề Kiểm Tra 15 phút · Giữa kì · Cuối kì – Lớp ' + g + '</h1>' +
+      '<h1>Kho đề kiểm tra 15 phút · Giữa kì · Cuối kì – Lớp ' + g + '</h1>' +
       '<div class="row">' +
         [6,7,8,9].map(function(gr){
-          var lbl = (gr === 7 || gr === 8) ? ('Lớp ' + gr + ' ★') : ('Lớp ' + gr);
-          return '<a class="btn sm ' + (gr === g ? 'on' : 'subtle') + '" href="#/de-kiem-tra/' + gr + '">' + lbl + '</a>';
+          return '<a class="btn sm ' + (gr === g ? 'on' : 'subtle') + '" href="#/de-kiem-tra/' + gr + '">Lớp ' + gr + '</a>';
         }).join('') +
       '</div>' +
     '</div>' +
     '<div id="cat-gb-slot"></div>' +
     '<div class="helper-tip">' +
-      '<span>✅ <b>An tâm luyện tập:</b> Đề tuần nào chỉ hỏi đúng những bài đã học tới tuần đó — không bao giờ lẫn câu hỏi của học kì sau.</span>' +
-      '<a class="btn sm alt" href="#/luyen-tap">🎯 Tự chọn số câu theo ý muốn</a>' +
+      '<span><b>Đúng phạm vi tuần học:</b> Đề ở giai đoạn nào chỉ hỏi đúng các bài đã học tới giai đoạn đó, không trộn kiến thức học kì sau.</span>' +
+      '<a class="btn sm alt" href="#/luyen-tap">Tự chọn số câu theo ý muốn</a>' +
     '</div>' +
     '<div id="cat-exams-box"></div>';
 
@@ -1878,9 +1882,9 @@ function quickPrintPage(g){
 
   function render(){
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › In đề giấy A4 (Lớp ' + g + ')</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › In đề giấy A4 (Lớp ' + g + ')</div>' +
       '<div class="row between">' +
-        '<h1>🖨️ In Đề Ra Giấy A4 / Lưu File PDF Gửi Zalo – Lớp ' + g + '</h1>' +
+        '<h1>In đề giấy A4 &amp; Lưu file PDF – Lớp ' + g + '</h1>' +
         '<div class="row">' +
           [6,7,8,9].map(function(gr){
             return '<a class="btn sm ' + (gr === g ? 'on' : 'subtle') + '" href="#/in-nhanh/' + gr + '">Lớp ' + gr + '</a>';
@@ -1890,15 +1894,15 @@ function quickPrintPage(g){
       '<div class="card highlight" style="margin-bottom:14px">' +
         '<div class="row between">' +
           '<div>' +
-            '<b>✨ Chỉ cần 1 lần bấm là có đủ cả Tờ Đề (cho con làm) + Tờ Đáp Án (ở trang riêng để bố mẹ/thầy cô dò)!</b>' +
-            '<div class="muted" style="font-size:.9rem;margin-top:3px">Muốn in thêm toàn bộ bảng công thức tóm tắt của cả năm Lớp ' + g + ' để dán góc học tập, bấm nút bên phải:</div>' +
+            '<b>Tự động tách Tờ 1: Đề bài (không đáp án) và Tờ 2: Đáp án chi tiết sang trang riêng.</b>' +
+            '<div class="muted" style="font-size:.88rem;margin-top:3px">Có thể in thêm bảng công thức và các dạng bài tập trọng tâm của cả năm Lớp ' + g + ':</div>' +
           '</div>' +
-          '<button type="button" class="btn alt" id="qp-all-formulas">📖 In Sổ tay Công thức Lớp ' + g + '</button>' +
+          '<button type="button" class="btn alt" id="qp-all-formulas">In Sổ tay công thức Lớp ' + g + '</button>' +
         '</div>' +
       '</div>' +
       '<div class="tabs">' +
-        '<button type="button" data-qpt="exams" class="' + (pTab === 'exams' ? 'on' : '') + '">📝 In Đề Kiểm Tra 15p · Giữa kì · Cuối kì (' + gExams.length + ' đề)</button>' +
-        '<button type="button" data-qpt="lessons" class="' + (pTab === 'lessons' ? 'on' : '') + '">📖 In Phiếu Bài Tập Từng Bài Học (' + gLessons.length + ' bài)</button>' +
+        '<button type="button" data-qpt="exams" class="' + (pTab === 'exams' ? 'on' : '') + '">Đề kiểm tra 15p · Giữa kì · Cuối kì (' + gExams.length + ' đề)</button>' +
+        '<button type="button" data-qpt="lessons" class="' + (pTab === 'lessons' ? 'on' : '') + '">Phiếu bài tập từng bài học (' + gLessons.length + ' bài)</button>' +
       '</div>' +
       '<div id="qp-body"></div>';
 
@@ -1927,7 +1931,7 @@ function quickPrintPage(g){
             '<h3 style="margin:.45em 0 .2em">' + esc(ex.title) + '</h3>' +
             '<div class="muted" style="font-size:.88rem;margin-bottom:10px">' + esc(ex.scope) + '</div>' +
             '<div class="row">' +
-              '<button type="button" class="btn sm" data-qp-ex="' + ex.id + '" data-mode="both">🖨️ Xem &amp; In (Đề + Đáp án)</button>' +
+              '<button type="button" class="btn sm" data-qp-ex="' + ex.id + '" data-mode="both">Xem &amp; In (Đề + Đáp án)</button>' +
               '<button type="button" class="btn sm subtle" data-qp-ex="' + ex.id + '" data-mode="quiz">Chỉ tờ Đề</button>' +
             '</div>' +
           '</div>'
@@ -1951,8 +1955,8 @@ function quickPrintPage(g){
             '<div class="row between">' + tag(t.subj) + (t.weeks ? '<span class="badge">' + esc(t.weeks) + '</span>' : '') + '</div>' +
             '<h3 style="margin:.45em 0 .25em">' + esc(t.title) + '</h3>' +
             '<div class="row" style="margin-top:8px">' +
-              '<button type="button" class="btn sm" data-qp-les="' + t.id + '" data-mode="study">📖 In Lý thuyết + Đề + Đáp án</button>' +
-              '<button type="button" class="btn sm alt" data-qp-les="' + t.id + '" data-mode="both">🖨️ Chỉ Đề + Đáp án</button>' +
+              '<button type="button" class="btn sm" data-qp-les="' + t.id + '" data-mode="study">In Lý thuyết + Đề + Đáp án</button>' +
+              '<button type="button" class="btn sm alt" data-qp-les="' + t.id + '" data-mode="both">Chỉ Đề + Đáp án</button>' +
             '</div>' +
           '</div>'
         );
@@ -2001,40 +2005,40 @@ function examRunner(examId){
     var setupPrintSpec = null;
 
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra Lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra Lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
       '<div class="row between" style="margin-bottom:6px">' +
         '<div class="row">' +
           '<span class="badge pri">Lớp ' + ex.grade + ' · ' + esc(ex.term) + (ex.weeks ? ' · ' + esc(ex.weeks) : '') + '</span>' +
           '<span class="badge">' + ex.minutes + ' phút · ' + ex.count + ' câu hỏi</span>' +
         '</div>' +
-        '<button type="button" class="btn sm subtle" id="ex-share-btn">📤 Gửi link đề này</button>' +
+        '<button type="button" class="btn sm subtle" id="ex-share-btn">Chia sẻ đề</button>' +
       '</div>' +
       '<h1>' + esc(ex.title) + '</h1>' +
       '<p class="muted"><b>Phạm vi kiến thức:</b> ' + esc(ex.scope) + '</p>' +
-      (st ? '<div class="card soft" style="margin-bottom:14px">📊 Bạn đã làm đề này <b>' + st.attempts + ' lần</b> · Điểm cao nhất: <b class="done">' + score10(st.best) + '/10</b> · Lần gần nhất: <b>' + score10(st.last) + '/10</b></div>' : '') +
+      (st ? '<div class="card soft" style="margin-bottom:14px">Đã làm đề này <b>' + st.attempts + ' lần</b> · Điểm cao nhất: <b class="done">' + score10(st.best) + '/10</b> · Gần nhất: <b>' + score10(st.last) + '/10</b></div>' : '') +
       '<section class="card">' +
-        '<h2 style="margin-top:0">Chọn cách làm bài (rất đơn giản):</h2>' +
+        '<h2 style="margin-top:0">Chọn chế độ làm bài:</h2>' +
         '<div class="choice-cards" id="mode-cards">' +
           '<button type="button" class="choice-card ' + (examMode === 'practice' ? 'on' : '') + '" data-m="practice">' +
-            '<b>✅ Biết Đúng / Sai ngay từng câu (Khuyên dùng)</b>' +
-            '<small>Bấm câu nào biết kết quả và xem lời giải dễ hiểu ngay câu đó, không áp lực.</small>' +
+            '<b>Biết Đúng / Sai ngay từng câu (Khuyên dùng)</b>' +
+            '<small>Chọn câu nào xem kết quả và lời giải ngay câu đó.</small>' +
           '</button>' +
           '<button type="button" class="choice-card ' + (examMode === 'exam' ? 'on' : '') + '" data-m="exam">' +
-            '<b>⏱ Làm giống thi thật trên lớp</b>' +
-            '<small>Chọn đáp án hết cả đề rồi bấm nút Nộp bài ở cuối trang để chấm điểm một lượt.</small>' +
+            '<b>Làm như kiểm tra trên lớp</b>' +
+            '<small>Hoàn thành cả đề rồi bấm Nộp bài ở cuối trang để chấm điểm một lượt.</small>' +
           '</button>' +
         '</div>' +
 
-        '<h3>Độ khó câu hỏi:</h3>' +
+        '<h3>Mức độ đề:</h3>' +
         '<div class="filters" id="level-pills" style="margin-bottom:16px">' +
-          '<button type="button" data-lv="basic" class="' + (levelMode === 'basic' ? 'on' : '') + '">🌱 Dễ – Lấy lại gốc</button>' +
-          '<button type="button" data-lv="standard" class="' + (levelMode === 'standard' ? 'on' : '') + '">⭐ Vừa sức trên lớp (Chuẩn)</button>' +
-          '<button type="button" data-lv="advanced" class="' + (levelMode === 'advanced' ? 'on' : '') + '">🚀 Nâng cao (Điểm 9–10)</button>' +
+          '<button type="button" data-lv="basic" class="' + (levelMode === 'basic' ? 'on' : '') + '">Cơ bản – Lấy gốc</button>' +
+          '<button type="button" data-lv="standard" class="' + (levelMode === 'standard' ? 'on' : '') + '">Chuẩn trên lớp</button>' +
+          '<button type="button" data-lv="advanced" class="' + (levelMode === 'advanced' ? 'on' : '') + '">Nâng cao (Điểm 9–10)</button>' +
         '</div>' +
 
         '<div class="row">' +
-          '<button type="button" class="btn lg" id="ex-start">▶ Bắt đầu làm bài ngay</button>' +
-          '<button type="button" class="btn alt" id="ex-print-now">🖨️ In ra giấy A4 (Đề + Đáp án)</button>' +
+          '<button type="button" class="btn lg" id="ex-start">Bắt đầu làm bài ›</button>' +
+          '<button type="button" class="btn alt" id="ex-print-now">In ra giấy A4 (Đề + Đáp án)</button>' +
           '<a class="btn subtle" href="#/de-kiem-tra/' + ex.grade + '">← Chọn đề khác</a>' +
         '</div>' +
       '</section>';
@@ -2101,14 +2105,14 @@ function examRunner(examId){
     }
 
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra Lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/de-kiem-tra/' + ex.grade + '">Đề kiểm tra Lớp ' + ex.grade + '</a> › ' + esc(ex.title) + '</div>' +
       '<div class="row between">' +
         '<div><h1 style="margin-bottom:.15em">' + esc(ex.title) + '</h1>' +
         '<div class="muted">Mã đề: <b>' + esc(attemptSpec.code) + '</b> · ' + (isDeferred ? 'Chế độ Thi thử (Làm xong bấm Nộp bài)' : 'Chế độ Ôn luyện (Biết đúng/sai ngay)') + '</div></div>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm alt" id="ex-top-pdf">🖨️ In đề này</button>' +
-          '<button type="button" class="btn sm subtle" id="ex-new">🔄 Đổi đề mới</button>' +
-          '<button type="button" class="btn sm subtle" id="ex-cfg">⚙ Đổi cách làm</button>' +
+          '<button type="button" class="btn sm alt" id="ex-top-pdf">In đề này</button>' +
+          '<button type="button" class="btn sm subtle" id="ex-new">Đổi đề mới</button>' +
+          '<button type="button" class="btn sm subtle" id="ex-cfg">Đổi chế độ</button>' +
         '</div>' +
       '</div>' +
       '<div class="exam-bar">' +
@@ -2116,21 +2120,21 @@ function examRunner(examId){
           '<span class="timer" id="ex-clock">' + fmtClock(leftSec) + '</span>' +
           '<button type="button" class="btn sm subtle" id="ex-pause">Tạm dừng</button>' +
           '<button type="button" class="btn sm subtle" id="ex-hide-t">Ẩn giờ</button>' +
-          '<span class="muted" style="font-weight:700" id="ex-prog">Đã làm: 0/' + picks.length + ' câu</span>' +
+          '<span class="muted" style="font-weight:600" id="ex-prog">Đã làm: 0/' + picks.length + ' câu</span>' +
         '</div>' +
         '<div class="row">' +
-          (isDeferred ? '<button type="button" class="btn sm" id="ex-submit">✅ Nộp bài chấm điểm</button>' : '') +
+          (isDeferred ? '<button type="button" class="btn sm" id="ex-submit">Nộp bài chấm điểm</button>' : '') +
         '</div>' +
       '</div>' +
-      (isDeferred ? '<div class="helper-tip"><span>👉 Bạn cứ bấm chọn đáp án từng câu (đổi ý bấm chọn lại thoải mái). Làm xong kéo xuống cuối trang bấm nút <b>✅ Nộp bài chấm điểm</b> nhé!</span></div>' : '') +
-      '<div id="ex-time-msg" class="q-hint" hidden>⏰ Đã hết thời gian gợi ý (' + ex.minutes + ' phút). Bạn vẫn được kiểm tra lại và bấm Nộp bài bình thường, không bị trừ điểm!</div>' +
+      (isDeferred ? '<div class="helper-tip"><span>Chọn đáp án từng câu (có thể đổi lại trước khi nộp). Làm xong bấm nút <b>Nộp bài chấm điểm</b> ở cuối trang.</span></div>' : '') +
+      '<div id="ex-time-msg" class="q-hint" hidden>Đã hết thời gian gợi ý (' + ex.minutes + ' phút). Bạn vẫn có thể kiểm tra lại và bấm Nộp bài bình thường.</div>' +
       '<div class="workspace has-pad exam-ws">' +
         '<div>' +
           '<div id="qs"></div>' +
           (isDeferred
             ? '<div class="exam-bottom-submit" id="ex-bottom-box">' +
                 '<div><b id="ex-bottom-prog">Đã chọn đáp án: 0/' + picks.length + ' câu</b><div class="muted" style="font-size:.88rem">Kiểm tra lại một lượt rồi bấm nút bên phải để xem điểm và lời giải chi tiết.</div></div>' +
-                '<button type="button" class="btn lg" id="ex-submit-bottom">✅ Nộp bài &amp; Chấm điểm ngay</button>' +
+                '<button type="button" class="btn lg" id="ex-submit-bottom">Nộp bài &amp; Chấm điểm</button>' +
               '</div>'
             : '') +
           '<div id="res"></div>' +
@@ -2170,14 +2174,14 @@ function examRunner(examId){
 
     document.getElementById('ex-pause').onclick = function(){
       paused = !paused;
-      this.textContent = paused ? '▶ Tiếp tục' : 'Tạm dừng';
+      this.textContent = paused ? 'Tiếp tục' : 'Tạm dừng';
     };
     document.getElementById('ex-hide-t').onclick = function(){
       timerHidden = !timerHidden;
       clockEl.hidden = timerHidden;
       this.textContent = timerHidden ? 'Hiện giờ' : 'Ẩn giờ';
     };
-    document.getElementById('ex-new').onclick = function(){ startExam(); showToast('🔄 Đã tạo mã đề mới!'); };
+    document.getElementById('ex-new').onclick = function(){ startExam(); showToast('Đã tạo mã đề mới.'); };
     document.getElementById('ex-cfg').onclick = function(){ renderSetup(); };
 
     function updateAnsweredCount(){
@@ -2228,9 +2232,9 @@ function examRunner(examId){
       resEl.style.marginTop = '14px';
       resEl.innerHTML =
         '<div class="row between">' +
-          '<div><div class="score-big">🎉 Điểm của bạn: ' + score10(ratio) + ' / 10</div>' +
+          '<div><div class="score-big">Điểm bài làm: ' + score10(ratio) + ' / 10</div>' +
           '<div>Mã đề: <b>' + esc(attemptSpec.code) + '</b> · Đúng <b>' + right + '/' + picks.length + '</b> câu · ' +
-          (ex.col ? 'Đã tự động lưu vào Sổ điểm!' : 'Thời gian làm: ' + spentTxt) + '</div></div>' +
+          (ex.col ? 'Đã lưu vào Sổ điểm' : 'Thời gian làm: ' + spentTxt) + '</div></div>' +
           '<span class="badge ' + (ratio >= 0.8 ? 'ok' : (ratio >= 0.65 ? 'pri' : 'warn')) + '">' +
             (ratio >= 0.8 ? 'Tốt (Giỏi)' : (ratio >= 0.65 ? 'Khá' : (ratio >= 0.5 ? 'Đạt' : 'Cần cố gắng thêm'))) +
           '</span>' +
@@ -2238,18 +2242,18 @@ function examRunner(examId){
         '<div class="diff-grid">' +
           [1,2,3,4].filter(function(lv){ return byDiff[lv].tot > 0; }).map(function(lv){
             return '<div class="diff-stat"><span class="badge d' + lv + '">' + DIFF_SHORT[lv] + '</span>' +
-              '<div style="font-weight:700;font-size:1.1rem;margin-top:4px">Đúng ' + byDiff[lv].ok + ' / ' + byDiff[lv].tot + '</div></div>';
+              '<div style="font-weight:600;font-size:1.05rem;margin-top:4px">Đúng ' + byDiff[lv].ok + ' / ' + byDiff[lv].tot + '</div></div>';
           }).join('') +
         '</div>' +
         (weakList.length
-          ? '<b>📖 Gợi ý các bài nên mở xem lại cho chắc:</b><ul class="tight">' + weakList.map(function(t){
+          ? '<b>Các bài nên xem lại:</b><ul class="tight">' + weakList.map(function(t){
               return '<li><a href="#/bai/' + t.id + '">' + esc(t.title) + '</a> (Lớp ' + t.grade + ')</li>';
             }).join('') + '</ul>'
-          : '<p class="done">🌟 Tuyệt vời! Bạn làm đúng hết tất cả các câu trong đề này.</p>') +
+          : '<p class="done">✓ Xuất sắc! Bạn đã trả lời đúng toàn bộ câu hỏi trong đề này.</p>') +
         '<div class="row" style="margin-top:12px">' +
-          '<button type="button" class="btn" id="ex-retry">🔄 Làm đề mới (số liệu khác)</button>' +
-          '<button type="button" class="btn alt" id="ex-pdf-both">🖨️ In đề này + Đáp án</button>' +
-          '<a class="btn subtle" href="#/tien-do">🏆 Xem Sổ điểm</a>' +
+          '<button type="button" class="btn" id="ex-retry">Làm đề mới (số liệu khác)</button>' +
+          '<button type="button" class="btn alt" id="ex-pdf-both">In đề này + Đáp án</button>' +
+          '<a class="btn subtle" href="#/tien-do">Xem Sổ điểm</a>' +
         '</div>';
 
       document.getElementById('ex-retry').onclick = function(){ startExam(); };
@@ -2446,9 +2450,9 @@ function practice(presetMode){
   function renderBuilder(){
     if (currentCleanup) { currentCleanup(); currentCleanup = null; }
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Tự chọn bài luyện</div>' +
-      '<h1>🎯 Tự chọn bài luyện theo ý muốn</h1>' +
-      '<p class="muted">Gõ yêu cầu bình thường bằng tiếng Việt hoặc chọn lớp &amp; bài học bên dưới:</p>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › Tự chọn bài luyện</div>' +
+      '<h1>Tự chọn bài luyện theo ý muốn</h1>' +
+      '<p class="muted">Nhập yêu cầu bằng tiếng Việt hoặc chọn lớp &amp; bài học bên dưới:</p>' +
       '<section class="card" style="margin-bottom:14px">' +
         '<label for="quick-cmd" style="display:block;font-weight:700;margin-bottom:6px">Gõ nhanh điều bạn muốn luyện:</label>' +
         '<div class="row">' +
@@ -2495,8 +2499,8 @@ function practice(presetMode){
         '</div>' +
         '<div id="p-summary" class="card soft" style="margin-bottom:14px"></div>' +
         '<div class="row">' +
-          '<button type="button" class="btn lg" id="p-start">▶ Bắt đầu làm bài</button>' +
-          '<button type="button" class="btn alt" id="p-print">🖨️ In ra giấy A4 (Đề + Đáp án)</button>' +
+          '<button type="button" class="btn lg" id="p-start">Bắt đầu làm bài ›</button>' +
+          '<button type="button" class="btn alt" id="p-print">In ra giấy A4 (Đề + Đáp án)</button>' +
         '</div>' +
       '</section>';
 
@@ -2562,7 +2566,7 @@ function practice(presetMode){
         var scopeNote = state.topicId !== 'all' && byId[state.topicId]
           ? ('Chỉ hỏi riêng bài: <b>' + esc(byId[state.topicId].title) + '</b>')
           : ('Tìm thấy <b>' + pool.length + '+ câu phù hợp</b>');
-        elSummary.innerHTML = '✅ ' + scopeNote + ' · Sẽ lấy ra <b>' + take + ' câu</b>' +
+        elSummary.innerHTML = '✓ ' + scopeNote + ' · Sẽ lấy ra <b>' + take + ' câu</b>' +
           (state.sortEasyToHard ? ' (sắp từ Dễ → Khó)' : '') + '.';
         btnStart.disabled = false;
         btnPrint.disabled = false;
@@ -2668,12 +2672,12 @@ function practice(presetMode){
     });
 
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › <a href="#/luyen-tap" id="back-builder">Tự chọn bài luyện</a> › Đang làm bài</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › <a href="#/luyen-tap" id="back-builder">Tự chọn bài luyện</a> › Đang làm bài</div>' +
       '<div class="row between">' +
         '<div><h1 style="margin-bottom:.15em">' + esc(title) + '</h1><div class="muted">Mã phiếu: <b>' + esc(sheetSpec.code) + '</b></div></div>' +
         '<div class="row">' +
-          '<button type="button" class="btn sm alt" id="run-pdf">🖨️ In phiếu này (Đề + Đáp án)</button>' +
-          '<button type="button" class="btn sm subtle" id="chg-cfg">🔄 Chọn bài khác</button>' +
+          '<button type="button" class="btn sm alt" id="run-pdf">In phiếu này (Đề + Đáp án)</button>' +
+          '<button type="button" class="btn sm subtle" id="chg-cfg">Chọn bài khác</button>' +
         '</div>' +
       '</div>' +
       '<div class="workspace has-pad">' +
@@ -2709,16 +2713,16 @@ function practice(presetMode){
             resEl.className = 'card highlight';
             resEl.style.marginTop = '12px';
             resEl.innerHTML =
-              '<div class="score-big">🎉 Điểm của bạn: ' + score10(ratio) + ' / 10</div>' +
+              '<div class="score-big">Điểm bài luyện: ' + score10(ratio) + ' / 10</div>' +
               '<p>Đúng <b>' + right + '/' + picks.length + '</b> câu.</p>' +
               (weakList.length
-                ? '<b>📖 Các bài nên mở xem lại:</b><ul class="tight">' + weakList.map(function(t){
+                ? '<b>Các bài nên xem lại:</b><ul class="tight">' + weakList.map(function(t){
                     return '<li><a href="#/bai/' + t.id + '">' + esc(t.title) + '</a> (Lớp ' + t.grade + ')</li>';
                   }).join('') + '</ul>'
-                : '<p class="done">🌟 Xuất sắc! Bạn trả lời đúng hết toàn bộ câu hỏi.</p>') +
+                : '<p class="done">✓ Xuất sắc! Bạn trả lời đúng toàn bộ câu hỏi.</p>') +
               '<div class="row" style="margin-top:12px">' +
-                '<button type="button" class="btn" id="re-cfg">🔄 Làm lượt mới</button>' +
-                '<button type="button" class="btn alt" id="s-pdf-both">🖨️ In Đề + Đáp án</button>' +
+                '<button type="button" class="btn" id="re-cfg">Làm lượt mới</button>' +
+                '<button type="button" class="btn alt" id="s-pdf-both">In Đề + Đáp án</button>' +
               '</div>';
 
             document.getElementById('re-cfg').onclick = renderBuilder;
@@ -2759,7 +2763,7 @@ function placement(g){
   });
 
   var h =
-    '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Kiểm tra gốc Lớp ' + g + '</div>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › Kiểm tra gốc Lớp ' + g + '</div>' +
     '<div class="row between">' +
       '<h1>Kiểm tra kiến thức gốc trước khi học Lớp ' + g + '</h1>' +
       '<div class="row">' +
@@ -2771,8 +2775,8 @@ function placement(g){
     '<div class="row between" style="margin-bottom:8px">' +
       '<span class="muted">Gồm <b>' + picks.length + ' câu cơ bản</b> để biết phần nào còn hổng và cần xem lại.</span>' +
       '<div class="row">' +
-        '<button type="button" class="btn sm alt" id="pl-top-pdf">🖨️ In Đề + Đáp án</button>' +
-        '<button type="button" class="btn sm subtle" id="pl-reroll">🔄 Đổi đề khác</button>' +
+        '<button type="button" class="btn sm alt" id="pl-top-pdf">In Đề + Đáp án</button>' +
+        '<button type="button" class="btn sm subtle" id="pl-reroll">Đổi đề khác</button>' +
       '</div>' +
     '</div>' +
     '<div class="workspace has-pad">' +
@@ -2820,14 +2824,14 @@ function placement(g){
             '<div class="score-big">Điểm kiểm tra gốc: ' + score10(ratio) + ' / 10</div>' +
             '<p>Đúng <b>' + right + '/' + picks.length + '</b> câu.</p>' +
             (weak.length
-              ? '<b>📌 Các bài gốc nên bấm vào đọc lại 5 phút:</b><ul class="tight">' +
+              ? '<b>Các bài gốc nên xem lại:</b><ul class="tight">' +
                 weak.map(function(t){
                   return '<li><a href="#/bai/' + t.id + '">' + esc(t.title) + '</a> (Lớp ' + t.grade + ' · ' + SUBJ[t.subj] + ')</li>';
                 }).join('') + '</ul>'
-              : '<p class="done">🌟 Tuyệt vời! Nền tảng của bạn rất vững để học Lớp ' + g + '.</p>') +
+              : '<p class="done">✓ Nền tảng của bạn rất vững để học Lớp ' + g + '.</p>') +
             '<div class="row" style="margin-top:12px">' +
-              '<button type="button" class="btn" id="re">🔄 Làm đề khác</button>' +
-              '<button type="button" class="btn alt" id="pl-pdf">🖨️ In Đề + Đáp án</button>' +
+              '<button type="button" class="btn" id="re">Làm đề khác</button>' +
+              '<button type="button" class="btn alt" id="pl-pdf">In Đề + Đáp án</button>' +
             '</div>';
 
           document.getElementById('re').onclick = function(){ placement(g); };
@@ -2857,21 +2861,21 @@ function notebook(initialTab){
       .sort(function(a,b){ return (b.lastWrongAt || 0) - (a.lastWrongAt || 0); });
 
     var h =
-      '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Sổ tay công thức &amp; Câu hay sai</div>' +
+      '<div class="crumb"><a href="#/">Trang chủ</a> › Sổ tay công thức &amp; Câu hay sai</div>' +
       '<div class="row between">' +
-        '<h1>📖 Sổ tay Công thức &amp; Câu Hay Sai</h1>' +
+        '<h1>Sổ tay Công thức &amp; Câu hay sai</h1>' +
         '<button type="button" class="btn sm alt" id="nb-print-btn">' +
-          (tab === 'formulas' ? '🖨️ In Sổ tay đang xem' : '🖨️ In phiếu câu hay sai') +
+          (tab === 'formulas' ? 'In Sổ tay đang xem' : 'In phiếu câu hay sai') +
         '</button>' +
       '</div>' +
       '<div class="tabs">' +
-        '<button type="button" data-tab="formulas" class="' + (tab === 'formulas' ? 'on' : '') + '">📐 Bảng Công thức dễ hiểu</button>' +
-        '<button type="button" data-tab="mistakes" class="' + (tab === 'mistakes' ? 'on' : '') + '">🔁 Câu từng làm sai (' + mList.length + ')</button>' +
+        '<button type="button" data-tab="formulas" class="' + (tab === 'formulas' ? 'on' : '') + '">Bảng công thức</button>' +
+        '<button type="button" data-tab="mistakes" class="' + (tab === 'mistakes' ? 'on' : '') + '">Câu từng làm sai (' + mList.length + ')</button>' +
       '</div>';
 
     if (tab === 'formulas') {
       h +=
-        '<input type="search" id="nb-search" placeholder="🔍 Gõ tên công thức hoặc bài học (không cần dấu, VD: mol, ap suat, hoa tri)…" value="' + esc(query) + '">' +
+        '<input type="search" id="nb-search" placeholder="Nhập tên công thức hoặc bài học (VD: mol, áp suất, hóa trị)…" value="' + esc(query) + '">' +
         '<div class="filters" id="nb-g">' +
           ['all','6','7','8','9'].map(function(g){
             return '<button type="button" data-g="' + g + '" class="' + (gradeFilter === g ? 'on' : '') + '">' + (g === 'all' ? 'Tất cả lớp' : 'Lớp ' + g) + '</button>';
@@ -2968,12 +2972,12 @@ function notebook(initialTab){
       };
 
       if (!mList.length) {
-        box.innerHTML = '<div class="empty">🎉 Hiện tại chưa có câu làm sai nào! Khi làm bài nếu có câu nhầm, hệ thống sẽ tự lưu vào đây để bạn dễ ôn lại.</div>';
+        box.innerHTML = '<div class="empty">Hiện tại chưa có câu làm sai nào. Khi làm bài nếu có câu nhầm, hệ thống sẽ tự lưu vào đây để dễ ôn lại.</div>';
       } else {
         var out =
           '<div class="helper-tip">' +
-            '<span>💡 Khi bạn bấm <b>Làm lại ngay</b> và trả lời đúng, câu đó sẽ tự động được gỡ khỏi danh sách sai.</span>' +
-            '<a class="btn sm" href="#/luyen-tap/cau-sai">▶ Làm lại ' + mList.length + ' câu này ngay</a>' +
+            '<span>Khi bấm <b>Làm lại ngay</b> và trả lời đúng, câu đó sẽ tự động được gỡ khỏi danh sách sai.</span>' +
+            '<a class="btn sm" href="#/luyen-tap/cau-sai">Làm lại ' + mList.length + ' câu này ›</a>' +
           '</div>';
 
         mList.forEach(function(m){
@@ -3012,8 +3016,8 @@ function progress(){
   var doneExamIds = Object.keys(examStats).filter(function(id){ return examById[id]; });
 
   var h =
-    '<div class="crumb"><a href="#/">🏠 Trang chủ</a> › Sổ điểm &amp; Tiến độ học tập</div>' +
-    '<h1>🏆 Sổ Điểm &amp; Kết Quả Học Tập</h1>' +
+    '<div class="crumb"><a href="#/">Trang chủ</a> › Sổ điểm &amp; Tiến độ học tập</div>' +
+    '<h1>Sổ điểm &amp; Kết quả học tập</h1>' +
     '<div class="grid stats" style="margin-bottom:16px">' +
       '<div class="card"><div class="muted">Bài đã nắm vững</div><div class="stat-val">' + completed + ' / ' + D.length + '</div></div>' +
       '<div class="card"><div class="muted">Điểm TB bài học</div><div class="stat-val">' + avgScore + '</div></div>' +
@@ -3074,10 +3078,10 @@ function progress(){
     '<div class="card">' +
       '<p class="muted" style="margin-top:0">Điểm số luôn tự động lưu trên máy này. Nếu muốn chuyển điểm sang điện thoại hoặc máy tính khác, bấm <b>Lưu sổ điểm về máy</b> rồi mở lại trên máy mới.</p>' +
       '<div class="row">' +
-        '<button type="button" class="btn sm alt" id="btn-export">📥 Lưu sổ điểm về máy</button>' +
-        '<button type="button" class="btn sm subtle" id="btn-import">📂 Mở lại sổ điểm đã lưu</button>' +
+        '<button type="button" class="btn sm alt" id="btn-export">Lưu sổ điểm về máy</button>' +
+        '<button type="button" class="btn sm subtle" id="btn-import">Mở sổ điểm đã lưu</button>' +
         '<input type="file" id="file-import" accept="application/json,.json" hidden>' +
-        '<button type="button" class="btn sm danger" id="rs">🗑 Xóa điểm để học lại từ đầu</button>' +
+        '<button type="button" class="btn sm danger" id="rs">Xóa điểm để học lại</button>' +
       '</div>' +
     '</div>';
 
@@ -3101,7 +3105,7 @@ function progress(){
     a.download = 'so-diem-khtn-' + new Date().toISOString().slice(0,10) + '.json';
     a.click();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
-    showToast('📥 Đã lưu tệp sổ điểm về máy!');
+    showToast('Đã lưu tệp sổ điểm về máy.');
   };
 
   var fileInput = document.getElementById('file-import');
@@ -3151,8 +3155,7 @@ function route(){
   var m = location.hash.replace(/^#\/?/, '').split('/');
   if (m[0] === 'lop') grade(parseInt(m[1], 10), m[2]);
   else if (m[0] === 'bai') lesson(m[1]);
-  else if (m[0] === 'de-kiem-tra') examCatalog(parseInt(m[1], 10), m[2]);
-  else if (m[0] === 'in-nhanh') quickPrintPage(parseInt(m[1], 10));
+  else if (m[0] === 'de-kiem-tra' || m[0] === 'in-nhanh') examCatalog(parseInt(m[1], 10), m[2]);
   else if (m[0] === 'lam-de') examRunner(m[1]);
   else if (m[0] === 'luyen-tap') practice(m[1]);
   else if (m[0] === 'kiem-tra') placement(parseInt(m[1], 10));

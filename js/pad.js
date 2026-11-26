@@ -23,7 +23,7 @@ window.KHTNPad = {
     box.innerHTML =
       '<div class="pad-top">' +
         '<div>' +
-          '<h2>✏️ Giấy Nháp Viết Tay</h2>' +
+          '<h2>Giấy nháp viết tay</h2>' +
           '<span class="muted" style="font-size:.82rem">Dùng ngón tay, bút cảm ứng hoặc chuột để tính nháp</span>' +
         '</div>' +
         '<button type="button" class="btn sm alt pad-toggle-btn" data-act="toggle-pad"></button>' +
@@ -31,13 +31,13 @@ window.KHTNPad = {
       '<div class="pad-body">' +
         '<div class="pad-wrap"><canvas class="pad" aria-label="Bảng nháp vẽ tay"></canvas></div>' +
         '<div class="pad-tools">' +
-          '<button type="button" class="btn sm on" data-tool="pen">✏️ Bút viết</button>' +
-          '<button type="button" class="btn sm subtle" data-tool="eraser">🧽 Cục tẩy</button>' +
+          '<button type="button" class="btn sm on" data-tool="pen">Bút viết</button>' +
+          '<button type="button" class="btn sm subtle" data-tool="eraser">Tẩy</button>' +
           '<button type="button" class="swatch on" data-color="#111827" style="background:#111827" title="Mực đen" aria-label="Mực đen"></button>' +
           '<button type="button" class="swatch" data-color="#1b66c9" style="background:#1b66c9" title="Mực xanh" aria-label="Mực xanh"></button>' +
           '<button type="button" class="swatch" data-color="#c43434" style="background:#c43434" title="Mực đỏ" aria-label="Mực đỏ"></button>' +
-          '<button type="button" class="btn sm subtle" data-act="undo" disabled>↩ Quay lại</button>' +
-          '<button type="button" class="btn sm subtle" data-act="clear" disabled>🗑 Xóa trang nháp</button>' +
+          '<button type="button" class="btn sm subtle" data-act="undo" disabled>Hoàn tác</button>' +
+          '<button type="button" class="btn sm subtle" data-act="clear" disabled>Xóa nháp</button>' +
         '</div>' +
       '</div>';
 
@@ -58,7 +58,7 @@ window.KHTNPad = {
       } else {
         bodyEl.hidden = !expanded;
       }
-      toggleBtn.textContent = bodyEl.hidden ? '✏️ Mở giấy nháp' : '▲ Thu gọn nháp';
+      toggleBtn.textContent = bodyEl.hidden ? 'Mở giấy nháp' : 'Thu gọn nháp';
       if (!bodyEl.hidden) {
         requestAnimationFrame(function(){ redraw(); });
       }

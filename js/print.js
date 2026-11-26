@@ -336,7 +336,7 @@ function buildStandaloneDownloadFile(spec, mode, includeTypes){
     '@media print{@page{size:A4;margin:14mm}body{background:#fff;padding:0}.top-bar{display:none!important}.sheet-preview{border:0;padding:0;max-width:none}.sheet-page-break{border-top:0;margin:0;padding:0;page-break-before:always;break-before:page}}\n' +
     '</style>\n</head>\n<body>\n' +
     '<div class="top-bar"><div><b>SciBook</b> · Mã đề: <b>' + esc(spec.code) + '</b><div style="font-size:13px;color:#555;margin-top:2px">Bấm nút màu tím bên cạnh để in ra máy in hoặc chọn Save as PDF (Lưu dưới dạng PDF).</div></div>' +
-    '<button class="pbtn" onclick="window.print()">🖨️ In ra giấy / Lưu thành PDF</button></div>\n' +
+    '<button class="pbtn" onclick="window.print()">In ra giấy / Lưu thành PDF</button></div>\n' +
     bodySheet + '\n</body>\n</html>';
 }
 
@@ -422,14 +422,14 @@ window.KHTNPrint = {
 
       var modeBtns = '';
       if (spec.formulaGroups) {
-        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">📖 Sổ tay công thức &amp; dạng bài</button>';
+        modeBtns = '<button type="button" class="btn sm on" data-mode="formulas">Sổ tay công thức &amp; dạng bài</button>';
       } else {
         modeBtns +=
           '<button type="button" class="btn sm ' + (mode === 'both' ? 'on' : 'subtle') + '" data-mode="both">1+2. Gộp Đề + Đáp án (Khác trang)</button>' +
           '<button type="button" class="btn sm ' + (mode === 'quiz' ? 'on' : 'subtle') + '" data-mode="quiz">1. Chỉ tờ Đề bài</button>' +
           '<button type="button" class="btn sm ' + (mode === 'key' ? 'on' : 'subtle') + '" data-mode="key">2. Chỉ tờ Đáp án</button>';
         if (spec.lesson) {
-          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">📖 Lý thuyết + Dạng bài + Đề + Đáp án</button>';
+          modeBtns += '<button type="button" class="btn sm ' + (mode === 'study' ? 'on' : 'subtle') + '" data-mode="study">Lý thuyết + Dạng bài + Đề + Đáp án</button>';
         }
       }
 
@@ -462,25 +462,25 @@ window.KHTNPrint = {
         '<div class="modal-card">' +
           '<div class="modal-head">' +
             '<div class="row">' +
-              '<b id="print-modal-title">🖨️ Xem trước &amp; In ra giấy A4 / Lưu PDF</b>' +
+              '<b id="print-modal-title">Xem trước &amp; In giấy A4 / Lưu PDF</b>' +
               '<span class="badge pri">Mã đề: ' + esc(spec.code) + '</span>' +
               historySelect +
-              (typeof opts.onRegenerate === 'function' ? '<button type="button" class="btn sm subtle" data-act="regen">🔄 Đổi mã đề mới</button>' : '') +
+              (typeof opts.onRegenerate === 'function' ? '<button type="button" class="btn sm subtle" data-act="regen">Đổi mã đề mới</button>' : '') +
             '</div>' +
             '<div class="row">' +
-              '<button type="button" class="btn sm subtle" data-act="close">✕ Đóng lại</button>' +
+              '<button type="button" class="btn sm subtle" data-act="close">✕ Đóng</button>' +
             '</div>' +
           '</div>' +
           '<div class="print-guide">' +
-            '💡 <b>Cách dùng rất dễ:</b> Bấm nút màu tím <b>🖨️ In ra giấy / Lưu thành PDF</b> bên dưới. ' +
-            'Nếu muốn lưu thành file gửi qua Zalo, ở ô <b>Máy in (Destination)</b> bạn chọn <b>Lưu dưới dạng PDF (Save as PDF)</b> rồi bấm <b>Lưu</b>.' +
+            '<b>Hướng dẫn:</b> Bấm nút <b>In ra giấy / Lưu thành PDF</b> bên dưới. ' +
+            'Nếu muốn lưu thành file PDF, ở mục <b>Máy in (Destination)</b> chọn <b>Save as PDF (Lưu dưới dạng PDF)</b> rồi bấm <b>Lưu</b>.' +
           '</div>' +
           '<div style="padding:10px 18px;border-bottom:1px solid var(--line);background:var(--card);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center">' +
             '<div class="row">' + modeBtns + typesToggleHtml + '</div>' +
             '<div class="row">' +
-              '<button type="button" class="btn" data-act="print">🖨️ In ra giấy / Lưu thành PDF</button>' +
+              '<button type="button" class="btn" data-act="print">In ra giấy / Lưu thành PDF</button>' +
               (!spec.formulaGroups
-                ? '<button type="button" class="btn sm alt" data-act="dl-both" title="Tải riêng 2 tệp về máy để mở khi không có mạng">📥 Tải 2 tệp về máy</button>'
+                ? '<button type="button" class="btn sm alt" data-act="dl-both" title="Tải riêng 2 tệp về máy để mở khi không có mạng">Tải 2 tệp riêng</button>'
                 : '') +
             '</div>' +
           '</div>' +
