@@ -102,10 +102,10 @@ KHTN.push(
     'Lưu ý hay nhầm: Công thức V = n × 24,79 (L) CHỈ áp dụng cho CHẤT KHÍ ở điều kiện chuẩn (25 °C, 1 bar), tuyệt đối không dùng cho chất rắn hay chất lỏng!'
   ],
   formulas:[
-    'n = m / M  ⇒  m = n · M  ;  M = m / n',
-    'V_khí (ở 25 °C, 1 bar) = n · 24,79 (L)  ⇒  n = V / 24,79',
+    'n = \\frac{m}{M}  ⇒  m = n · M  ;  M = \\frac{m}{n}',
+    'V_khí (ở 25 °C, 1 bar) = n · 24,79 (L)  ⇒  n = \\frac{V}{24,79}',
     'Số hạt = n · 6,022 × 10²³',
-    'd_(A/B) = M_A / M_B  ;  d_(A/không khí) = M_A / 29'
+    'd_(A/B) = \\frac{M_A}{M_B}  ;  d_(A/không khí) = \\frac{M_A}{29}'
   ],
   examples:[
     {
@@ -149,10 +149,10 @@ KHTN.push(
     'Khi pha loãng dung dịch bằng nước nguyên chất, lượng chất tan (m_ct và n_ct) trước và sau khi pha luôn KHÔNG ĐỔI: C₁·V₁ = C₂·V₂ hoặc m_dd1·C%₁ = m_dd2·C%₂.'
   ],
   formulas:[
-    'Độ tan: S = (m_ct / m_nước) × 100  (trong dung dịch bão hòa)',
-    'C% = (m_ct / m_dd) × 100%  ;  m_dd = m_ct + m_nước  ;  m_ct = (m_dd · C%) / 100%',
-    'C_M = n / V (mol/L hay M, với V tính bằng Lít; 1 L = 1000 mL)',
-    'Liên hệ giữa C% (bão hòa) và độ tan S: C%_bh = S / (100 + S) × 100%'
+    'Độ tan: S = \\frac{m_ct}{m_nước} × 100  (trong dung dịch bão hòa)',
+    'C% = \\frac{m_ct}{m_dd} × 100%  ;  m_dd = m_ct + m_nước  ;  m_ct = \\frac{m_dd · C%}{100%}',
+    'C_M = \\frac{n}{V} (mol/L hay M, với V tính bằng Lít; 1 L = 1000 mL)',
+    'Liên hệ giữa C% (bão hòa) và độ tan S: C%_bh = \\frac{S}{100 + S} × 100%'
   ],
   examples:[
     {
@@ -196,8 +196,8 @@ KHTN.push(
     'Chất xúc tác làm tăng tốc độ phản ứng nhưng giữ nguyên khối lượng và tính chất hóa học sau khi phản ứng kết thúc (VD: MnO₂ xúc tác phân hủy H₂O₂; enzyme sinh học). Chất ức chế làm giảm tốc độ phản ứng (bảo quản thực phẩm).'
   ],
   formulas:[
-    'Xét chất hết (aA + bB → …): so sánh (n_A / a) với (n_B / b) ⇒ bên nhỏ hơn hết',
-    'H% = (m_thực tế / m_lí thuyết) × 100%  ⇒  m_sp thực tế = m_sp lí thuyết × H%',
+    'Xét chất hết (aA + bB → …): so sánh \\frac{n_A}{a} với \\frac{n_B}{b} ⇒ bên nhỏ hơn phản ứng hết',
+    'H% = \\frac{m_(thực tế)}{m_(lí thuyết)} × 100%  ⇒  m_(sp thực tế) = m_(sp lí thuyết) × H%',
     '5 yếu tố tăng tốc độ phản ứng: Nồng độ ↑ · Nhiệt độ ↑ · Áp suất khí ↑ · Diện tích tiếp xúc ↑ · Xúc tác'
   ],
   examples:[
@@ -334,8 +334,8 @@ KHTN.push(
     'Trái Đất được bao bọc bởi khí quyển nên mọi vật đều chịu áp suất khí quyển theo mọi phương (càng lên cao không khí càng loãng nên áp suất khí quyển càng giảm; ứng dụng giác mút, ống hút, lỗ nhỏ trên nắp bình nước mắm).'
   ],
   formulas:[
-    'D = m / V  ;  1 g/cm³ = 1000 kg/m³  ;  d = 10 · D (N/m³)',
-    'Áp suất trên bề mặt: p = F / S  (1 Pa = 1 N/m² ; 1 kPa = 1000 Pa ; 1 cm² = 10⁻⁴ m²)',
+    'D = \\frac{m}{V}  ;  1 g/cm³ = 1000 kg/m³  ;  d = 10 · D (N/m³)',
+    'Áp suất trên bề mặt: p = \\frac{F}{S}  (1 Pa = 1 N/m² ; 1 kPa = 1000 Pa ; 1 cm² = 10⁻⁴ m²)',
     'Áp suất chất lỏng ở độ sâu h: p = d · h = 10 · D · h (h tính từ mặt thoáng chất lỏng)'
   ],
   examples:[
@@ -425,7 +425,7 @@ KHTN.push(
   ],
   formulas:[
     'Moment lực: M = F · d  (F: N, d: m, M: N·m)',
-    'Điều kiện cân bằng của đòn bẩy: F₁ · d₁ = F₂ · d₂  ⇒  F₁ / F₂ = d₂ / d₁',
+    'Điều kiện cân bằng của đòn bẩy: F₁ · d₁ = F₂ · d₂  ⇒  \\frac{F₁}{F₂} = \\frac{d₂}{d₁}',
     'Đòn bẩy cho lợi về lực khi cánh tay đòn lực tác dụng > cánh tay đòn lực cản (d_người > d_vật)'
   ],
   examples:[

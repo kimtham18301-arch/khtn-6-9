@@ -195,9 +195,9 @@ KHTN.push(
     'Tìm công thức hóa học khi biết % khối lượng và khối lượng phân tử M: tìm khối lượng mỗi nguyên tố trong 1 phân tử m_X = (%X · M) / 100% ⇒ suy ra chỉ số x = m_X / M_X.'
   ],
   formulas:[
-    'Quy tắc hóa trị (AₓBᵧ): a · x = b · y  ⇒  x / y = b / a (tối giản)',
-    '%A = (x · M_A / M_AₓBᵧ) × 100%',
-    'Tìm chỉ số từ % và M: x = (%A × M) / (100 × M_A)'
+    'Quy tắc hóa trị (AₓBᵧ): a · x = b · y  ⇒  \\frac{x}{y} = \\frac{b}{a} (tối giản)',
+    '%A = \\frac{x · M_A}{M_(AₓBᵧ)} × 100%',
+    'Tìm chỉ số từ % và M: x = \\frac{%A × M}{100 × M_A}'
   ],
   examples:[
     {
@@ -241,9 +241,9 @@ KHTN.push(
     'Lưu ý hay nhầm: Tốc độ trung bình trên nhiều đoạn đường luôn tính bằng Tổng quãng đường chia Tổng thời gian (kể cả thời gian dừng nghỉ): v_tb = (s₁ + s₂) / (t₁ + t₂).'
   ],
   formulas:[
-    'v = s / t  ⇒  s = v · t  ;  t = s / v',
+    'v = \\frac{s}{t}  ⇒  s = v · t  ;  t = \\frac{s}{v}',
     '1 m/s = 3,6 km/h',
-    'v_tb = (s₁ + s₂ + …) / (t₁ + t₂ + …)',
+    'v_tb = \\frac{s₁ + s₂ + …}{t₁ + t₂ + …}',
     'Khoảng cách an toàn theo quy tắc 3 giây: d ≈ v (m/s) × 3'
   ],
   examples:[
@@ -287,9 +287,9 @@ KHTN.push(
     'Chống ô nhiễm tiếng ồn: tác động vào nguồn âm (giảm to, cấm còi), phân tán âm trên đường truyền (trồng cây xanh, xây tường chắn), ngăn âm truyền tới tai (kính hai lớp, nút tai).'
   ],
   formulas:[
-    'Tần số: f = N / t (Hz; t tính bằng giây)',
-    'Bài toán tiếng vang / sonar đo khoảng cách: d = (v · t) / 2',
-    'Khoảng cách tối thiểu nghe tiếng vang trong không khí (v = 340 m/s): d_min = 340 × (1/15) / 2 ≈ 11,3 m'
+    'Tần số: f = \\frac{N}{t} (Hz; t tính bằng giây)',
+    'Bài toán tiếng vang / sonar đo khoảng cách: d = \\frac{v · t}{2}',
+    'Khoảng cách tối thiểu nghe tiếng vang trong không khí (v = 340 m/s): d_min = \\frac{340}{2 × 15} ≈ 11,3 m'
   ],
   examples:[
     {

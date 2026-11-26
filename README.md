@@ -1,4 +1,4 @@
-# Cẩm Nang Tự Nhiên – Sách mở tự học & Đề kiểm tra KHTN 6–9 (Trọng tâm Lớp 7 – 8)
+# SciBook – Pastel Science Book · Tự học & Đề kiểm tra KHTN 6–9 (Trọng tâm Lớp 7 – 8)
 
 Website tĩnh (HTML/CSS/JS thuần, không cần build) bám sát Chương trình GDPT 2018 của Bộ Giáo dục & Đào tạo (Thông tư 32/2018/TT-BGDĐT):
 - **50 bài học · 630+ câu hỏi & biến thể động · 44 bộ đề kiểm tra** chia theo **4 giai đoạn năm học (140 tiết / 35 tuần)**.

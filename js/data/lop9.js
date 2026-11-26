@@ -2,7 +2,7 @@ window.KHTN = window.KHTN || [];
 KHTN.push(
 { id:'l9-nang-luong-co', grade:9, subj:'ly', title:'Năng lượng cơ học, công & công suất', prereq:['l6-nang-luong','l7-toc-do'],
   theory:['Động năng Wđ = ½·m·v² (J). Thế năng trọng trường Wt = 10·m·h (J) (g ≈ 10 m/s²). Cơ năng W = Wđ + Wt.','Khi chỉ có trọng lực, cơ năng bảo toàn: vật rơi → thế năng giảm, động năng tăng.','Công cơ học A = F·s (J) khi lực cùng phương chuyển dời. Công suất P = A / t (W); 1 kW = 1000 W.'],
-  formulas:['Wđ = ½mv²','Wt = 10mh','A = F·s','P = A / t'],
+  formulas:['W_đ = \\frac{1}{2}mv²','W_t = 10mh','A = F·s','P = \\frac{A}{t}'],
   questions:[
     {q:'Vật 2 kg chuyển động với tốc độ 3 m/s. Động năng là bao nhiêu J?',n:9,t:0,u:'J',w:'½·2·3² = 9.'},
     {q:'Vật 2 kg ở độ cao 5 m. Thế năng (g = 10 m/s²) là bao nhiêu J?',n:100,t:0,u:'J',w:'10·2·5 = 100.'},
@@ -18,7 +18,7 @@ KHTN.push(
 
 { id:'l9-dien-ohm', grade:9, subj:'ly', title:'Điện trở & định luật Ohm', prereq:['l8-dien'],
   theory:['Định luật Ohm: I = U / R (R: điện trở, Ω).','Mạch nối tiếp: I bằng nhau, Rtđ = R₁ + R₂. Mạch song song: U bằng nhau, 1/Rtđ = 1/R₁ + 1/R₂.','Điện trở dây dẫn: R = ρ·l / S – tăng theo chiều dài, giảm theo tiết diện.'],
-  formulas:['I = U / R','Rnt = R₁ + R₂','Rss = R₁R₂ / (R₁ + R₂)','R = ρ l / S'],
+  formulas:['I = \\frac{U}{R}','R_nt = R₁ + R₂','R_ss = \\frac{R₁ · R₂}{R₁ + R₂}','R = \\frac{ρ · l}{S}'],
   questions:[
     {q:'U = 12 V, R = 4 Ω. Cường độ dòng điện là bao nhiêu A?',n:3,t:0,u:'A',w:'12 / 4 = 3.'},
     {q:'Hai điện trở 6 Ω và 3 Ω mắc song song. Điện trở tương đương là bao nhiêu Ω?',n:2,t:0,u:'Ω',w:'6·3/9 = 2.'},
@@ -34,7 +34,7 @@ KHTN.push(
 
 { id:'l9-cam-ung', grade:9, subj:'ly', title:'Cảm ứng điện từ & dòng điện xoay chiều', prereq:['l7-tu','l8-dien'],
   theory:['Khi từ thông qua cuộn dây kín biến thiên → xuất hiện dòng điện cảm ứng.','Dòng điện xoay chiều liên tục đổi chiều (điện lưới Việt Nam 220 V, 50 Hz).','Máy biến áp: U₁/U₂ = N₁/N₂. Truyền tải điện đi xa dùng điện áp cao để giảm hao phí.'],
-  formulas:['U₁ / U₂ = N₁ / N₂'],
+  formulas:['\\frac{U₁}{U₂} = \\frac{N₁}{N₂}'],
   questions:[
     {q:'Điều kiện xuất hiện dòng điện cảm ứng trong cuộn dây kín là gì?',o:['Từ thông qua cuộn dây biến thiên','Có nam châm đặt cạnh','Cuộn dây đứng yên','Có lõi sắt'],w:'Phải có sự biến thiên từ thông.'},
     {q:'Máy biến áp có N₁ = 1000 vòng, N₂ = 50 vòng, U₁ = 220 V. U₂ là bao nhiêu V?',n:11,t:0,u:'V',w:'U₂ = 220·50/1000 = 11.'},

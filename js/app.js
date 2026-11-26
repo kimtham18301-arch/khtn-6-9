@@ -92,6 +92,11 @@ function esc(s){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
   });
 }
+function fmtMath(s){
+  return (window.KHTNMath && typeof window.KHTNMath.format === 'function')
+    ? window.KHTNMath.format(s)
+    : esc(s);
+}
 function normVi(s){
   return String(s || '')
     .toLowerCase()
@@ -291,7 +296,10 @@ function mountGradebookWidget(containerEl, g){
         '<div class="row between">' +
           '<div>' +
             '<b>Bảng điểm KHTN Lớp ' + g + ' chuẩn Thông tư 22/2021/TT-BGDĐT (140 tiết/năm)</b>' +
-            '<div class="muted" style="font-size:.86rem">Mỗi học kì có <b>4 cột ĐĐGtx (hệ số 1)</b> + <b>1 cột Giữa kì (hệ số 2)</b> + <b>1 cột Cuối kì (hệ số 3)</b>. Công thức: <code>ĐTBmhk = (TX1+TX2+TX3+TX4 + 2×GK + 3×CK) / 9</code> · <code>Cả năm = (HK1 + 2×HK2) / 3</code>.</div>' +
+            '<div class="muted" style="font-size:.86rem;line-height:1.9">Mỗi học kì có <b>4 cột ĐĐGtx (hs 1)</b> + <b>1 cột Giữa kì (hs 2)</b> + <b>1 cột Cuối kì (hs 3)</b>: ' +
+              fmtMath('ĐTB_mhk = \\frac{TX_1 + TX_2 + TX_3 + TX_4 + 2·GK + 3·CK}{9}') + ' · ' +
+              fmtMath('ĐTB_cn = \\frac{ĐTB_HK1 + 2·ĐTB_HK2}{3}') +
+            '.</div>' +
           '</div>' +
           '<button type="button" class="btn sm ' + (simMode ? 'on' : 'alt') + '" id="gb-sim-btn">' + (simMode ? 'Đóng tính thử' : 'Tính thử mục tiêu điểm') + '</button>' +
         '</div>' +
@@ -381,13 +389,13 @@ function renderQ(q, displayIdx, opts){
   var h =
     '<div class="q-head">' +
       '<div class="q-meta">' + diffBadge(q) + topicBadge + '<span class="badge">' + typeLabel + '</span></div>' +
-      '<div class="q-text"><b>Câu ' + (displayIdx + 1) + '.</b> ' + esc(q.q) + '</div>' +
+      '<div class="q-text"><b>Câu ' + (displayIdx + 1) + '.</b> ' + fmtMath(q.q) + '</div>' +
     '</div>';
 
   if (choices) {
     var letters = ['A', 'B', 'C', 'D'];
     choices.forEach(function(o, oi){
-      h += '<button type="button" class="opt" data-val="' + esc(o) + '"><b>' + (letters[oi] || '') + '.</b> ' + esc(o) + '</button>';
+      h += '<button type="button" class="opt" data-val="' + esc(o) + '"><b>' + (letters[oi] || '') + '.</b> ' + fmtMath(o) + '</button>';
     });
   } else {
     h +=
@@ -401,7 +409,7 @@ function renderQ(q, displayIdx, opts){
 
   if (opts.hintText && !deferred) {
     h += '<div class="row" style="margin-top:8px"><button type="button" class="btn sm subtle" data-act="hint">Xem gợi ý</button></div>' +
-         '<div class="q-hint" hidden><b>Gợi ý:</b> ' + esc(opts.hintText) + '</div>';
+         '<div class="q-hint" hidden><b>Gợi ý:</b> ' + fmtMath(opts.hintText) + '</div>';
   }
   h += '<div class="fb" hidden></div>';
   box.innerHTML = h;
@@ -429,13 +437,13 @@ function renderQ(q, displayIdx, opts){
 
     var ansLine = '';
     if (!ok) {
-      if (q.o) ansLine = '<br>Đáp án đúng: <b>' + esc(q.o[0]) + '</b>';
+      if (q.o) ansLine = '<br>Đáp án đúng: <b>' + fmtMath(q.o[0]) + '</b>';
       else if (q.n != null) ansLine = '<br>Đáp án đúng: <b>' + fmtNum(q.n) + (q.u ? ' ' + esc(q.u) : '') + '</b>';
     }
     var headText = ok ? 'Chính xác.' : (skipped ? 'Chưa trả lời (0 điểm).' : 'Chưa đúng.');
     fb.innerHTML =
       '<div><b>' + headText + '</b> ' + ansLine + '</div>' +
-      (q.w ? '<div style="margin-top:4px"><b>Giải thích:</b> ' + esc(q.w) + '</div>' : '');
+      (q.w ? '<div style="margin-top:4px"><b>Giải thích:</b> ' + fmtMath(q.w) + '</div>' : '');
 
     box.querySelectorAll('.opt, input, [data-act="check"]').forEach(function(x){ x.disabled = true; });
     if (hintBtn) hintBtn.hidden = true;
@@ -657,9 +665,9 @@ function home(){
 
   var h =
     '<section class="hero">' +
-      '<div class="hero-kicker">✦ Sách Mở Tự Học &amp; Luyện Đề Khoa Học Tự Nhiên THCS ✦</div>' +
-      '<h1>Cẩm Nang Tự Nhiên</h1>' +
-      '<p>Quyển sách gối đầu giường môn Khoa học tự nhiên (Trọng tâm Tập 7 &amp; Tập 8): chia rõ <b>4 giai đoạn năm học (140 tiết)</b>, sổ điểm <b>Thông tư 22/2021/TT-BGDĐT</b>, học đến trang nào chỉ random đúng dạng bài trang đó và tách riêng 2 phần Đề – Đáp án khi in ra giấy.</p>' +
+      '<div class="hero-kicker">✦ Pastel Open-Book · Natural Science 6–9 ✦</div>' +
+      '<h1>SciBook</h1>' +
+      '<p>Quyển sách pastel tự học &amp; luyện đề Khoa học tự nhiên (Trọng tâm Tập 7 &amp; Tập 8): công thức phân số rõ nét, chia <b>4 giai đoạn năm học (140 tiết)</b>, sổ điểm <b>Thông tư 22/2021/TT-BGDĐT</b>, khóa chặt random theo từng bài và tách riêng 2 phần Đề – Đáp án khi in PDF.</p>' +
       '<div class="row">' +
         '<a class="btn" href="#/lop/7">Mở Tập 7 (Lớp 7)</a>' +
         '<a class="btn" href="#/lop/8">Mở Tập 8 (Lớp 8)</a>' +
@@ -1051,20 +1059,20 @@ function lesson(id){
   h +=
     '<section class="card" style="margin-bottom:14px">' +
       '<h2 style="margin-top:0">1. Kiến thức trọng tâm (Bộ GD&ĐT)</h2>' +
-      '<ul class="tight">' + t.theory.map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' +
+      '<ul class="tight">' + t.theory.map(function(s){ return '<li>' + fmtMath(s) + '</li>'; }).join('') + '</ul>' +
       '<h2>2. Công thức & quy tắc chuẩn</h2>' +
-      t.formulas.map(function(f){ return '<div class="formula">' + esc(f) + '</div>'; }).join('');
+      t.formulas.map(function(f){ return '<div class="formula">' + fmtMath(f) + '</div>'; }).join('');
 
   if (t.examples && t.examples.length) {
     h += '<h2>3. Ví dụ minh họa từ Cơ bản đến Vận dụng</h2>';
     t.examples.forEach(function(ex, ei){
       h +=
         '<div class="example-card">' +
-          '<div><b>Ví dụ ' + (ei + 1) + '.</b> ' + esc(ex.q) + '</div>' +
+          '<div><b>Ví dụ ' + (ei + 1) + '.</b> ' + fmtMath(ex.q) + '</div>' +
           '<details' + (ei === 0 ? ' open' : '') + '>' +
             '<summary>Xem lời giải từng bước</summary>' +
-            '<ol class="example-steps">' + ex.steps.map(function(st){ return '<li>' + esc(st) + '</li>'; }).join('') + '</ol>' +
-            '<div><b>Đáp số:</b> ' + esc(ex.ans) + '</div>' +
+            '<ol class="example-steps">' + ex.steps.map(function(st){ return '<li>' + fmtMath(st) + '</li>'; }).join('') + '</ol>' +
+            '<div><b>Đáp số:</b> ' + fmtMath(ex.ans) + '</div>' +
           '</details>' +
         '</div>';
     });
@@ -2262,7 +2270,7 @@ function notebook(initialTab){
                 '<div>' + tag(t.subj) + ' <a href="#/bai/' + t.id + '" style="font-weight:700">Lớp ' + t.grade + (t.term ? ' (' + t.term + ')' : '') + ' – ' + esc(t.title) + '</a></div>' +
                 '<a href="#/bai/' + t.id + '" style="font-size:.88rem">Học bài →</a>' +
               '</div>' +
-              g.formulas.map(function(f){ return '<div class="formula">' + esc(f) + '</div>'; }).join('') +
+              g.formulas.map(function(f){ return '<div class="formula">' + fmtMath(f) + '</div>'; }).join('') +
             '</div>';
         });
         document.getElementById('nb-list').innerHTML = out || '<div class="empty">Không có công thức nào khớp với tìm kiếm.</div>';
@@ -2329,8 +2337,8 @@ function notebook(initialTab){
                 '<div>' + tag(t.subj) + ' ' + diffBadge(q) + ' <a href="#/bai/' + t.id + '"><b>Lớp ' + t.grade + ' – ' + esc(t.title) + '</b></a></div>' +
                 '<span class="badge warn">Sai ' + (m.count || 1) + ' lần</span>' +
               '</div>' +
-              '<p style="margin:.6em 0 .4em"><b>Đề:</b> ' + esc(q.q) + '</p>' +
-              '<div class="fb ok"><b>Đáp án đúng:</b> ' + esc(ans) + (q.w ? '<br><b>Giải thích:</b> ' + esc(q.w) : '') + '</div>' +
+              '<p style="margin:.6em 0 .4em"><b>Đề:</b> ' + fmtMath(q.q) + '</p>' +
+              '<div class="fb ok"><b>Đáp án đúng:</b> ' + fmtMath(ans) + (q.w ? '<br><b>Giải thích:</b> ' + fmtMath(q.w) : '') + '</div>' +
             '</div>';
         });
         box.innerHTML = out;

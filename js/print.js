@@ -21,6 +21,12 @@ function esc(s){
   });
 }
 
+function fmtMath(s){
+  return (window.KHTNMath && typeof window.KHTNMath.format === 'function')
+    ? window.KHTNMath.format(s)
+    : esc(s);
+}
+
 function makeCode(prefix){
   var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var out = '';
@@ -86,7 +92,7 @@ function renderQuestionListHtml(items, isKey){
     var q = item.q;
     var dLabel = q.d && DIFF_NAME[q.d] ? DIFF_NAME[q.d] : '';
     html += '<div class="sheet-q">';
-    html += '<div><b>Câu ' + (idx + 1) + '.</b> ' + esc(q.q) +
+    html += '<div><b>Câu ' + (idx + 1) + '.</b> ' + fmtMath(q.q) +
       (dLabel || item.topicTitle ? ' <span style="color:#555;font-size:.85rem">[' + esc([dLabel, item.topicTitle].filter(Boolean).join(' · ')) + ']</span>' : '') + '</div>';
 
     if (!isKey) {
@@ -94,7 +100,7 @@ function renderQuestionListHtml(items, isKey){
         var letters = ['A', 'B', 'C', 'D'];
         html += '<div class="sheet-opts">';
         item.choices.forEach(function(opt, oi){
-          html += '<div><b>' + letters[oi] + '.</b> ' + esc(opt) + '</div>';
+          html += '<div><b>' + letters[oi] + '.</b> ' + fmtMath(opt) + '</div>';
         });
         html += '</div>';
       } else {
@@ -106,11 +112,11 @@ function renderQuestionListHtml(items, isKey){
       if (item.choices) {
         var lettersKey = ['A', 'B', 'C', 'D'];
         var correctIdx = item.choices.indexOf(q.o[0]);
-        ansText = (correctIdx > -1 ? lettersKey[correctIdx] + '. ' : '') + q.o[0];
+        ansText = (correctIdx > -1 ? '<b>' + lettersKey[correctIdx] + '.</b> ' : '') + fmtMath(q.o[0]);
       } else {
-        ansText = formatNum(q.n) + (q.u ? ' ' + q.u : '');
+        ansText = esc(formatNum(q.n) + (q.u ? ' ' + q.u : ''));
       }
-      html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + esc(ansText) + '<br><b>Lời giải chi tiết:</b> ' + esc(q.w || '') + '</div>';
+      html += '<div class="sheet-ans"><b>Đáp án đúng:</b> ' + ansText + '<br><b>Lời giải chi tiết:</b> ' + fmtMath(q.w || '') + '</div>';
     }
     html += '</div>';
   });
@@ -123,15 +129,15 @@ function buildSheetHtml(spec, mode){
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.18rem;font-weight:700">SỔ TAY TÓM TẮT CÔNG THỨC & GHI NHỚ KHTN</div>' +
+            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · SỔ TAY TÓM TẮT CÔNG THỨC & GHI NHỚ KHTN</div>' +
             '<div class="sheet-meta">' + esc(spec.subtitle) + ' · ' + spec.formulaGroups.length + ' chủ đề</div>' +
           '</div>' +
           '<div class="sheet-code">' + esc(spec.code) + '</div>' +
         '</div>';
     spec.formulaGroups.forEach(function(g, gi){
-      fHtml += '<div class="sheet-q"><b>' + (gi + 1) + '. Lớp ' + g.grade + ' – ' + esc(g.title) + '</b><ul style="margin:4px 0 8px 18px;padding:0">';
+      fHtml += '<div class="sheet-q"><b>' + (gi + 1) + '. Lớp ' + g.grade + ' – ' + esc(g.title) + '</b><ul style="margin:6px 0 10px 18px;padding:0">';
       g.formulas.forEach(function(f){
-        fHtml += '<li style="margin:3px 0">' + esc(f) + '</li>';
+        fHtml += '<li style="margin:7px 0;line-height:1.8">' + fmtMath(f) + '</li>';
       });
       fHtml += '</ul></div>';
     });
@@ -145,23 +151,23 @@ function buildSheetHtml(spec, mode){
       '<div class="sheet-preview">' +
         '<div class="sheet-head">' +
           '<div>' +
-            '<div style="font-size:1.18rem;font-weight:700">TÀI LIỆU LÝ THUYẾT & ĐỀ LUYỆN (KHÔNG KÈM ĐÁP ÁN)</div>' +
+            '<div style="font-size:1.18rem;font-weight:700">SCIBOOK · TÀI LIỆU LÝ THUYẾT & ĐỀ LUYỆN (KHÔNG KÈM ĐÁP ÁN)</div>' +
             '<div class="sheet-meta">Lớp ' + t.grade + ' – ' + esc(t.title) + ' · Sắp xếp từ Dễ đến Khó</div>' +
           '</div>' +
           '<div class="sheet-code">Mã đề: ' + esc(spec.code) + '</div>' +
         '</div>' +
         '<div style="margin-bottom:12px"><b>I. KIẾN THỨC TRỌNG TÂM CẦN NHỚ</b><ul style="margin:5px 0 0 18px;padding:0">' +
-          (t.theory || []).map(function(line){ return '<li style="margin:4px 0">' + esc(line) + '</li>'; }).join('') +
+          (t.theory || []).map(function(line){ return '<li style="margin:5px 0">' + fmtMath(line) + '</li>'; }).join('') +
         '</ul></div>' +
         '<div style="margin-bottom:12px"><b>II. CÔNG THỨC & QUY TẮC CHUẨN</b><ul style="margin:5px 0 0 18px;padding:0">' +
-          (t.formulas || []).map(function(f){ return '<li style="margin:4px 0"><b>' + esc(f) + '</b></li>'; }).join('') +
+          (t.formulas || []).map(function(f){ return '<li style="margin:8px 0;line-height:1.85"><b>' + fmtMath(f) + '</b></li>'; }).join('') +
         '</ul></div>';
 
     if (t.examples && t.examples.length) {
       sHtml += '<div style="margin-bottom:14px"><b>III. VÍ DỤ MINH HỌA TỪNG BƯỚC</b>';
       t.examples.forEach(function(ex, ei){
-        sHtml += '<div style="margin:6px 0 8px 10px"><div><i>Ví dụ ' + (ei + 1) + ':</i> ' + esc(ex.q) + '</div>' +
-          '<div style="margin-left:12px;color:#222">• ' + ex.steps.map(esc).join('<br>• ') + '<br>⇒ <b>Đáp số:</b> ' + esc(ex.ans) + '</div></div>';
+        sHtml += '<div style="margin:6px 0 8px 10px"><div><i>Ví dụ ' + (ei + 1) + ':</i> ' + fmtMath(ex.q) + '</div>' +
+          '<div style="margin-left:12px;color:#222;line-height:1.8">• ' + ex.steps.map(fmtMath).join('<br>• ') + '<br>⇒ <b>Đáp số:</b> ' + fmtMath(ex.ans) + '</div></div>';
       });
       sHtml += '</div>';
     }
@@ -213,22 +219,25 @@ function buildStandaloneDownloadFile(spec, mode){
   var partTag = mode === 'key' ? 'PHAN-2-DAP-AN' : 'PHAN-1-DE-KHONG-DAP-AN';
   var pageTitle = partTag + '_' + spec.code;
   var bodySheet = buildSheetHtml(spec, mode);
+  var mathCss = (window.KHTNMath && typeof window.KHTNMath.cssString === 'function') ? window.KHTNMath.cssString() : '';
   return '<!doctype html>\n<html lang="vi">\n<head>\n<meta charset="utf-8">\n<title>' + esc(pageTitle) + '</title>\n' +
     '<style>\n' +
-    'body{margin:0;padding:20px;background:#eef2f7;font:15px/1.55 "Times New Roman",Cambria,Georgia,serif;color:#111}\n' +
-    '.top-bar{max-width:210mm;margin:0 auto 14px;padding:10px 14px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;display:flex;justify-content:space-between;align-items:center;font-family:system-ui,sans-serif}\n' +
-    '.pbtn{background:#1b66c9;color:#fff;border:0;border-radius:7px;padding:8px 14px;font-weight:600;cursor:pointer}\n' +
+    'body{margin:0;padding:20px;background:#f7f4ff;font:15px/1.7 "Times New Roman",Cambria,Georgia,serif;color:#111}\n' +
+    '.top-bar{max-width:210mm;margin:0 auto 14px;padding:10px 14px;background:#fff;border:1px solid #d8ccf8;border-radius:10px;display:flex;justify-content:space-between;align-items:center;font-family:system-ui,sans-serif}\n' +
+    '.pbtn{background:#6d5dfc;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}\n' +
     '.sheet-preview{background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:22px 26px;max-width:210mm;margin:0 auto}\n' +
+    '.sheet-preview li{margin:7px 0;line-height:1.8}\n' +
     '.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:14px}\n' +
     '.sheet-meta{font-size:.9rem;color:#333}\n' +
     '.sheet-code{font-family:Consolas,monospace;font-weight:700;border:1.5px solid #111;padding:3px 8px;border-radius:4px;font-size:.92rem;white-space:nowrap}\n' +
     '.sheet-q{margin:12px 0;page-break-inside:avoid}\n' +
     '.sheet-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:5px 0 0 18px}\n' +
     '.sheet-lines{margin-top:8px}.sheet-lines div{border-bottom:1px dotted #888;height:24px}\n' +
-    '.sheet-ans{margin:4px 0 0 18px;color:#111}\n' +
+    '.sheet-ans{margin:4px 0 0 18px;color:#111;line-height:1.8}\n' +
+    mathCss + '\n' +
     '@media print{@page{size:A4;margin:14mm}body{background:#fff;padding:0}.top-bar{display:none!important}.sheet-preview{border:0;padding:0;max-width:none}}\n' +
     '</style>\n</head>\n<body>\n' +
-    '<div class="top-bar"><div><b>' + esc(mode === 'key' ? 'Phần 2: Đáp án & lời giải' : 'Phần 1: Đề bài (Không có đáp án)') + '</b> · Mã đề: <b>' + esc(spec.code) + '</b></div>' +
+    '<div class="top-bar"><div><b>SciBook · ' + esc(mode === 'key' ? 'Phần 2: Đáp án & lời giải' : 'Phần 1: Đề bài (Không có đáp án)') + '</b> · Mã đề: <b>' + esc(spec.code) + '</b></div>' +
     '<button class="pbtn" onclick="window.print()">In ra giấy / Lưu thành PDF (A4)</button></div>\n' +
     bodySheet + '\n</body>\n</html>';
 }
